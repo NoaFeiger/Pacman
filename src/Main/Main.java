@@ -1,12 +1,7 @@
 package Main;
-
-import Level1.Level1Game;
-
+import Level.LevelGame;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
 
 public class Main extends JFrame {
     public static void main(String[] args) {
@@ -33,8 +28,7 @@ public class Main extends JFrame {
         button_start.setContentAreaFilled(false);
         button_start.addActionListener(e -> {   //moves to the option window panel
             remove(main_panel);
-            Level1Game a = new Level1Game(this,main_panel);
-          //  this.addKeyListener(a);
+            LevelGame a = new LevelGame(this,main_panel,1,"BoardLevel1");
             add(a);
             repaint();
             revalidate();});

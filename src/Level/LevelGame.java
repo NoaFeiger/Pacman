@@ -1,19 +1,15 @@
-package Level1;
-
-import Main.Main;
-
+package Level;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Level1Game extends JPanel implements ActionListener {
+public class LevelGame extends JPanel implements ActionListener {
     private JFrame frame;
     private JPanel main_panel;
     private int[][] matrix;
@@ -24,13 +20,13 @@ public class Level1Game extends JPanel implements ActionListener {
     protected int vy;
     private final int delay = 200;
 
-    public Level1Game(JFrame frame, JPanel main_panel) {
+    public LevelGame(JFrame frame, JPanel main_panel,int level,String path_board) {
         super();
         this.frame = frame;
         this.main_panel = main_panel;
         this.matrix = new int[32][32];
         vx = 0; vy = 0;
-        buildMatrix();
+        buildMatrix(path_board);
         timer = new Timer(delay, this);
         timer.start();
 
@@ -40,10 +36,10 @@ public class Level1Game extends JPanel implements ActionListener {
         addKeyListener(KeyEvent.VK_RIGHT,1,0);
     }
 
-    private void buildMatrix() {
+    private void buildMatrix(String path_board) {
         BufferedReader reader = null;
         try {
-            File file = new File("BoardLevel1");
+            File file = new File(path_board);
             reader = new BufferedReader(new FileReader(file));
             String line;
             int j=0;
