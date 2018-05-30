@@ -28,10 +28,8 @@ public class Main extends JFrame {
         button_start.setContentAreaFilled(false);
         button_start.addActionListener(e -> {   //moves to the option window panel
             remove(main_panel);
-            LevelGame a = new LevelGame(this,main_panel,1,"BoardLevel1");
-            add(a);
-            repaint();
-            revalidate();});
+            GameControl gameControl = new GameControl(this);
+            gameControl.startGame();});
 
         JButton button_exit = new JButton(new ImageIcon("button_exit.png"));
         button_exit.setOpaque(false); // remove the background of the button
