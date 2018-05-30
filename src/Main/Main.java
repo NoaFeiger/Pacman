@@ -1,8 +1,12 @@
 package Main;
 
+import Level1.Level1Game;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 
 public class Main extends JFrame {
     public static void main(String[] args) {
@@ -25,9 +29,19 @@ public class Main extends JFrame {
         JButton button_start = new JButton(new ImageIcon("button_start.png"));
         button_start.setOpaque(false); // remove the background of jbutton-random
         button_start.setContentAreaFilled(false);
+        button_start.addActionListener(e -> {   //moves to the option window panel
+            remove(main_panel);
+            Level1Game a = new Level1Game(this,main_panel);
+          //  this.addKeyListener(a);
+            add(a);
+            repaint();
+            revalidate();});
+
         JButton button_exit = new JButton(new ImageIcon("button_exit.png"));
         button_exit.setOpaque(false); // remove the background of the button
         button_exit.setContentAreaFilled(false);
+        button_exit.addActionListener(e ->
+            System.exit(42));
         main_panel.setLayout(new GridLayout(5,2));
         main_panel.add(title);
         main_panel.add(new JLabel(""));
