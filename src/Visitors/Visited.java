@@ -1,6 +1,5 @@
 package Visitors;
 
-public interface Visited { // Pacman
+public interface Visited { // PacMan
     void accept(Visitor ghost);
-
 }
