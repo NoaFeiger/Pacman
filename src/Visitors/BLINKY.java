@@ -8,19 +8,18 @@ public class BLINKY extends Ghost implements Visitor {
 
     @Override
     public void visit(NicePacman nice_p) {
-        System.out.println("blinky got nice");
     }
 
     @Override
     public void visit(SafePacman nice_p) {
-        System.out.println("blinky got safe");
-
-
     }
 
     @Override
-    public void visit(AngryPacman nice_p) {
-        System.out.println("blinky got angry");
+    public void visit(AngryPacman angryPacman_p) { //kills pacman
+        System.out.println("pacman kills");
+        angryPacman_p.setLives(angryPacman_p.getLives()-1);
+
+
 
     }
 }

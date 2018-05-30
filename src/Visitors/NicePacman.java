@@ -1,8 +1,8 @@
 package Visitors;
 
 public class NicePacman extends Pacman implements Visited {
-    public NicePacman(int x, int y, String path, int lives, int score) {
-        super(x, y, path, lives, score);
+    public NicePacman(int x, int y, int lives, int score) {
+        super(x, y, "nice_pacman.png", lives, score);
     }
 
     @Override

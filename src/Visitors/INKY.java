@@ -8,16 +8,17 @@ public class INKY extends Ghost implements Visitor {
 
     @Override
     public void visit(NicePacman nice_p) {
-
     }
 
     @Override
-    public void visit(SafePacman nice_p) {
+    public void visit(SafePacman safe_p) {
+        safe_p.setScore(safe_p.getScore()-10);
+        // freeze to 3 seconds
 
     }
 
     @Override
     public void visit(AngryPacman nice_p) {
-
+        //freeze to 5 seconds
     }
 }
