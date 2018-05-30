@@ -2,7 +2,7 @@ package Visitors;
 
 import javax.swing.*;
 
-public class Ghost {
+public class Ghost implements Visited {
    private int x;
    private int y;
    private ImageIcon img;
@@ -12,4 +12,9 @@ public class Ghost {
        this.x=x;
        this.y=y;
    }
+
+    @Override
+    public void accept(Visitor ghost) {
+
+    }
 }

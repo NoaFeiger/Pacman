@@ -1,4 +1,8 @@
 package Level;
+import Visitors.Capsule;
+import Visitors.Ghost;
+import Visitors.Visited;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +17,7 @@ public class LevelGame extends JPanel{
     private JFrame frame;
     private JPanel main_panel;
     private int[][] matrix;
+    private Visited[][]Vmatrix;
     private int x; // pacman place
     private int y;
     protected int vx;
@@ -24,6 +29,7 @@ public class LevelGame extends JPanel{
         this.frame = frame;
         this.main_panel = main_panel;
         this.matrix = new int[32][32];
+        this.Vmatrix = new Visited[32][32];
         vx = 0;
         vy = 0;
         buildMatrix(path_board);
@@ -90,9 +96,11 @@ public class LevelGame extends JPanel{
                 } else if (matrix[i][j] == 3) {
                     g.setColor(Color.PINK);
                     g.fillRect(i * 20, j * 20, 20, 20);
+                    this.Vmatrix[i][j] = new Capsule(10,240,"temp");
                 } else if (matrix[i][j] == 4) {
                     g.setColor(Color.RED);
                     g.fillRect(i * 20, j * 20, 20, 20);
+                    this.Vmatrix[i][j] = new Ghost(i,j,"temp");
                 }
             }
     }
