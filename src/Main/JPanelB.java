@@ -14,7 +14,7 @@ public class JPanelB extends JPanel {
         try {
             backgroundImage = ImageIO.read(new File("pacman_background.jpg"));
           //  backgroundImage = ImageIO.read(new File("orig.gif"));
-            backgroundImage= backgroundImage.getScaledInstance(800,800,Image.SCALE_DEFAULT);
+            backgroundImage= backgroundImage.getScaledInstance(800,600,Image.SCALE_DEFAULT);
         }
         catch (Exception e)
         {

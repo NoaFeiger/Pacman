@@ -21,8 +21,10 @@ public class Main extends JFrame {
         setVisible(true);
 
         JPanelB main_panel = new JPanelB();
-
-        JLabel title=new JLabel("            Pac-man IL");
+        main_panel.setAlignmentX(1);
+        JLabel title=new JLabel("Pac-man IL");
+        title.setSize(800,100);
+        title.setHorizontalAlignment(0);
         title.setFont(new Font("Playbill", Font.BOLD, 60));
         title.setForeground(Color.white);
 
@@ -49,7 +51,7 @@ public class Main extends JFrame {
         main_panel.add(button_exit);
         this.add(main_panel);
         pack();
-        this.setSize(800, 800);
+        this.setSize(800, 600);
 
     }
 
