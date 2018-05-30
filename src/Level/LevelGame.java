@@ -83,6 +83,7 @@ public class LevelGame extends JPanel{
     public void paint(Graphics g) {
         super.paint(g);
         // ImageIcon img=new ImageIcon("pacman.jpg");
+        g.setColor(Color.BLACK);
         for (int i = 0; i < matrix.length; i++)
             for (int j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] == 1) {
@@ -90,22 +91,36 @@ public class LevelGame extends JPanel{
                 } else if (matrix[i][j] == 2) {
                     x = i;
                     y = j;
-                    draw(g,i,j,"pacman.png");
+                    if(pacman.isOpenMouth())
+                        draw(g,i,j,"pacman.png");
+                    else{
+                        g.setColor(Color.YELLOW);
+                        g.fillOval(i * 20, j * 20, 20, 20);
+                    }
                 } else if (matrix[i][j] == 3) {
                     draw(g,i,j, "capsule.png");
                     this.Vmatrix[i][j] = new Capsule(10,240,"temp");
                 } else if (matrix[i][j] == 4) {
-                    draw(g,i,j,"GINKY.jpg");
+                    draw(g,i,j,"GINKY.png");
                     this.Vmatrix[i][j] = new GINKEY(i,j,3);
                 }
                 else if (matrix[i][j] == 5) {
                     draw(g,i,j,"water.png");
                     this.Vmatrix[i][j] = new EnergyCapsule(50,4);
                 }
+                else if (matrix[i][j] == 6) {
+                    draw(g,i,j,"pineapple.png");
+                    this.Vmatrix[i][j] = new PineAppleCapsule(100,4);
+                }
+                else if (matrix[i][j] == 7) {
+                    draw(g,i,j,"apple.png");
+                    this.Vmatrix[i][j] = new AppleCapsule(200,4);
+                }
             }
     }
     public StatusChange move(){
         StatusChange statusChange = null;
+        pacman.switchM();
         int tmp_x;
         int tmp_y;
         tmp_x = (x + vx) % 32;
