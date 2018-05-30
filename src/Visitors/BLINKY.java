@@ -2,8 +2,8 @@ package Visitors;
 
 public class BLINKY extends Ghost implements Visitor {
 
-    public BLINKY(int x, int y, String path_img) {
-        super(x, y, path_img);
+    public BLINKY(int x, int y) {
+        super(x, y, "BLINKY.jpg");
     }
 
     @Override

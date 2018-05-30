@@ -2,8 +2,8 @@ package Visitors;
 
 public class GINKEY extends Ghost implements Visitor {
 
-    public GINKEY(int x, int y, String path_img) {
-        super(x, y, path_img);
+    public GINKEY(int x, int y) {
+        super(x, y,"GINKY.jpg");
     }
 
     @Override

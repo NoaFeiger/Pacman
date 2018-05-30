@@ -2,8 +2,8 @@ package Visitors;
 
 public class INKY extends Ghost implements Visitor {
 
-    public INKY(int x, int y, String path_img) {
-        super(x, y, path_img);
+    public INKY(int x, int y) {
+        super(x, y, "INKY.jpg");
     }
 
     @Override
