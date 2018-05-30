@@ -2,7 +2,18 @@ package Visitors;
 
 import javax.swing.*;
 
-public class Capsul implements Visitor{
+public class Capsule implements Visitor{
+
+    private int points;
+    private int quantity;
+    private ImageIcon img_capsule;
+
+    public Capsule(int points,int quantity, String path){
+        this.points=points;
+        this.quantity=quantity;
+        this.img_capsule=new ImageIcon(path);
+    }
+
     public int getPoints() {
         return points;
     }
@@ -19,35 +30,25 @@ public class Capsul implements Visitor{
         this.quantity = quantity;
     }
 
-    public ImageIcon getImg_capsul() {
-        return img_capsul;
+    public ImageIcon getImg_capsule() {
+        return img_capsule;
     }
 
-    public void setImg_capsul(ImageIcon img_capsul) {
-        this.img_capsul = img_capsul;
+    public void setImg_capsule(ImageIcon img_capsule) {
+        this.img_capsule = img_capsule;
     }
-
-    private int points;
-    private int quantity;
-    private ImageIcon img_capsul;
-    public Capsul(int points,int quantity, String path){
-        this.points=points;
-        this.quantity=quantity;
-        this.img_capsul=new ImageIcon(path);
+    @Override
+    public StatusChange visit(NicePacman nice_p) {
+        return new StatusChange(this.points,0,0);
     }
 
     @Override
-    public void visit(NicePacman nice_p) {
-
+    public StatusChange visit(SafePacman nice_p) {
+        return new StatusChange(this.points,0,0);
     }
 
     @Override
-    public void visit(SafePacman nice_p) {
-
-    }
-
-    @Override
-    public void visit(AngryPacman nice_p) {
-
+    public StatusChange visit(AngryPacman nice_p) {
+        return new StatusChange(this.points,0,0);
     }
 }

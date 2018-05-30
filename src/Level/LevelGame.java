@@ -1,13 +1,12 @@
 package Level;
-import Visitors.Capsule;
-import Visitors.Ghost;
-import Visitors.Visited;
+import Visitors.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,23 +16,24 @@ public class LevelGame extends JPanel{
     private JFrame frame;
     private JPanel main_panel;
     private int[][] matrix;
-    private Visited[][]Vmatrix;
+    private Visitor[][]Vmatrix;
     private int x; // pacman place
     private int y;
     protected int vx;
     protected int vy;
     private final int delay = 200;
+    private NicePacman pacman;
 
     public LevelGame(JFrame frame, int level, String path_board) {
         super();
         this.frame = frame;
         this.main_panel = main_panel;
         this.matrix = new int[32][32];
-        this.Vmatrix = new Visited[32][32];
+        this.Vmatrix = new Visitor[32][32];
         vx = 0;
         vy = 0;
         buildMatrix(path_board);
-
+        pacman = new NicePacman(x,y,3,0);
         addKeyListener(KeyEvent.VK_UP, 0, -1);
         addKeyListener(KeyEvent.VK_DOWN, 0, 1);
         addKeyListener(KeyEvent.VK_LEFT, -1, 0);
@@ -86,31 +86,36 @@ public class LevelGame extends JPanel{
         for (int i = 0; i < matrix.length; i++)
             for (int j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] == 1) {
-                    g.setColor(Color.BLACK);
-                    g.fillRect(i * 20, j * 20, 20, 20);
+                    draw(g,i,j,"block.png");
                 } else if (matrix[i][j] == 2) {
                     x = i;
                     y = j;
-                    g.setColor(Color.YELLOW);
-                    g.fillRect(i * 20, j * 20, 20, 20);
+                    draw(g,i,j,"pacman.png");
                 } else if (matrix[i][j] == 3) {
-                    g.setColor(Color.PINK);
-                    g.fillRect(i * 20, j * 20, 20, 20);
+                    draw(g,i,j, "capsule.png");
                     this.Vmatrix[i][j] = new Capsule(10,240,"temp");
                 } else if (matrix[i][j] == 4) {
-                    g.setColor(Color.RED);
-                    g.fillRect(i * 20, j * 20, 20, 20);
-                    this.Vmatrix[i][j] = new Ghost(i,j,"temp");
+                    draw(g,i,j,"GINKY.jpg");
+                    this.Vmatrix[i][j] = new GINKEY(i,j,3);
+                }
+                else if (matrix[i][j] == 5) {
+                    draw(g,i,j,"water.png");
+                    this.Vmatrix[i][j] = new EnergyCapsule(50,4);
                 }
             }
     }
-    public void move(){
+    public StatusChange move(){
+        StatusChange statusChange = null;
         int tmp_x;
         int tmp_y;
         tmp_x = (x + vx) % 32;
         tmp_y = (y + vy) % 32;
         if(matrix[tmp_x][tmp_y]!=1){//not a block
             matrix[x][y] = 0;
+            if(Vmatrix[tmp_x][tmp_y] !=null) {
+                statusChange = Vmatrix[tmp_x][tmp_y].visit(pacman);
+                Vmatrix[tmp_x][tmp_y]=null;
+            }
             x = tmp_x;
             y = tmp_y;
         }
@@ -121,6 +126,24 @@ public class LevelGame extends JPanel{
 
         matrix[x][y] = 2;
         repaint();
+
+        return statusChange;
+    }
+    private void draw(Graphics g, int i, int j, String path){
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File(path));
+        }
+        catch (IOException e){ }
+
+        if(image==null) {
+            g.setColor(Color.ORANGE);
+            g.fillRect(i * 20, j * 20, 20, 20);
+        }
+        else{
+          g.drawImage(image,i*20,j*20,20,20,this);
+        }
+        this.Vmatrix[i][j] = new EnergyCapsule(50,4);
     }
 }
 

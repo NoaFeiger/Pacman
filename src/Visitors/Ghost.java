@@ -2,16 +2,19 @@ package Visitors;
 
 import javax.swing.*;
 
-public class Ghost {
+public class Ghost{
    private int x;
    private int y;
    private ImageIcon img;
+   private int speed;
+   boolean alive;
 
-
-    public Ghost(int x, int y, String path_img){
+    public Ghost(int x, int y, String path_img,int speed){
        this.img=new ImageIcon(path_img);
        this.x=x;
        this.y=y;
+       this.speed = speed;
+       this.alive = true;
    }
     public int getX() {
         return x;

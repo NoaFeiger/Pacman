@@ -1,8 +1,7 @@
 package Visitors;
 
 public interface Visitor { //Ghost
-    void visit(NicePacman nice_p);
-    void visit(SafePacman nice_p);
-    void visit(AngryPacman nice_p);
-
+    StatusChange visit(NicePacman nice_p);
+    StatusChange visit(SafePacman nice_p);
+    StatusChange visit(AngryPacman nice_p);
 }

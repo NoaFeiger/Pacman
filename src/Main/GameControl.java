@@ -1,6 +1,8 @@
 package Main;
 
 import Level.LevelGame;
+import Visitors.StatusChange;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +14,7 @@ public class GameControl implements ActionListener {
     private int lifes;
     private int points;
     private int level;
+    private int freeze;
     private Timer timer;
     private final int delay = 200;
 
@@ -20,6 +23,7 @@ public class GameControl implements ActionListener {
         this.lifes = 3;
         this.points = 0;
         this.level = 0;
+        this.freeze = 0;
     }
     public void startGame(){
         this.level = 1;
@@ -33,7 +37,21 @@ public class GameControl implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==timer)
-            this.levelGame.move();
+        if(e.getSource()==timer) {
+            StatusChange statusChange = null;
+            if(this.freeze==0)
+                statusChange = this.levelGame.move();
+            else
+                this.freeze--;
+            if (statusChange!=null){
+                this.points = this.points+statusChange.getPoints();
+                this.lifes = this.lifes+statusChange.getLifes();
+                this.freeze = statusChange.getFreezeTime();
+            }
+            if(this.lifes==0) {
+                System.out.println("LOSE!");
+                timer.stop();
+            }
+        }
     }
 }
