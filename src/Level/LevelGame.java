@@ -79,11 +79,10 @@ public class LevelGame extends JPanel{
             }
         });
     }
-
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         // ImageIcon img=new ImageIcon("pacman.jpg");
-        g.setColor(Color.BLACK);
         for (int i = 0; i < matrix.length; i++)
             for (int j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] == 1) {
