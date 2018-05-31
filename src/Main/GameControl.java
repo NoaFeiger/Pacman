@@ -28,7 +28,9 @@ public class GameControl implements ActionListener {
     public void startGame(){
         this.level = 1;
         this.levelGame = new LevelGame(frame,this.level,"BoardLevel" + this.level);
+        this.levelGame.setBackground(new Color(3,3,99));
         frame.add(this.levelGame);
+        frame.setBackground(Color.BLACK);
         frame.repaint();
         frame.revalidate();
         timer = new Timer(delay, this);
@@ -38,6 +40,7 @@ public class GameControl implements ActionListener {
         this.level++;
         frame.remove(this.levelGame);
         this.levelGame = new LevelGame(frame,this.level,"BoardLevel" + this.level);
+        this.levelGame.setBackground(new Color(5,5,160));
         frame.add(this.levelGame);
         frame.repaint();
         frame.revalidate();
