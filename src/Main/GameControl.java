@@ -34,10 +34,21 @@ public class GameControl implements ActionListener {
         timer = new Timer(delay, this);
         timer.start();
     }
+    public void nextLevel(){
+        this.level++;
+        frame.remove(this.levelGame);
+        this.levelGame = new LevelGame(frame,this.level,"BoardLevel" + this.level);
+        frame.add(this.levelGame);
+        frame.repaint();
+        frame.revalidate();
+        timer = new Timer(delay, this);
+        timer.start();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==timer) {
+            System.out.println(this.points);
             StatusChange statusChange = null;
             if(this.freeze==0)
                 statusChange = this.levelGame.move();
@@ -51,6 +62,11 @@ public class GameControl implements ActionListener {
             if(this.lifes==0) {
                 System.out.println("LOSE!");
                 timer.stop();
+            }
+            if(this.points>=500 & this.level<2){
+                System.out.println("Next Level");
+                timer.stop();
+                nextLevel();
             }
         }
     }

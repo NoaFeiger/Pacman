@@ -21,6 +21,8 @@ public class LevelGame extends JPanel{
     private int y;
     protected int vx;
     protected int vy;
+    private int desiredX;
+    private int desiredY;
     private final int delay = 200;
     private NicePacman pacman;
 
@@ -32,6 +34,8 @@ public class LevelGame extends JPanel{
         this.Vmatrix = new Visitor[32][32];
         vx = 0;
         vy = 0;
+        desiredX = 0;
+        desiredY = 0;
         buildMatrix(path_board);
         pacman = new NicePacman(x,y,3,0);
         addKeyListener(KeyEvent.VK_UP, 0, -1);
@@ -54,7 +58,8 @@ public class LevelGame extends JPanel{
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             try {
                 reader.close();
             } catch (IOException e) {
@@ -74,8 +79,8 @@ public class LevelGame extends JPanel{
         this.getActionMap().put("forward" + keyEvent, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                vy = mvy;
-                vx = mvx;
+                desiredX = mvx;
+                desiredY = mvy;
             }
         });
     }
@@ -91,10 +96,9 @@ public class LevelGame extends JPanel{
                     x = i;
                     y = j;
                     if(pacman.isOpenMouth())
-                        draw(g,i,j,"pacman.png");
+                        draw(g,i,j,"pacman_open.png");
                     else{
-                        g.setColor(Color.YELLOW);
-                        g.fillOval(i * 20, j * 20, 20, 20);
+                        draw(g,i,j,"pacman_close.png");
                     }
                 } else if (matrix[i][j] == 3) {
                     draw(g,i,j, "capsule.png");
@@ -120,6 +124,7 @@ public class LevelGame extends JPanel{
     public StatusChange move(){
         StatusChange statusChange = null;
         pacman.switchM();
+        tryDesired();
         int tmp_x;
         int tmp_y;
         tmp_x = (x + vx) % 32;
@@ -157,7 +162,15 @@ public class LevelGame extends JPanel{
         else{
           g.drawImage(image,i*20,j*20,20,20,this);
         }
-        this.Vmatrix[i][j] = new EnergyCapsule(50,4);
+    }
+    private void tryDesired(){
+        int tmp_x = (x + desiredX) % 32;
+        int tmp_y = (y + desiredY) % 32;
+
+        if(matrix[tmp_x][tmp_y]!=1){
+            vx = desiredX;
+            vy = desiredY;
+        }
     }
 }
 
