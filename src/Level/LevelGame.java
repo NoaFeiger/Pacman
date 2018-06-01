@@ -1,4 +1,5 @@
 package Level;
+import Main.TimerListener;
 import Visitors.*;
 
 import javax.imageio.ImageIO;
@@ -11,12 +12,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LevelGame extends JPanel{
+    public static ArrayList<TimerListener> monsters;
     private JFrame frame;
     private JPanel main_panel;
-    private int[][] matrix;
-    private Visitor[][]Vmatrix;
+    public static int[][] matrix;
+    public static Visitor[][]Vmatrix;
     private int x; // pacman place
     private int y;
     protected int vx;
@@ -36,12 +39,14 @@ public class LevelGame extends JPanel{
         vy = 0;
         desiredX = 0;
         desiredY = 0;
+        dofirst=true;
         buildMatrix(path_board);
         pacman = new NicePacman(x,y,3,0);
         addKeyListener(KeyEvent.VK_UP, 0, -1);
         addKeyListener(KeyEvent.VK_DOWN, 0, 1);
         addKeyListener(KeyEvent.VK_LEFT, -1, 0);
         addKeyListener(KeyEvent.VK_RIGHT, 1, 0);
+        monsters = new ArrayList<>();
     }
 
     private void buildMatrix(String path_board) {
@@ -84,6 +89,7 @@ public class LevelGame extends JPanel{
             }
         });
     }
+    boolean dofirst=true;
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -102,24 +108,29 @@ public class LevelGame extends JPanel{
                     }
                 } else if (matrix[i][j] == 3) {
                     draw(g,i,j, "capsule.png");
-                    this.Vmatrix[i][j] = new Capsule(10,240,"temp");
+                    if(dofirst)this.Vmatrix[i][j] = new Capsule(10,240,"temp");
                 } else if (matrix[i][j] == 4) {
                     draw(g,i,j,"GINKY.png");
-                    this.Vmatrix[i][j] = new GINKEY(i,j,3);
+                    if(dofirst){
+                        GINKEY b= new GINKEY(i,j,6);
+                        this.Vmatrix[i][j]=b;
+                        monsters.add(b);
+                    }
                 }
                 else if (matrix[i][j] == 5) {
                     draw(g,i,j,"water.png");
-                    this.Vmatrix[i][j] = new EnergyCapsule(50,4);
+                    if(dofirst)this.Vmatrix[i][j] = new EnergyCapsule(50,4);
                 }
                 else if (matrix[i][j] == 6) {
                     draw(g,i,j,"pineapple.png");
-                    this.Vmatrix[i][j] = new PineAppleCapsule(100,4);
+                    if(dofirst)this.Vmatrix[i][j] = new PineAppleCapsule(100,4);
                 }
                 else if (matrix[i][j] == 7) {
                     draw(g,i,j,"apple.png");
-                    this.Vmatrix[i][j] = new AppleCapsule(200,4);
+                    if(dofirst)this.Vmatrix[i][j] = new AppleCapsule(200,4);
                 }
             }
+            dofirst=false;
     }
     public StatusChange move(){
         StatusChange statusChange = null;

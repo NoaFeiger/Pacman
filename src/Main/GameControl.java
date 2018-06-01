@@ -21,11 +21,12 @@ public class GameControl implements ActionListener {
     private JLabel lifesL;
     private JPanel statusP;
     private Color curBackground;
-
-    public GameControl(JFrame frame){
+    private JPanel main_panel;
+    public GameControl(JFrame frame, JPanel main_panel){
         this.frame = frame;
         this.lifes = 3;
         this.points = 0;
+        this.main_panel=main_panel;
         this.level = 0;
         this.freeze = 0;
         this.curBackground = new Color(3,3,99);
@@ -76,6 +77,10 @@ public class GameControl implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==timer) {
             StatusChange statusChange = null;
+            for(TimerListener t : LevelGame.monsters)
+            {
+                t.action();
+            }
             if(this.freeze==0)
                 statusChange = this.levelGame.move();
             else
@@ -86,8 +91,12 @@ public class GameControl implements ActionListener {
                 this.freeze = statusChange.getFreezeTime();
             }
             if(this.lifes==0) {
-                System.out.println("LOSE!");
                 timer.stop();
+                LastPage last_page=new LastPage(frame,main_panel,this.points);
+                frame.remove(this.levelGame); // move to the game page
+                frame.add(last_page);
+                frame.repaint();
+                frame.revalidate();
             }
             if(this.points>=500 & this.level<2){
                 System.out.println("Next Level");

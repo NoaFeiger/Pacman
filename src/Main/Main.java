@@ -28,7 +28,7 @@ public class Main extends JFrame {
         button_start.setContentAreaFilled(false);
         button_start.addActionListener(e -> {   //moves to the option window panel
             remove(main_panel);
-            GameControl gameControl = new GameControl(this);
+            GameControl gameControl = new GameControl(this,main_panel);
             gameControl.startGame();});
 
         JButton button_exit = new JButton(new ImageIcon("button_exit.png"));

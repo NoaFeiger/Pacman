@@ -3,7 +3,7 @@ package Visitors;
 public class INKY extends Ghost implements Visitor {
     private int freeze;
     public INKY(int x, int y,int speed) {
-        super(x, y, "INKY.jpg",speed);
+        super(x, y, "INKY.jpg",speed,8);
     }
 
     @Override

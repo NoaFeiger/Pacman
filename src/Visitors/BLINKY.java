@@ -3,7 +3,7 @@ package Visitors;
 public class BLINKY extends Ghost implements Visitor {
 
     public BLINKY(int x, int y,int speed) {
-        super(x, y, "BLINKY.jpg",speed);
+        super(x, y, "BLINKY.jpg",speed,9);
     }
 
     @Override
