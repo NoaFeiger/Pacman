@@ -31,6 +31,17 @@ public class Main extends JFrame {
             GameControl gameControl = new GameControl(this,main_panel);
             gameControl.startGame();});
 
+        JButton button_best5 = new JButton(new ImageIcon("button_top-players.png"));
+        button_best5.setOpaque(false); // remove the background of jbutton-random
+        button_best5.setContentAreaFilled(false);
+        button_best5.addActionListener(e -> {   //moves to the option window panel
+            remove(main_panel);
+            add(new Best5Winner(this,main_panel));
+            repaint();
+           revalidate();
+
+           });
+
         JButton button_exit = new JButton(new ImageIcon("button_exit.png"));
         button_exit.setOpaque(false); // remove the background of the button
         button_exit.setContentAreaFilled(false);
@@ -38,8 +49,9 @@ public class Main extends JFrame {
             System.exit(42));
         main_panel.setLayout(new GridLayout(5,2));
         main_panel.add(title);
-        main_panel.add(new JLabel(""));
+     //   main_panel.add(new JLabel(""));
         main_panel.add(button_start);
+        main_panel.add(button_best5);
         main_panel.add(button_exit);
         this.add(main_panel);
         pack();

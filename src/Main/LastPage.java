@@ -29,7 +29,7 @@ public class LastPage extends JPanelB {
         button_save_result.setContentAreaFilled(false);
         button_save_result.addActionListener(e -> {   //moves to the option window panel
             remove(panel);
-            GameResults game_results = new GameResults(this.frame,this.main_panel);
+            GameResults game_results = new GameResults(this.frame,this.main_panel,this.points);
             frame.remove(this); // move to the game page
             frame.add(game_results);
             frame.repaint();
