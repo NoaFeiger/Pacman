@@ -23,8 +23,6 @@ public class WaterBomb  extends Ghost implements Visitor {
         this.speed=speed;
         this.x_ghost=x_ghost;
         this.y_ghost=y_ghost;
-        LevelGame.monsters.add(this);
-
     }
 
     @Override
@@ -49,6 +47,7 @@ public class WaterBomb  extends Ghost implements Visitor {
         // create a list of all moves possibilities
         int tmp_x = x;
         int tmp_y = y;
+
         switch (direct_ghost) {
             case UP: {
                 y--;
@@ -67,19 +66,24 @@ public class WaterBomb  extends Ghost implements Visitor {
                 break;
             }
         }
-        if (!(LevelGame.matrix[x][y]==1)) {
-            temp = LevelGame.Vmatrix[x][y];
-            tempnum = LevelGame.matrix[x][y];
-            LevelGame.matrix[x][y] = id; // new place of GINKEY
-            LevelGame.Vmatrix[x][y] = LevelGame.Vmatrix[tmp_x][tmp_y];
-            LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
-            LevelGame.matrix[tmp_x][tmp_y] = tempnum;
+        if (!(x < 0 || y < 0 || x > 31 || y > 31)) {
+
+            if (!(LevelGame.matrix[x][y] == 1)) {
+                LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
+                LevelGame.matrix[tmp_x][tmp_y] = tempnum;
+
+                temp = LevelGame.Vmatrix[x][y];
+                tempnum = LevelGame.matrix[x][y];
+                LevelGame.matrix[x][y] = id; // new place of GINKEY
+                LevelGame.Vmatrix[x][y] = LevelGame.Vmatrix[tmp_x][tmp_y];
+      }
         }
         else {
             LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
             LevelGame.matrix[tmp_x][tmp_y] = tempnum;
+            LevelGame.ghost_to_remove.add(this);
         }
     }
-    }
+}
 
 

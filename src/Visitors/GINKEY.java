@@ -9,8 +9,6 @@ import java.util.LinkedList;
 
 public class GINKEY extends Ghost implements Visitor {
 
-    private Visitor temp;
-    private int tempnum;
 
     public GINKEY(int x, int y, int speed) {
         super(x, y, "GINKY.jpg", 6, 4);

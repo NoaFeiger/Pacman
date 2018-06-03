@@ -86,6 +86,14 @@ public class GameControl implements ActionListener {
             for (TimerListener t : LevelGame.monsters) {
                 t.action();
             }
+            LevelGame.monsters.addAll(LevelGame.tmp_array);
+            LevelGame.tmp_array.clear();
+            if (LevelGame.ghost_to_remove!=null){
+                for(int i=0;i<LevelGame.ghost_to_remove.size();i++)
+                {
+                    LevelGame.monsters.remove(LevelGame.ghost_to_remove.get(i));
+                }
+            }
             if (this.freeze == 0)
                 statusChange = this.levelGame.move();
             else

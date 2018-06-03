@@ -8,6 +8,7 @@ import java.util.HashSet;
 public class BLINKY extends Ghost implements Visitor {
 
     public BLINKY(int x, int y, int speed) {
+
         super(x, y, "BLINKY.jpg", speed, 9);
     }
 
@@ -39,14 +40,15 @@ public class BLINKY extends Ghost implements Visitor {
         set.add(4);
         set.add(8);
         ArrayList<directions> poss = new ArrayList<>();
-        if (!set.contains(LevelGame.matrix[x + 1][y])) // RIGHT
+        if (((x+1)<31)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
             poss.add(directions.RIGHT);
-        if (!set.contains(LevelGame.matrix[x - 1][y])) // LEFT
+        if (((x-1<0)&&(!set.contains(LevelGame.matrix[x - 1][y])))) // LEFT
             poss.add(directions.LEFT);
-        if (!set.contains(LevelGame.matrix[x][y - 1])) // UP
+        if (((y-1)<0)&&(!set.contains(LevelGame.matrix[x][y - 1]))) // UP
             poss.add(directions.UP);
-        if (!set.contains(LevelGame.matrix[x][y + 1])) // DOWN
+        if (((y+1>31)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
             poss.add(directions.DOWN);
+
         if (poss.size() > 1) {
             if (last_direct != null) {
                 switch (last_direct) { // remove the option to go the opposite way of the last move
@@ -99,7 +101,9 @@ public class BLINKY extends Ghost implements Visitor {
             LevelGame.Vmatrix[x][y] = LevelGame.Vmatrix[tmp_x][tmp_y];
             LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
             LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-            FireBall fire_bomb = new FireBall(this, x, y, "fire_ball.png", 4, 'a',d);//TODO check if it goes on the right direction and check id
+            FireBall fire_bomb = new FireBall(this, x, y, "fire_ball.png", 1, 'a'-'0',d);//TODO check if it goes on the right direction and check id
+            LevelGame.tmp_array.add(fire_bomb);
+
         }
 
     }

@@ -28,11 +28,14 @@ public class LevelGame extends JPanel{
     private int desiredY;
     private final int delay = 200;
     private NicePacman pacman;
-
+    public static ArrayList<Ghost>ghost_to_remove;
+    public static ArrayList<Ghost> tmp_array;
     public LevelGame(JFrame frame, int level, String path_board) {
         super();
         this.frame = frame;
       //  this.main_panel = main_panel;
+        tmp_array=new ArrayList<>();
+        ghost_to_remove=new ArrayList<>();
         this.matrix = new int[32][32];
         this.Vmatrix = new Visitor[32][32];
         vx = 0;
@@ -125,6 +128,12 @@ public class LevelGame extends JPanel{
                         monsters.add(inky);
                     }
                 }
+                else if (matrix[i][j] == 'a'-'0') {
+                    draw(g,i,j,"fire_ball.png");
+                    }
+                else if (matrix[i][j] == 9) {
+                    draw(g,i,j,"water_bomb.jpg");
+                }
                 else if (matrix[i][j] == 5) {
                     draw(g,i,j,"water.png");
                     if(dofirst)this.Vmatrix[i][j] = new EnergyCapsule(50,4);
@@ -137,6 +146,7 @@ public class LevelGame extends JPanel{
                     draw(g,i,j,"apple.png");
                     if(dofirst)this.Vmatrix[i][j] = new AppleCapsule(200,4);
                 }
+
 
             }
             dofirst=false;

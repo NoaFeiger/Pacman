@@ -19,8 +19,6 @@ public class FireBall extends Ghost implements Visitor  {
      this.speed=speed;
      this.x_ghost=x_ghost;
      this.y_ghost=y_ghost;
-     LevelGame.monsters.add(this);
-
     }
 
     @Override
@@ -71,6 +69,7 @@ public class FireBall extends Ghost implements Visitor  {
         else {
             LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
             LevelGame.matrix[tmp_x][tmp_y] = tempnum;
+            LevelGame.ghost_to_remove.add(this);
         }
     }
         }

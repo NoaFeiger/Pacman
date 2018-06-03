@@ -33,17 +33,20 @@ public class INKY extends Ghost implements Visitor {
         // create a list of all moves possibilities
         int tmp_x=x;
         int tmp_y=y;
-        HashSet<Integer> set=new HashSet<>();
-        set.add(1);set.add(4);set.add(8);
-        ArrayList<directions> poss=new ArrayList<>();
-        if(!set.contains(LevelGame.matrix[x+1][y])) // RIGHT
-            poss.add(directions.RIGHT);
-        if(!set.contains(LevelGame.matrix[x-1][y])) // LEFT
-            poss.add(directions.LEFT);
-        if(!set.contains(LevelGame.matrix[x][y-1])) // UP
-            poss.add(directions.UP);
-        if(!set.contains(LevelGame.matrix[x][y+1])) // DOWN
-            poss.add(directions.DOWN);
+            HashSet<Integer> set = new HashSet<>();
+            set.add(1);
+            set.add(4);
+            set.add(8);
+            ArrayList<directions> poss = new ArrayList<>();
+            if (((x+1)<31)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
+                poss.add(directions.RIGHT);
+            if (((x-1<0)&&(!set.contains(LevelGame.matrix[x - 1][y])))) // LEFT
+                poss.add(directions.LEFT);
+            if (((y-1)<0)&&(!set.contains(LevelGame.matrix[x][y - 1]))) // UP
+                poss.add(directions.UP);
+            if (((y+1>31)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
+                poss.add(directions.DOWN);
+
         if(poss.size()>1) {
             if (last_direct != null) {
                 switch (last_direct) { // remove the option to go the opposite way of the last move
@@ -96,7 +99,27 @@ public class INKY extends Ghost implements Visitor {
             LevelGame.Vmatrix[x][y]=LevelGame.Vmatrix[tmp_x][tmp_y];
             LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
             LevelGame.matrix[tmp_x][tmp_y]=tempnum;
-            WaterBomb water_bomb=new WaterBomb(this,x,y,"water_bomb.jpg",4,9,d);//TODO check if it goes on the right direction
+            WaterBomb water_bomb;
+            switch (d){
+                case UP:{
+                   water_bomb=new WaterBomb(this,x,y-1,"water_bomb.jpg",1,9,d);//TODO check if it goes on the right direction
+                    break;
+                }
+                case DOWN:{
+                   water_bomb=new WaterBomb(this,x,y+1,"water_bomb.jpg",1,9,d);//TODO check if it goes on the right direction
+                    break;
+                }
+                case LEFT:{
+                   water_bomb=new WaterBomb(this,x-1,y,"water_bomb.jpg",1,9,d);//TODO check if it goes on the right direction
+                    break;
+                }
+                default:{ //RIGHT
+                   water_bomb=new WaterBomb(this,x+1,y,"water_bomb.jpg",1,9,d);//TODO check if it goes on the right direction
+                    break;
+                }
+            }
+
+            LevelGame.tmp_array.add(water_bomb);
         }
     }
 

@@ -102,14 +102,15 @@ public class Ghost implements TimerListener{
         HashSet<Integer>set=new HashSet<>();
         set.add(1);set.add(4);set.add(8);
         ArrayList<directions> poss=new ArrayList<>();
-        if(!set.contains(LevelGame.matrix[x+1][y])) // RIGHT
+        if (((x+1)<31)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
             poss.add(directions.RIGHT);
-        if(!set.contains(LevelGame.matrix[x-1][y])) // LEFT
+        if (((x-1<0)&&(!set.contains(LevelGame.matrix[x - 1][y])))) // LEFT
             poss.add(directions.LEFT);
-        if(!set.contains(LevelGame.matrix[x][y-1])) // UP
+        if (((y-1)<0)&&(!set.contains(LevelGame.matrix[x][y - 1]))) // UP
             poss.add(directions.UP);
-        if(!set.contains(LevelGame.matrix[x][y+1])) // DOWN
+        if (((y+1>31)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
             poss.add(directions.DOWN);
+
 
         if(poss.size()>1) {
             if (last_direct != null) {
