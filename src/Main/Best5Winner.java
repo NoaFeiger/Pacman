@@ -42,6 +42,7 @@ public class Best5Winner extends JPanelB {
         while (size>=0&&counter<5){
             best5[counter]=array_scores.get(size);
             size--;
+            counter++;
         }
         JLabel label = new JLabel("<html>"+best5[0]+"<br>"+best5[1]+"<br>"+best5[2]+"<br>"+best5[3]+"<br>"+best5[4]+"</html>");
         label.setFont(new Font("Playbill", Font.BOLD, 40));

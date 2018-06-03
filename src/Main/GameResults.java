@@ -35,8 +35,8 @@ public class GameResults extends JPanelB{
         String name= text.getText();
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter("results.txt"));
-            writer.write(name+","+this.points);
+            writer = new BufferedWriter(new FileWriter("results.txt",true));
+            writer.write(name+","+this.points+"\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
