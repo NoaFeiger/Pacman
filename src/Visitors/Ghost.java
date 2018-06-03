@@ -5,6 +5,7 @@ import Main.TimerListener;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Ghost implements TimerListener{
    protected int x;
@@ -21,7 +22,7 @@ public class Ghost implements TimerListener{
     public Ghost(int x, int y, String path_img,int speed, int id){
        this.img=new ImageIcon(path_img);
        this.x=x;
-       this.last_direct=directions.RIGHT; //TODO change
+       this.last_direct=null;
        this.count=0;
        this.y=y;
        this.id=id;
@@ -83,42 +84,44 @@ public class Ghost implements TimerListener{
         // create a list of all moves possibilities
         int tmp_x=x;
         int tmp_y=y;
+        HashSet<Integer>set=new HashSet<>();
+        set.add(1);set.add(4);set.add(8);
         ArrayList<directions> poss=new ArrayList<>();
-        if(LevelGame.matrix[x+1][y]!=1) // RIGHT
+        if(!set.contains(LevelGame.matrix[x+1][y])) // RIGHT
             poss.add(directions.RIGHT);
-        if(LevelGame.matrix[x-1][y]!=1) // LEFT
+        if(!set.contains(LevelGame.matrix[x-1][y])) // LEFT
             poss.add(directions.LEFT);
-        if(LevelGame.matrix[x][y-1]!=1) // UP
+        if(!set.contains(LevelGame.matrix[x][y-1])) // UP
             poss.add(directions.UP);
-        if(LevelGame.matrix[x][y+1]!=1) // DOWN
+        if(!set.contains(LevelGame.matrix[x][y+1])) // DOWN
             poss.add(directions.DOWN);
         if(poss.size()>1) {
-
-            switch (last_direct) { // remove the option to go the opposite way of the last move
-                case RIGHT: {
-                    poss.remove(directions.LEFT);
-                    break;
-                }
-                case LEFT: {
-                    poss.remove(directions.RIGHT);
-                    break;
-                }
-                case DOWN: {
-                    poss.remove(directions.UP);
-                    break;
-                }
-                case UP: {
-                    poss.remove(directions.DOWN);
-                    break;
+            if (last_direct != null) {
+                switch (last_direct) { // remove the option to go the opposite way of the last move
+                    case RIGHT: {
+                        poss.remove(directions.LEFT);
+                        break;
+                    }
+                    case LEFT: {
+                        poss.remove(directions.RIGHT);
+                        break;
+                    }
+                    case DOWN: {
+                        poss.remove(directions.UP);
+                        break;
+                    }
+                    case UP: {
+                        poss.remove(directions.DOWN);
+                        break;
+                    }
                 }
             }
         }
         int size=poss.size();
+        if (size!=0){
         int random = (int)(Math.random() *size );
         directions d=poss.get(random);
         last_direct=d;
-      //  Visitor last_temp = temp;
-       // int last_temp_num = tempnum;
 
         switch (d){
             case UP:{
@@ -147,6 +150,7 @@ public class Ghost implements TimerListener{
         LevelGame.Vmatrix[x][y]=LevelGame.Vmatrix[tmp_x][tmp_y];
         LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
         LevelGame.matrix[tmp_x][tmp_y]=tempnum;
+    }
     }
 
 }

@@ -32,7 +32,7 @@ public class LevelGame extends JPanel{
     public LevelGame(JFrame frame, int level, String path_board) {
         super();
         this.frame = frame;
-        this.main_panel = main_panel;
+      //  this.main_panel = main_panel;
         this.matrix = new int[32][32];
         this.Vmatrix = new Visitor[32][32];
         vx = 0;
@@ -117,6 +117,14 @@ public class LevelGame extends JPanel{
                         monsters.add(b);
                     }
                 }
+                else if (matrix[i][j] == 8) {
+                    draw(g,i,j,"INKY.jpg");
+                    if(dofirst){
+                        INKY inky= new INKY(i,j,3);
+                        this.Vmatrix[i][j]=inky;
+                        monsters.add(inky);
+                    }
+                }
                 else if (matrix[i][j] == 5) {
                     draw(g,i,j,"water.png");
                     if(dofirst)this.Vmatrix[i][j] = new EnergyCapsule(50,4);
@@ -129,6 +137,7 @@ public class LevelGame extends JPanel{
                     draw(g,i,j,"apple.png");
                     if(dofirst)this.Vmatrix[i][j] = new AppleCapsule(200,4);
                 }
+
             }
             dofirst=false;
     }

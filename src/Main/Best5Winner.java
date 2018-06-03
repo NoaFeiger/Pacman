@@ -21,7 +21,7 @@ public class Best5Winner extends JPanelB {
         this.array_scores =new ArrayList<>();
         this.main_panel=main_panel;
         setVisible(true);
-        JPanel panel_best5=new JPanel(new GridLayout(5,2));
+        JPanel panel_best5=new JPanel(new GridLayout(7,1));
 
         panel_best5.setOpaque(false);
         buildArray();
@@ -51,9 +51,13 @@ public class Best5Winner extends JPanelB {
         panel_best5.add(label);
 
         JButton button_back=new JButton(new ImageIcon("button_back.png"));
+        button_back.setSize(10,1);
         button_back.setOpaque(false); // remove the background of jbutton-random
         button_back.setContentAreaFilled(false);
-        panel_best5.add(button_back);
+        JPanel meh = new JPanel();
+        meh.setOpaque(false);
+        meh.add(button_back);
+        panel_best5.add(meh);
 
         button_back.addActionListener(e -> {   //moves to the option window panel
             frame.remove(this);
