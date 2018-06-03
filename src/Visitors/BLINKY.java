@@ -39,6 +39,8 @@ public class BLINKY extends Ghost implements Visitor {
         set.add(1);
         set.add(4);
         set.add(8);
+        set.add('a'-'0');
+        set.add(9);
         ArrayList<directions> poss = new ArrayList<>();
         if (((x+1)<31)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
             poss.add(directions.RIGHT);
@@ -101,6 +103,7 @@ public class BLINKY extends Ghost implements Visitor {
             LevelGame.Vmatrix[x][y] = LevelGame.Vmatrix[tmp_x][tmp_y];
             LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
             LevelGame.matrix[tmp_x][tmp_y] = tempnum;
+            //todo Add switch of d
             FireBall fire_bomb = new FireBall(this, x, y, "fire_ball.png", 1, 'a'-'0',d);//TODO check if it goes on the right direction and check id
             LevelGame.tmp_array.add(fire_bomb);
 

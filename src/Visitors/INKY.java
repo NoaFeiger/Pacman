@@ -37,6 +37,8 @@ public class INKY extends Ghost implements Visitor {
             set.add(1);
             set.add(4);
             set.add(8);
+            set.add('a'-'0');
+            set.add(9);
             ArrayList<directions> poss = new ArrayList<>();
             if (((x+1)<31)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
                 poss.add(directions.RIGHT);
