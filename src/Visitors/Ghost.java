@@ -9,19 +9,23 @@ import java.util.HashSet;
 
 public class Ghost implements TimerListener{
    protected int x;
+   protected int freeze;
    protected int y;
    private ImageIcon img;
    private int speed;
    boolean alive;
    private int count;
    protected int id;
-   private directions last_direct;
-   private Visitor temp;
-   private int tempnum;
+   protected directions last_direct;
+   protected Visitor temp;
+   protected int tempnum;
+   protected int visible;
 
     public Ghost(int x, int y, String path_img,int speed, int id){
        this.img=new ImageIcon(path_img);
        this.x=x;
+       this.visible=0;
+       this.freeze=0;
        this.last_direct=null;
        this.count=0;
        this.y=y;
@@ -72,15 +76,26 @@ public class Ghost implements TimerListener{
 
     @Override
     public void action() {
-        if(this.count == this.speed){
-            this.count = 0;
-            move();
+        if (!alive)
+        {
+            LevelGame.Vmatrix[x][y]=null;
+            LevelGame.matrix[x][y]=0;
+        }
+        else if(freeze>0) // TODO check order of if else
+            freeze--;
+        else if (visible>0)
+            visible--;
+        else {
+            if (this.count == this.speed) {
+                this.count = 0;
+                move();
+            }
         }
         this.count++;
 
     }
 
-    private void move() {
+    public void move() {
         // create a list of all moves possibilities
         int tmp_x=x;
         int tmp_y=y;
@@ -95,6 +110,7 @@ public class Ghost implements TimerListener{
             poss.add(directions.UP);
         if(!set.contains(LevelGame.matrix[x][y+1])) // DOWN
             poss.add(directions.DOWN);
+
         if(poss.size()>1) {
             if (last_direct != null) {
                 switch (last_direct) { // remove the option to go the opposite way of the last move
@@ -118,7 +134,8 @@ public class Ghost implements TimerListener{
             }
         }
         int size=poss.size();
-        if (size!=0){
+        if (size!=0)
+        {
         int random = (int)(Math.random() *size );
         directions d=poss.get(random);
         last_direct=d;
@@ -143,15 +160,14 @@ public class Ghost implements TimerListener{
         }
         temp = LevelGame.Vmatrix[x][y];
         tempnum = LevelGame.matrix[x][y];
-
-        //[lasttemp]-G->[temp]
-        //TODO
         LevelGame.matrix[x][y]=id; // new place of GINKEY
         LevelGame.Vmatrix[x][y]=LevelGame.Vmatrix[tmp_x][tmp_y];
         LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
         LevelGame.matrix[tmp_x][tmp_y]=tempnum;
+
     }
     }
+
 
 }
 enum directions{RIGHT,LEFT,UP,DOWN}
