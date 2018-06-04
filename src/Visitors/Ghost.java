@@ -11,7 +11,7 @@ public abstract class Ghost implements TimerListener,Visitor{
    protected int x;
    protected int freeze;
    protected int y;
-   private ImageIcon img;
+   private String img_path;
    private int speed;
    boolean alive;
    private int count;
@@ -22,7 +22,7 @@ public abstract class Ghost implements TimerListener,Visitor{
    protected int visible;
 
     public Ghost(int x, int y, String path_img,int speed, int id){
-       this.img=new ImageIcon(path_img);
+       this.img_path = path_img;
        this.x=x;
        this.visible=0;
        this.freeze=0;
@@ -65,24 +65,26 @@ public abstract class Ghost implements TimerListener,Visitor{
         this.y = y;
     }
 
-    public ImageIcon getImg() {
-        return img;
+    public String getImg_path() {
+        return img_path;
     }
 
-    public void setImg(ImageIcon img) {
-        this.img = img;
+    public void setImg_path(String img) {
+        this.img_path = img;
     }
-
 
     @Override
     public void action() {
-        if (!alive)
-        {
+        if (!alive){
             LevelGame.Vmatrix[x][y]=null;
             LevelGame.matrix[x][y]=0;
         }
-        else if(freeze>0) // TODO check order of if else
+        else if(freeze>0) { // TODO check order of if else
+            this.img_path = "GINKY_FROZEN.png";
             freeze--;
+            if(freeze<=0)
+                this.img_path = "GINKY.png";
+        }
         else if (visible>0)
             visible--;
         else {
@@ -92,7 +94,6 @@ public abstract class Ghost implements TimerListener,Visitor{
             }
         }
         this.count++;
-
     }
 
     public void move() {
@@ -110,7 +111,6 @@ public abstract class Ghost implements TimerListener,Visitor{
             poss.add(directions.UP);
         if (((y<30)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
             poss.add(directions.DOWN);
-
 
         if(poss.size()>1) {
             if (last_direct != null) {
@@ -135,8 +135,7 @@ public abstract class Ghost implements TimerListener,Visitor{
             }
         }
         int size=poss.size();
-        if (size!=0)
-        {
+        if (size!=0){
         int random = (int)(Math.random() *size );
         directions d=poss.get(random);
         last_direct=d;
@@ -167,8 +166,6 @@ public abstract class Ghost implements TimerListener,Visitor{
         LevelGame.Vmatrix[x][y]=this;
     }
     }
-
-
 }
 enum directions{RIGHT,LEFT,UP,DOWN}
 

@@ -6,12 +6,12 @@ public class Capsule implements Visitor{
 
     private int points;
     private int quantity;
-    private ImageIcon img_capsule;
+    private String img_capsule;
 
     public Capsule(int points,int quantity, String path){
         this.points=points;
         this.quantity=quantity;
-        this.img_capsule=new ImageIcon(path);
+        this.img_capsule = path;
     }
 
     public int getPoints() {
@@ -30,11 +30,11 @@ public class Capsule implements Visitor{
         this.quantity = quantity;
     }
 
-    public ImageIcon getImg_capsule() {
+    public String getImg_capsule() {
         return img_capsule;
     }
 
-    public void setImg_capsule(ImageIcon img_capsule) {
+    public void setImg_capsule(String img_capsule) {
         this.img_capsule = img_capsule;
     }
     @Override
@@ -50,5 +50,10 @@ public class Capsule implements Visitor{
     @Override
     public StatusChange visit(AngryPacman nice_p) {
         return new StatusChange(this.points,0,0);
+    }
+
+    @Override
+    public String getPath() {
+        return this.img_capsule;
     }
 }

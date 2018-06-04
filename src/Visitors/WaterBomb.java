@@ -87,6 +87,10 @@ public class WaterBomb  extends Ghost implements Visitor {
             }
         }
     }
+    @Override
+    public String getPath() {
+        return super.getImg_path();
+    }
 }
 
 

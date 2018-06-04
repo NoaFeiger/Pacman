@@ -9,7 +9,7 @@ import java.util.HashSet;
 public class INKY extends Ghost implements Visitor {
 private int counter;
     public INKY(int x, int y,int speed) {
-        super(x, y, "INKY.jpg",speed,8);
+        super(x, y, "INKY.png",speed,8);
         counter=0;
     }
 
@@ -25,9 +25,15 @@ private int counter;
 
     @Override
     public StatusChange visit(AngryPacman angry_p) { // inky freeze for 5 sec
-        this.freeze=50;
+        this.freeze=500;
         return new StatusChange(0,0,0);
     }
+
+    @Override
+    public String getPath() {
+        return super.getImg_path();
+    }
+
     public void freeze(int sec){
         this.freeze=sec;
     }

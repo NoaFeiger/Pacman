@@ -131,29 +131,27 @@ public class LevelGame extends JPanel{
                 } else if (matrix[i][j] == 2) {
                     x = i;
                     y = j;
-                    if(pacman.isOpenMouth())
-                        draw(g,i,j,"pacman_open.png");
-                    else{
-                        draw(g,i,j,"pacman_close.png");
-                    }
-                } else if (matrix[i][j] == 3) {
-                    draw(g,i,j, "capsule.png");
-                    if(dofirst)this.Vmatrix[i][j] = new Capsule(10,240,"temp");
-                } else if (matrix[i][j] == 4) {
-                    draw(g,i,j,"GINKY.png");
+                        draw(g,i,j,pacman.getImg_pacman());
+                }
+                else if (matrix[i][j] == 3) {
+                    if(dofirst)this.Vmatrix[i][j] = new Capsule(10,240,"capsule.png");
+                    draw(g,i,j, this.Vmatrix[i][j].getPath());
+                }
+                else if (matrix[i][j] == 4) {
                     if(dofirst){
                         GINKEY b= new GINKEY(i,j,6);
                         this.Vmatrix[i][j]=b;
                         monsters.add(b);
                     }
+                    draw(g,i,j,this.Vmatrix[i][j].getPath());
                 }
                 else if (matrix[i][j] == 8) {
-                    draw(g,i,j,"INKY.png");
                     if(dofirst){
                         INKY inky= new INKY(i,j,3);
                         this.Vmatrix[i][j]=inky;
                         monsters.add(inky);
                     }
+                    draw(g,i,j,this.Vmatrix[i][j].getPath());
                 }
                 else if (matrix[i][j] == 'a'-'0') {
                     draw(g,i,j,"fire_ball.png");
@@ -173,13 +171,10 @@ public class LevelGame extends JPanel{
                     draw(g,i,j,"apple.png");
                     if(dofirst)this.Vmatrix[i][j] = new AppleCapsule(200,4);
                 }
-
-
             }
             dofirst=false;
     }
     public StatusChange move(boolean freeze){
-
 
         StatusChange statusChange = null;
         pacman.switchM();
@@ -210,7 +205,10 @@ public class LevelGame extends JPanel{
 
         matrix[x][y] = 2;
         repaint();
-
+        if(!freeze & pacman.isFrozen())
+            pacman.unfreeze();
+        if(statusChange!=null && statusChange.getFreezeTime()>0)
+            pacman.freeze();
         return statusChange;
     }
     private void draw(Graphics g, int i, int j, String path){

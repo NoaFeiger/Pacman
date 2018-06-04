@@ -9,7 +9,7 @@ public class BLINKY extends Ghost implements Visitor {
 
     public BLINKY(int x, int y, int speed) {
 
-        super(x, y, "BLINKY.jpg", speed, 9);
+        super(x, y, "BLINKY.png", speed, 9);
     }
 
     @Override
@@ -108,6 +108,9 @@ public class BLINKY extends Ghost implements Visitor {
             LevelGame.tmp_array.add(fire_bomb);
 
         }
-
+    }
+    @Override
+    public String getPath() {
+        return super.getImg_path();
     }
 }

@@ -1,17 +1,9 @@
 package Visitors;
 
-import Level.LevelGame;
-import Main.Main;
-import Main.TimerListener;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 public class GINKEY extends Ghost implements Visitor {
 
-
     public GINKEY(int x, int y, int speed) {
-        super(x, y, "GINKY.jpg", 6, 4);
+        super(x, y, "GINKY.png", 6, 4);
         System.out.println("GINKY CREATED");
     }
 
@@ -22,7 +14,7 @@ public class GINKEY extends Ghost implements Visitor {
 
     @Override
     public StatusChange visit(SafePacman safe_p) { //ginkey disappear for 5 sec
-        this.visible = 5000;
+        freeze();
         return new StatusChange(0, 0, 0);
     }
 
@@ -31,5 +23,11 @@ public class GINKEY extends Ghost implements Visitor {
         this.alive = false;
         return new StatusChange(0, 0, 0);
     }
-
+    @Override
+    public String getPath() {
+        return super.getImg_path();
+    }
+    public void freeze(){
+        this.freeze=500;
+    }
 }

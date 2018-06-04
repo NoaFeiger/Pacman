@@ -5,21 +5,35 @@ import javax.swing.*;
 public abstract class Pacman implements Visited{
     private int x;
     private int y;
-    private ImageIcon img_pacman;
+    private String curPic;
     boolean openMouth;
+    boolean frozen;
 
     public Pacman(int x,int y,String path, int lives,int score){
         this.x=x;
         this.y=y;
-        this.img_pacman=new ImageIcon(path);
+        this.curPic = path;
         this.lives=lives;
         this.score=score;
         openMouth = true;
+        frozen = false;
     }
     public void switchM(){
         openMouth = !openMouth;
+        if(!frozen)
+        if(openMouth)
+            curPic = "pacman_open.png";
+        else
+            curPic = "pacman_close.png";
     }
-
+    public void freeze(){
+        this.frozen = true;
+        this.curPic = "pacman_frozen.png";
+    }
+    public void unfreeze(){
+        frozen = false;
+        this.curPic = "pacman_open.png";
+    }
     public boolean isOpenMouth() {
         return openMouth;
     }
@@ -40,12 +54,12 @@ public abstract class Pacman implements Visited{
         this.y = y;
     }
 
-    public ImageIcon getImg_pacman() {
-        return img_pacman;
+    public String getImg_pacman() {
+        return curPic;
     }
 
-    public void setImg_pacman(ImageIcon img_pacman) {
-        this.img_pacman = img_pacman;
+    public void setImg_pacman(String img_pacman) {
+        this.curPic = img_pacman;
     }
 
     public int getLives() {
@@ -64,8 +78,11 @@ public abstract class Pacman implements Visited{
         this.score = score;
     }
 
+    public boolean isFrozen(){
+        return frozen;
+    }
+
     private int lives;
     private int score;
-
 
 }
