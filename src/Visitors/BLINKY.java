@@ -39,16 +39,15 @@ public class BLINKY extends Ghost implements Visitor {
         set.add(1);
         set.add(4);
         set.add(8);
-        set.add('a'-'0');
-        set.add(9);
+
         ArrayList<directions> poss = new ArrayList<>();
-        if (((x+1)<31)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
+        if (((x)<30)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
             poss.add(directions.RIGHT);
-        if (((x-1<0)&&(!set.contains(LevelGame.matrix[x - 1][y])))) // LEFT
+        if (((x>1)&&(!set.contains(LevelGame.matrix[x - 1][y])))) // LEFT
             poss.add(directions.LEFT);
-        if (((y-1)<0)&&(!set.contains(LevelGame.matrix[x][y - 1]))) // UP
+        if (((y)>1)&&(!set.contains(LevelGame.matrix[x][y - 1]))) // UP
             poss.add(directions.UP);
-        if (((y+1>31)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
+        if (((y<30)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
             poss.add(directions.DOWN);
 
         if (poss.size() > 1) {

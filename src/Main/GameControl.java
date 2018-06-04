@@ -17,7 +17,7 @@ public class GameControl implements ActionListener {
     private int level;
     private int freeze;
     private Timer timer;
-    private final int delay = 200;
+    private final int delay = 50;
     private JLabel pointsL;
     private JLabel lifesL;
     private JPanel statusP;
@@ -116,7 +116,7 @@ public class GameControl implements ActionListener {
                     frame.repaint();
                     frame.revalidate();
                 }
-                if (this.points >= 500 & this.level < 2) {
+                if (this.points >= 100 & this.level < 2) { //TODO CHANGE POINTS
                     System.out.println("Next Level");
                     timer.stop();
                     nextLevel(true);

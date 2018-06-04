@@ -59,12 +59,13 @@ public class FireBall extends Ghost implements Visitor  {
             }
         }
         if (!(x < 0 || y < 0 || x > 31 || y > 31)) {
+            LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
+            LevelGame.matrix[tmp_x][tmp_y] = tempnum;
             temp = LevelGame.Vmatrix[x][y];
             tempnum = LevelGame.matrix[x][y];
             LevelGame.matrix[x][y] = id; // new place of GINKEY
             LevelGame.Vmatrix[x][y] = LevelGame.Vmatrix[tmp_x][tmp_y];
-            LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
-            LevelGame.matrix[tmp_x][tmp_y] = tempnum;
+
         }
         else {
             LevelGame.Vmatrix[tmp_x][tmp_y] = temp;

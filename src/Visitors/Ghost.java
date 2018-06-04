@@ -100,15 +100,15 @@ public class Ghost implements TimerListener{
         int tmp_x=x;
         int tmp_y=y;
         HashSet<Integer>set=new HashSet<>();
-        set.add(1);set.add(4);set.add(8);set.add('a'-'0');set.add(9);
+        set.add(1);set.add(4);set.add(8);
         ArrayList<directions> poss=new ArrayList<>();
-        if (((x+1)<31)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
+        if (((x)<30)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
             poss.add(directions.RIGHT);
-        if (((x-1<0)&&(!set.contains(LevelGame.matrix[x - 1][y])))) // LEFT
+        if (((x>1)&&(!set.contains(LevelGame.matrix[x - 1][y])))) // LEFT
             poss.add(directions.LEFT);
-        if (((y-1)<0)&&(!set.contains(LevelGame.matrix[x][y - 1]))) // UP
+        if (((y)>1)&&(!set.contains(LevelGame.matrix[x][y - 1]))) // UP
             poss.add(directions.UP);
-        if (((y+1>31)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
+        if (((y<30)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
             poss.add(directions.DOWN);
 
 
@@ -159,13 +159,12 @@ public class Ghost implements TimerListener{
                 break;
             }
         }
+        LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
+        LevelGame.matrix[tmp_x][tmp_y]=tempnum;
         temp = LevelGame.Vmatrix[x][y];
         tempnum = LevelGame.matrix[x][y];
         LevelGame.matrix[x][y]=id; // new place of GINKEY
         LevelGame.Vmatrix[x][y]=LevelGame.Vmatrix[tmp_x][tmp_y];
-        LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
-        LevelGame.matrix[tmp_x][tmp_y]=tempnum;
-
     }
     }
 
