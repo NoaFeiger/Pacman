@@ -35,13 +35,13 @@ public class WaterBomb  extends Ghost implements Visitor {
     @Override
     public StatusChange visit(SafePacman safe_p) {
         //freeze- 3 sec lose 10 points
-        return new StatusChange(-10,0,3);
+        return new StatusChange(-10,0,30);
 
     }
 
     @Override
     public StatusChange visit(AngryPacman angry_p) { // ghost Freeze for 5 sec
-        ghost.freeze(5);
+        ghost.freeze(50);
         return  null; //TODO check
     }
     @Override
@@ -77,7 +77,7 @@ public class WaterBomb  extends Ghost implements Visitor {
                 temp = LevelGame.Vmatrix[x][y];
                 tempnum = LevelGame.matrix[x][y];
                 LevelGame.matrix[x][y] = id; // new place of GINKEY
-                LevelGame.Vmatrix[x][y] = LevelGame.Vmatrix[tmp_x][tmp_y];
+                LevelGame.Vmatrix[x][y] = this;
             } else {
                 LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
                 LevelGame.matrix[tmp_x][tmp_y] = tempnum;

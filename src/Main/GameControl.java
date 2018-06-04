@@ -17,7 +17,7 @@ public class GameControl implements ActionListener {
     private int level;
     private int freeze;
     private Timer timer;
-    private final int delay = 50;
+    private final int delay = 10;
     private JLabel pointsL;
     private JLabel lifesL;
     private JPanel statusP;
@@ -53,7 +53,7 @@ public class GameControl implements ActionListener {
 
     public void startGame() {
         this.level = 1;
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level,0,3);
         this.levelGame.setBackground(this.curBackground);
         frame.add(this.levelGame);
         frame.setBackground(Color.BLACK);
@@ -67,7 +67,7 @@ public class GameControl implements ActionListener {
         if (change == true)
             this.level++;
         frame.remove(this.levelGame);
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level,this.points,this.lifes);
         this.curBackground = new Color(5, 5, 160);
         this.statusP.setBackground(this.curBackground);
         this.levelGame.setBackground(curBackground);
@@ -85,6 +85,7 @@ public class GameControl implements ActionListener {
             StatusChange statusChange = null;
             for (TimerListener t : LevelGame.monsters) {
                 t.action();
+
             }
             LevelGame.monsters.addAll(LevelGame.tmp_array);
             LevelGame.tmp_array.clear();
@@ -94,10 +95,15 @@ public class GameControl implements ActionListener {
                     LevelGame.monsters.remove(LevelGame.ghost_to_remove.get(i));
                 }
             }
-            if (this.freeze == 0)
-                statusChange = this.levelGame.move();
-            else
-                this.freeze--;
+            if (this.freeze <= 0) {
+                freeze = 0;
+                statusChange = this.levelGame.move(false);
+            }
+            else {
+                System.out.println(freeze);
+                freeze--;
+                statusChange = this.levelGame.move(true);
+            }
             if (statusChange != null) {
                 this.points = this.points + statusChange.getPoints();
                 this.freeze = statusChange.getFreezeTime();

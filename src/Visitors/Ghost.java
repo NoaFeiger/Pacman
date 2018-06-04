@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Ghost implements TimerListener{
+public abstract class Ghost implements TimerListener,Visitor{
    protected int x;
    protected int freeze;
    protected int y;
@@ -164,7 +164,7 @@ public class Ghost implements TimerListener{
         temp = LevelGame.Vmatrix[x][y];
         tempnum = LevelGame.matrix[x][y];
         LevelGame.matrix[x][y]=id; // new place of GINKEY
-        LevelGame.Vmatrix[x][y]=LevelGame.Vmatrix[tmp_x][tmp_y];
+        LevelGame.Vmatrix[x][y]=this;
     }
     }
 

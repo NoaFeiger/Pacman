@@ -26,11 +26,13 @@ public class LevelGame extends JPanel{
     protected int vy;
     private int desiredX;
     private int desiredY;
-    private final int delay = 200;
-    private NicePacman pacman;
+    private int points;
+    private int lifes;
+    private final int delay = 10;
+    private Pacman pacman;
     public static ArrayList<Ghost>ghost_to_remove;
     public static ArrayList<Ghost> tmp_array;
-    public LevelGame(JFrame frame, int level, String path_board) {
+    public LevelGame(JFrame frame, int level, String path_board,int points,int lives) {
         super();
         this.frame = frame;
       //  this.main_panel = main_panel;
@@ -38,13 +40,23 @@ public class LevelGame extends JPanel{
         ghost_to_remove=new ArrayList<>();
         this.matrix = new int[32][32];
         this.Vmatrix = new Visitor[32][32];
+        this.lifes=lives;
+        this.points=points;
         vx = 0;
         vy = 0;
         desiredX = 0;
         desiredY = 0;
         dofirst=true;
         buildMatrix(path_board);
-        pacman = new NicePacman(x,y,3,0);
+        if(level==1){
+        pacman = new NicePacman(x,y,lives,points);
+        }
+        if(level==2){
+            pacman=new SafePacman(x,y,lives,points);
+        }
+        if(level==3){
+            pacman=new AngryPacman(x,y,lives,points);
+        }
         addKeyListener(KeyEvent.VK_UP, 0, -1);
         addKeyListener(KeyEvent.VK_DOWN, 0, 1);
         addKeyListener(KeyEvent.VK_LEFT, -1, 0);
@@ -151,18 +163,26 @@ public class LevelGame extends JPanel{
             }
             dofirst=false;
     }
-    public StatusChange move(){
+    public StatusChange move(boolean freeze){
+
+
         StatusChange statusChange = null;
         pacman.switchM();
-        tryDesired();
-        int tmp_x;
-        int tmp_y;
-        tmp_x = (x + vx) % 32;
-        tmp_y = (y + vy) % 32;
+        if(!freeze)
+            tryDesired();
+        int tmp_x=x;
+        int tmp_y=y;
+        if(!freeze) {
+            tmp_x = (x + vx) % 32;
+            tmp_y = (y + vy) % 32;
+        }
         if(matrix[tmp_x][tmp_y]!=1){//not a block
-            matrix[x][y] = 0;
+            if(!freeze) {
+                matrix[x][y] = 0;
+            }
             if(Vmatrix[tmp_x][tmp_y] !=null) {
-                statusChange = Vmatrix[tmp_x][tmp_y].visit(pacman);
+                statusChange = pacman.accept(Vmatrix[tmp_x][tmp_y]);
+                //statusChange = Vmatrix[tmp_x][tmp_y].visit(pacman.ac);
                 Vmatrix[tmp_x][tmp_y]=null;
             }
             x = tmp_x;

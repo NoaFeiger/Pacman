@@ -22,7 +22,7 @@ public class GINKEY extends Ghost implements Visitor {
 
     @Override
     public StatusChange visit(SafePacman safe_p) { //ginkey disappear for 5 sec
-        this.visible = 5;
+        this.visible = 5000;
         return new StatusChange(0, 0, 0);
     }
 

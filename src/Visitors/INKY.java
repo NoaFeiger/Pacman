@@ -20,12 +20,12 @@ private int counter;
 
     @Override
     public StatusChange visit(SafePacman safe_p) { // pacman lose 10 points and freeze for 3 sec
-        return new StatusChange(-10,0,3);
+        return new StatusChange(-10,0,300);
     }
 
     @Override
     public StatusChange visit(AngryPacman angry_p) { // inky freeze for 5 sec
-        this.freeze=5;
+        this.freeze=50;
         return new StatusChange(0,0,0);
     }
     public void freeze(int sec){
@@ -101,7 +101,7 @@ private int counter;
             temp = LevelGame.Vmatrix[x][y];
             tempnum = LevelGame.matrix[x][y];
             LevelGame.matrix[x][y]=id; // new place of GINKEY
-            LevelGame.Vmatrix[x][y]=LevelGame.Vmatrix[tmp_x][tmp_y];
+            LevelGame.Vmatrix[x][y]=this;
 
             if(counter++%4==0) {
                 WaterBomb water_bomb;

@@ -2,7 +2,7 @@ package Visitors;
 
 import javax.swing.*;
 
-public class Pacman {
+public abstract class Pacman implements Visited{
     private int x;
     private int y;
     private ImageIcon img_pacman;

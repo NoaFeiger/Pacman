@@ -6,7 +6,7 @@ public class NicePacman extends Pacman implements Visited {
     }
 
     @Override
-    public void accept(Visitor ghost) {
-        ghost.visit(this);
+    public StatusChange accept(Visitor ghost) {
+        return ghost.visit(this);
     }
 }
