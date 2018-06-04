@@ -122,7 +122,7 @@ public class GameControl implements ActionListener {
                     frame.repaint();
                     frame.revalidate();
                 }
-                if (this.points >= 100 & this.level < 2) { //TODO CHANGE POINTS
+                if ((this.points >= 100 & this.level < 2) | (this.points >= 305 & this.level < 3)) { //TODO CHANGE POINTS
                     System.out.println("Next Level");
                     timer.stop();
                     nextLevel(true);

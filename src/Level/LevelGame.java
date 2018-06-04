@@ -86,6 +86,21 @@ public class LevelGame extends JPanel{
                 e.printStackTrace();
             }
         }
+//        int countC = 188;
+//        while(countC<240)
+//        for(int i=0;i<matrix.length;i++)
+//            for(int j=0;j<matrix.length;j++){
+//                if(countC<240 & matrix[i][j]==0 & matrix[31-i][j]!=2 & Math.random()<0.4){
+//                    matrix[i][j]=3;
+//                    matrix[31-i][j]=3;
+//                    countC+=2;
+//                }
+//            }
+//            for(int i=0;i<matrix.length;i++){
+//                for(int j=0;j<matrix.length;j++)
+//                    System.out.print(matrix[j][i]);
+//                System.out.println();
+//            }
     }
 
     private void buildLine(String line, int j) {
@@ -133,7 +148,7 @@ public class LevelGame extends JPanel{
                     }
                 }
                 else if (matrix[i][j] == 8) {
-                    draw(g,i,j,"INKY.jpg");
+                    draw(g,i,j,"INKY.png");
                     if(dofirst){
                         INKY inky= new INKY(i,j,3);
                         this.Vmatrix[i][j]=inky;
@@ -144,7 +159,7 @@ public class LevelGame extends JPanel{
                     draw(g,i,j,"fire_ball.png");
                     }
                 else if (matrix[i][j] == 9) {
-                    draw(g,i,j,"water_bomb.jpg");
+                    draw(g,i,j,"water_bomb.png");
                 }
                 else if (matrix[i][j] == 5) {
                     draw(g,i,j,"water.png");
