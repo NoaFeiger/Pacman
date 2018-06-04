@@ -29,7 +29,7 @@ public class LevelGame extends JPanel{
     private int points;
     private int lifes;
     private final int delay = 10;
-    private Pacman pacman;
+    private static Pacman pacman;
     public static ArrayList<Ghost>ghost_to_remove;
     public static ArrayList<Ghost> tmp_array;
     public LevelGame(JFrame frame, int level, String path_board,int points,int lives) {
@@ -235,7 +235,9 @@ public class LevelGame extends JPanel{
             vy = desiredY;
         }
     }
-}
+    public static Pacman getPacMan(){
+        return pacman;
+    } }
 
 
 

@@ -158,6 +158,9 @@ public abstract class Ghost implements TimerListener,Visitor{
                 break;
             }
         }
+        if(LevelGame.matrix[x][y]==2){
+            LevelGame.getPacMan().accept(temp);
+        }
         LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
         LevelGame.matrix[tmp_x][tmp_y]=tempnum;
         temp = LevelGame.Vmatrix[x][y];
