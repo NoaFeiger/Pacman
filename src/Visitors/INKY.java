@@ -47,7 +47,8 @@ private int counter;
             set.add(1);
             set.add(4);
             set.add(8);
-            ArrayList<directions> poss = new ArrayList<>();
+            set.add('b'-'0');
+        ArrayList<directions> poss = new ArrayList<>();
         if (((x)<30)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
             poss.add(directions.RIGHT);
         if (((x>1)&&(!set.contains(LevelGame.matrix[x - 1][y])))) // LEFT

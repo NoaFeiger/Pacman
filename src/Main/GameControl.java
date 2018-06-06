@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GameControl implements ActionListener,KeyListener {
+public class GameControl implements ActionListener, KeyListener {
     JFrame frame;
     private LevelGame levelGame;
     private int lifes;
@@ -19,7 +19,7 @@ public class GameControl implements ActionListener,KeyListener {
     private int level;
     private int freeze;
     private Timer timer;
-    private final int delay = 10;
+    private final int delay = 100;
     private JLabel pointsL;
     private JLabel lifesL;
     private JPanel statusP;
@@ -51,11 +51,16 @@ public class GameControl implements ActionListener,KeyListener {
         this.lifesL.setHorizontalAlignment(0);
         this.frame.add(statusP, BorderLayout.EAST);
         this.frame.getContentPane().setBackground(this.curBackground);
+        this.frame.addKeyListener(this);
     }
 
     public void startGame() {
         this.level = 1;
         this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, 0, 3);
+        this.levelGame.setFocusable(true);
+        this.levelGame.setFocusTraversalKeysEnabled(false);
+        this.levelGame.requestFocusInWindow();
+        this.levelGame.addKeyListener(this);
         this.levelGame.setBackground(this.curBackground);
         frame.add(this.levelGame);
         frame.setBackground(Color.BLACK);
@@ -70,6 +75,7 @@ public class GameControl implements ActionListener,KeyListener {
             this.level++;
         frame.remove(this.levelGame);
         this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes);
+        this.levelGame.addKeyListener(this);
         this.curBackground = new Color(5, 5, 160);
         this.statusP.setBackground(this.curBackground);
         this.levelGame.setBackground(curBackground);
@@ -84,6 +90,7 @@ public class GameControl implements ActionListener,KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timer) {
+            this.levelGame.requestFocus(false);
             levelGame.turn++;
             StatusChange statusChange = null;
             for (TimerListener t : LevelGame.monsters) {
@@ -99,36 +106,19 @@ public class GameControl implements ActionListener,KeyListener {
             }
             if (this.freeze <= 0) {
                 freeze = 0;
-                statusChange = this.levelGame.move(false);
             } else {
-                System.out.println(freeze);
                 freeze--;
-                statusChange = this.levelGame.move(true);
             }
-                update(statusChange);
-
-            if (this.lifes == 0) {
-                timer.stop();
-                LastPage last_page = new LastPage(frame, main_panel, this.points);
-                frame.remove(this.levelGame); // move to the game page
-                frame.add(last_page);
-                frame.repaint();
-                frame.revalidate();
-            }
-            if ((this.points >= 200 & this.level < 2) | (this.points >= 2105 & this.level < 3)) { //TODO CHANGE POINTS
-                System.out.println("Next Level");
-                timer.stop();
-                nextLevel(true);
-            }
-            pointsL.setText("Points: " + this.points);
-            lifesL.setText("Lifes: " + this.lifes);
+            update(statusChange);
+            this.levelGame.repaint();
         }
     }
 
     private void update(StatusChange statusChange) {
         if (statusChange != null) {
             this.points = this.points + statusChange.getPoints();
-            this.freeze = statusChange.getFreezeTime();
+            this.freeze += statusChange.getFreezeTime();
+            System.out.println(this.points);
             if ((statusChange.getLifes() + this.lifes) != this.lifes) {
                 this.lifes = this.lifes + statusChange.getLifes();
                 if (this.lifes != 0) {
@@ -136,17 +126,53 @@ public class GameControl implements ActionListener,KeyListener {
                     nextLevel(false);
                 }
             }
+            updateStatus();
         }
+    }
+    private void updateStatus(){
+        if (this.lifes == 0) {
+            timer.stop();
+            LastPage last_page = new LastPage(frame, main_panel, this.points);
+            frame.remove(this.levelGame); // move to the game page
+            frame.add(last_page);
+            frame.repaint();
+            frame.revalidate();
+        }
+        if ((this.points >= 2000 & this.level < 2) | (this.points >= 2105 & this.level < 3)) { //TODO CHANGE POINTS
+            System.out.println("Next Level");
+            timer.stop();
+            nextLevel(true);
+        }
+        pointsL.setText("Points: " + this.points);
+        lifesL.setText("Lifes: " + this.lifes);
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+       // System.out.println("asdfghjkl");
+        StatusChange statusChange = null;
+        int key = e.getKeyCode();
+        if(freeze>0)
+            return;
+        switch (key) {
+            case KeyEvent.VK_RIGHT:
+                statusChange = this.levelGame.move(freeze>0,1,0);
+                break;
+            case KeyEvent.VK_DOWN:
+                statusChange = this.levelGame.move(freeze>0,0,1);
+                break;
+            case KeyEvent.VK_LEFT:
+                statusChange = this.levelGame.move(freeze>0,-1,0);
+                break;
+            case KeyEvent.VK_UP:
+                statusChange = this.levelGame.move(freeze>0,0,-1);
+                break;
+        }
+        update(statusChange);
     }
 
     @Override

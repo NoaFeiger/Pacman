@@ -6,8 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Pacman extends JFrame implements ActionListener {
-    private int frame;          private ImageIcon[] im;
-    private Timer timer;        private int x, y, dx, dy;
+    private int frame;
+    private ImageIcon[] im;
+    private Timer timer;
+    private int x, y, dx, dy;
     public Pacman(){
         frame = 0; x = 30; y = 30;  dx = 15; dy = 15;
         im = new ImageIcon[3];
@@ -29,6 +31,4 @@ public class Pacman extends JFrame implements ActionListener {
     public void paint(Graphics g){
         super.paint(g);
         im[frame].paintIcon(this, g, x, y);      }
-
-
 }

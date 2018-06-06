@@ -17,6 +17,7 @@ public abstract class Pacman implements Visited{
         this.score=score;
         openMouth = true;
         frozen = false;
+        switchM();
     }
     public void switchM(){
         openMouth = !openMouth;

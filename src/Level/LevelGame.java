@@ -22,14 +22,14 @@ public class LevelGame extends JPanel{
     public static Visitor[][]Vmatrix;
     private static int x; // pacman place
     private static int y;
-    protected int vx;
-    protected int vy;
-    private int desiredX;
-    private int desiredY;
+   // protected int vx;
+   // protected int vy;
+   // private int desiredX;
+   // private int desiredY;
     private int points;
     private int lifes;
     public int turn;
-    private final int delay = 10;
+    private final int delay = 100;
     private static Pacman pacman;
     public static ArrayList<Ghost>ghost_to_remove;
     public static ArrayList<Ghost> tmp_array;
@@ -44,10 +44,12 @@ public class LevelGame extends JPanel{
         this.Vmatrix = new Visitor[32][32];
         this.lifes=lives;
         this.points=points;
-        vx = 0;
-        vy = 0;
-        desiredX = 0;
-        desiredY = 0;
+        setFocusable(true);
+        requestFocusInWindow();
+       // vx = 0;
+      //  vy = 0;
+      //  desiredX = 0;
+      //  desiredY = 0;
         dofirst=true;
         buildMatrix(path_board);
         if(level==1){
@@ -59,10 +61,10 @@ public class LevelGame extends JPanel{
         if(level==3){
             pacman=new AngryPacman(x,y,lives,points);
         }
-        addKeyListener(KeyEvent.VK_UP, 0, -1);
-        addKeyListener(KeyEvent.VK_DOWN, 0, 1);
-        addKeyListener(KeyEvent.VK_LEFT, -1, 0);
-        addKeyListener(KeyEvent.VK_RIGHT, 1, 0);
+//        addKeyListener(KeyEvent.VK_UP, 0, -1);
+//        addKeyListener(KeyEvent.VK_DOWN, 0, 1);
+//        addKeyListener(KeyEvent.VK_LEFT, -1, 0);
+//        addKeyListener(KeyEvent.VK_RIGHT, 1, 0);
         monsters = new ArrayList<>();
         turn = 0;
     }
@@ -112,16 +114,16 @@ public class LevelGame extends JPanel{
         }
     }
 
-    private void addKeyListener(int keyEvent, int mvx, int mvy) {
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keyEvent, 0), "forward" + keyEvent);
-        this.getActionMap().put("forward" + keyEvent, new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                desiredX = mvx;
-                desiredY = mvy;
-            }
-        });
-    }
+//    private void addKeyListener(int keyEvent, int mvx, int mvy) {
+//        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keyEvent, 0), "forward" + keyEvent);
+//        this.getActionMap().put("forward" + keyEvent, new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                desiredX = mvx;
+//                desiredY = mvy;
+//            }
+//        });
+//    }
     boolean dofirst=true;
     @Override
     public void paint(Graphics g) {
@@ -134,7 +136,7 @@ public class LevelGame extends JPanel{
                 } else if (matrix[i][j] == 2) {
                     x = i;
                     y = j;
-                        draw(g,i,j,pacman.getImg_pacman());
+                    draw(g,i,j,pacman.getImg_pacman());
                 }
                 else if (matrix[i][j] == 3) {
                     if(dofirst)this.Vmatrix[i][j] = new Capsule(10,240,"capsule.png");
@@ -183,12 +185,9 @@ public class LevelGame extends JPanel{
             }
             dofirst=false;
     }
-    public StatusChange move(boolean freeze){
-
+    public StatusChange move(boolean freeze,int vx, int vy){
         StatusChange statusChange = null;
         pacman.switchM();
-        if(!freeze)
-            tryDesired();
         int tmp_x=x;
         int tmp_y=y;
         if(!freeze) {
@@ -235,15 +234,15 @@ public class LevelGame extends JPanel{
           g.drawImage(image,i*20,j*20,20,20,this);
         }
     }
-    private void tryDesired(){
-        int tmp_x = (x + desiredX) % 32;
-        int tmp_y = (y + desiredY) % 32;
-
-        if(matrix[tmp_x][tmp_y]!=1){
-            vx = desiredX;
-            vy = desiredY;
-        }
-    }
+//    private void tryDesired(){
+//        int tmp_x = (x + desiredX) % 32;
+//        int tmp_y = (y + desiredY) % 32;
+//
+//        if(matrix[tmp_x][tmp_y]!=1){
+//            vx = desiredX;
+//            vy = desiredY;
+//        }
+//    }
     public static int pacManX(){
         return x;
     }

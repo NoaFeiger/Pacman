@@ -36,7 +36,6 @@ public class WaterBomb  extends Ghost implements Visitor {
     public StatusChange visit(SafePacman safe_p) {
         //freeze- 3 sec lose 10 points
         return new StatusChange(-10,0,30);
-
     }
 
     @Override
