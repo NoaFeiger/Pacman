@@ -1,5 +1,7 @@
 package Visitors;
 
+import Level.LevelGame;
+
 import javax.swing.*;
 
 public class Capsule implements Visitor{
@@ -39,16 +41,19 @@ public class Capsule implements Visitor{
     }
     @Override
     public StatusChange visit(NicePacman nice_p) {
+        LevelGame.collected++;
         return new StatusChange(this.points,0,0);
     }
 
     @Override
     public StatusChange visit(SafePacman nice_p) {
+        LevelGame.collected++;
         return new StatusChange(this.points,0,0);
     }
 
     @Override
     public StatusChange visit(AngryPacman nice_p) {
+        LevelGame.collected++;
         return new StatusChange(this.points,0,0);
     }
 

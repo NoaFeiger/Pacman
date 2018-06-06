@@ -68,7 +68,10 @@ public class WaterBomb  extends Ghost implements Visitor {
             }
         }
         if (!(x < 0 || y < 0 || x > 31 || y > 31)) {
-
+            if(LevelGame.matrix[x][y]==2){
+                System.out.println("HIT");
+                statusChange =  LevelGame.getPacMan().accept(this);
+            }
             if (!(LevelGame.matrix[x][y] == 1)) {
                 if(!(LevelGame.matrix[x][y]==4||LevelGame.matrix[x][y]==8)) { //if encountered a monster - dont save it
                     LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
@@ -85,10 +88,6 @@ public class WaterBomb  extends Ghost implements Visitor {
                 LevelGame.matrix[x][y] = 1;
                 LevelGame.ghost_to_remove.add(this);
             }
-        }
-        if(LevelGame.matrix[x][y]==2){
-            System.out.println("HIT");
-            statusChange =  LevelGame.getPacMan().accept(this);
         }
         return statusChange;
     }

@@ -141,7 +141,7 @@ public abstract class Ghost implements TimerListener,Visitor{
         int size=poss.size();
         if (size!=0){
         //int random = (int)(Math.random() *size );
-        directions d=getCLosest(poss);
+        directions d=getClosest(poss);
         last_direct=d;
 
         switch (d){
@@ -175,11 +175,11 @@ public abstract class Ghost implements TimerListener,Visitor{
     }
         return statusChange;
     }
-    private directions getCLosest(ArrayList<directions> options){
+    private directions getClosest(ArrayList<directions> options){
         int curX=0,curY=0;
         int pacX = LevelGame.pacManX();
         int pacY = LevelGame.pacManY();
-        int curDiss = Integer.MAX_VALUE;
+        int curDis = Integer.MAX_VALUE;
         directions toReturn = options.get(0);
         for(directions d: options){
             curX = x;
@@ -202,15 +202,33 @@ public abstract class Ghost implements TimerListener,Visitor{
                     break;
                 }
             }
-            if(distance(new Point(curX,curY),new Point(pacX,pacY))<curDiss){
-                curDiss = distance(new Point(curX,curY),new Point(pacX,pacY));
+            if(distance(new Point(curX,curY),new Point(pacX,pacY))<curDis){
+                curDis = distance(new Point(curX,curY),new Point(pacX,pacY));
                 toReturn = d;
             }
         }
         return toReturn;
     }
     private int distance(Point p1, Point p2){
-        return Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y);
+        return Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y)-free(p1,0);
+    }
+    private int free(Point p,int t){
+        int free = 0;
+        if(t>2)
+            return 0;
+        if(p.x>0 && LevelGame.matrix[x-1][y]!=1)
+            free++;
+        if(p.y>0 && LevelGame.matrix[x][y-1]!=1)
+            free++;
+        if(p.x<31 && LevelGame.matrix[x+1][y]!=1)
+            free++;
+        if(p.y<31 && LevelGame.matrix[x][y+1]!=1)
+            free++;
+        free += free(new Point(p.x+1,p.y),t+1);
+        free += free(new Point(p.x,p.y+1),t+1);
+        free += free(new Point(p.x-1,p.y),t+1);
+        free += free(new Point(p.x,p.y+1),t+1);
+        return free;
     }
 }
 enum directions{RIGHT,LEFT,UP,DOWN}

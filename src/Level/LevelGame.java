@@ -22,6 +22,7 @@ public class LevelGame extends JPanel{
     public static Visitor[][]Vmatrix;
     private static int x; // pacman place
     private static int y;
+    public static int collected;
    // protected int vx;
    // protected int vy;
    // private int desiredX;
@@ -54,6 +55,7 @@ public class LevelGame extends JPanel{
             this.matrix = new int[32][32];
             this.Vmatrix = new Visitor[32][32];
             buildMatrix(path_board);
+            collected = 0;
         }
         else{
             matrix[x][y]=0;
@@ -224,8 +226,9 @@ public class LevelGame extends JPanel{
         repaint();
         if(!freeze & pacman.isFrozen())
             pacman.unfreeze();
-        if(statusChange!=null && statusChange.getFreezeTime()>0)
+        if(statusChange!=null && statusChange.getFreezeTime()>0) {
             pacman.freeze();
+        }
         return statusChange;
     }
     private void draw(Graphics g, int i, int j, String path){

@@ -5,3 +5,5 @@ Matan,280
 Noa Feiger,390
 Itay Rosh,330
 ,0
+sagi,860
+James,2040

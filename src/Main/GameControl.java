@@ -119,6 +119,8 @@ public class GameControl implements ActionListener, KeyListener {
         if (statusChange != null) {
             this.points = this.points + statusChange.getPoints();
             this.freeze += statusChange.getFreezeTime();
+            if(statusChange.getFreezeTime()>0)
+                LevelGame.getPacMan().freeze();
             System.out.println(this.points);
             if ((statusChange.getLifes() + this.lifes) != this.lifes) {
                 this.lifes = this.lifes + statusChange.getLifes();
@@ -132,17 +134,17 @@ public class GameControl implements ActionListener, KeyListener {
     }
     private void updateStatus(){
         if (this.lifes == 0) {
-            timer.stop();
-            LastPage last_page = new LastPage(frame, main_panel, this.points);
-            frame.remove(this.levelGame); // move to the game page
-            frame.add(last_page);
-            frame.repaint();
-            frame.revalidate();
+            endScene();
         }
-        if ((this.points >= 2000 & this.level < 2) | (this.points >= 2105 & this.level < 3)) { //TODO CHANGE POINTS
-            System.out.println("Next Level");
-            timer.stop();
-            nextLevel(true);
+        if (LevelGame.collected>50) { //TODO CHANGE POINTS
+            if(this.level<3) {
+                System.out.println("Next Level");
+                timer.stop();
+                nextLevel(true);
+            }
+            else{
+                endScene();
+            }
         }
         pointsL.setText("Points: " + this.points);
         lifesL.setText("Lifes: " + this.lifes);
@@ -179,5 +181,13 @@ public class GameControl implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+    private void endScene(){
+        timer.stop();
+        LastPage last_page = new LastPage(frame, main_panel, this.points);
+        frame.remove(this.levelGame); // move to the game page
+        frame.add(last_page);
+        frame.repaint();
+        frame.revalidate();
     }
 }
