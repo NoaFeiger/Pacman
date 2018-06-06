@@ -7,8 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GameControl implements ActionListener {
+public class GameControl implements ActionListener,KeyListener {
     JFrame frame;
     private LevelGame levelGame;
     private int lifes;
@@ -53,7 +55,7 @@ public class GameControl implements ActionListener {
 
     public void startGame() {
         this.level = 1;
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level,0,3);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, 0, 3);
         this.levelGame.setBackground(this.curBackground);
         frame.add(this.levelGame);
         frame.setBackground(Color.BLACK);
@@ -67,7 +69,7 @@ public class GameControl implements ActionListener {
         if (change == true)
             this.level++;
         frame.remove(this.levelGame);
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level,this.points,this.lifes);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes);
         this.curBackground = new Color(5, 5, 160);
         this.statusP.setBackground(this.curBackground);
         this.levelGame.setBackground(curBackground);
@@ -82,54 +84,73 @@ public class GameControl implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timer) {
+            levelGame.turn++;
             StatusChange statusChange = null;
             for (TimerListener t : LevelGame.monsters) {
-                t.action();
-
+                statusChange = t.action();
+                update(statusChange);
             }
             LevelGame.monsters.addAll(LevelGame.tmp_array);
             LevelGame.tmp_array.clear();
-            if (LevelGame.ghost_to_remove!=null){
-                for(int i=0;i<LevelGame.ghost_to_remove.size();i++)
-                {
+            if (LevelGame.ghost_to_remove != null) {
+                for (int i = 0; i < LevelGame.ghost_to_remove.size(); i++) {
                     LevelGame.monsters.remove(LevelGame.ghost_to_remove.get(i));
                 }
             }
             if (this.freeze <= 0) {
                 freeze = 0;
                 statusChange = this.levelGame.move(false);
-            }
-            else {
+            } else {
                 System.out.println(freeze);
                 freeze--;
                 statusChange = this.levelGame.move(true);
             }
-            if (statusChange != null) {
-                this.points = this.points + statusChange.getPoints();
-                this.freeze = statusChange.getFreezeTime();
-                if ((statusChange.getLifes() + this.lifes) != this.lifes) {
-                    this.lifes = this.lifes + statusChange.getLifes();
-                    if (this.lifes != 0) {
-                        timer.stop();
-                        nextLevel(false);
-                    }
-                }
-                if (this.lifes == 0) {
+                update(statusChange);
+
+            if (this.lifes == 0) {
+                timer.stop();
+                LastPage last_page = new LastPage(frame, main_panel, this.points);
+                frame.remove(this.levelGame); // move to the game page
+                frame.add(last_page);
+                frame.repaint();
+                frame.revalidate();
+            }
+            if ((this.points >= 200 & this.level < 2) | (this.points >= 2105 & this.level < 3)) { //TODO CHANGE POINTS
+                System.out.println("Next Level");
+                timer.stop();
+                nextLevel(true);
+            }
+            pointsL.setText("Points: " + this.points);
+            lifesL.setText("Lifes: " + this.lifes);
+        }
+    }
+
+    private void update(StatusChange statusChange) {
+        if (statusChange != null) {
+            this.points = this.points + statusChange.getPoints();
+            this.freeze = statusChange.getFreezeTime();
+            if ((statusChange.getLifes() + this.lifes) != this.lifes) {
+                this.lifes = this.lifes + statusChange.getLifes();
+                if (this.lifes != 0) {
                     timer.stop();
-                    LastPage last_page = new LastPage(frame, main_panel, this.points);
-                    frame.remove(this.levelGame); // move to the game page
-                    frame.add(last_page);
-                    frame.repaint();
-                    frame.revalidate();
+                    nextLevel(false);
                 }
-                if ((this.points >= 100 & this.level < 2) | (this.points >= 1005 & this.level < 3)) { //TODO CHANGE POINTS
-                    System.out.println("Next Level");
-                    timer.stop();
-                    nextLevel(true);
-                }
-                pointsL.setText("Points: " + this.points);
-                lifesL.setText("Lifes: " + this.lifes);
             }
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

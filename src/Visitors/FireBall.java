@@ -38,7 +38,8 @@ public class FireBall extends Ghost implements Visitor {
     }
 
     @Override
-    public void move() {
+    public StatusChange move() {
+        StatusChange statusChange = null;
         // create a list of all moves possibilities
         int tmp_x = x;
         int tmp_y = y;
@@ -73,6 +74,11 @@ public class FireBall extends Ghost implements Visitor {
             LevelGame.matrix[tmp_x][tmp_y] = tempnum;
             LevelGame.ghost_to_remove.add(this);
         }
+        if(LevelGame.matrix[x][y]==2){
+            System.out.println("HIT");
+            statusChange = LevelGame.getPacMan().accept(this);
+        }
+        return statusChange;
     }
     @Override
     public String getPath() {

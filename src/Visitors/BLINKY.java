@@ -31,7 +31,8 @@ public class BLINKY extends Ghost implements Visitor {
     }
 
     @Override
-    public void move() {
+    public StatusChange move() {
+        StatusChange statusChange = null;
         // create a list of all moves possibilities
         int tmp_x = x;
         int tmp_y = y;
@@ -39,6 +40,7 @@ public class BLINKY extends Ghost implements Visitor {
         set.add(1);
         set.add(4);
         set.add(8);
+        set.add('b'-'0');
 
         ArrayList<directions> poss = new ArrayList<>();
         if (((x)<30)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
@@ -108,6 +110,11 @@ public class BLINKY extends Ghost implements Visitor {
             LevelGame.tmp_array.add(fire_bomb);
 
         }
+        if(LevelGame.matrix[x][y]==2){
+            System.out.println("HIT");
+            statusChange = LevelGame.getPacMan().accept(this);
+        }
+        return statusChange;
     }
     @Override
     public String getPath() {

@@ -45,7 +45,8 @@ public class WaterBomb  extends Ghost implements Visitor {
         return  null; //TODO check
     }
     @Override
-    public void move() {
+    public StatusChange move() {
+        StatusChange statusChange = null;
         int tmp_x = x;
         int tmp_y = y;
 
@@ -86,6 +87,11 @@ public class WaterBomb  extends Ghost implements Visitor {
                 LevelGame.ghost_to_remove.add(this);
             }
         }
+        if(LevelGame.matrix[x][y]==2){
+            System.out.println("HIT");
+            statusChange =  LevelGame.getPacMan().accept(this);
+        }
+        return statusChange;
     }
     @Override
     public String getPath() {

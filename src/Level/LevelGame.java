@@ -20,14 +20,15 @@ public class LevelGame extends JPanel{
     private JPanel main_panel;
     public static int[][] matrix;
     public static Visitor[][]Vmatrix;
-    private int x; // pacman place
-    private int y;
+    private static int x; // pacman place
+    private static int y;
     protected int vx;
     protected int vy;
     private int desiredX;
     private int desiredY;
     private int points;
     private int lifes;
+    public int turn;
     private final int delay = 10;
     private static Pacman pacman;
     public static ArrayList<Ghost>ghost_to_remove;
@@ -35,6 +36,7 @@ public class LevelGame extends JPanel{
     public LevelGame(JFrame frame, int level, String path_board,int points,int lives) {
         super();
         this.frame = frame;
+        turn = 0;
       //  this.main_panel = main_panel;
         tmp_array=new ArrayList<>();
         ghost_to_remove=new ArrayList<>();
@@ -62,6 +64,7 @@ public class LevelGame extends JPanel{
         addKeyListener(KeyEvent.VK_LEFT, -1, 0);
         addKeyListener(KeyEvent.VK_RIGHT, 1, 0);
         monsters = new ArrayList<>();
+        turn = 0;
     }
 
     private void buildMatrix(String path_board) {
@@ -171,6 +174,12 @@ public class LevelGame extends JPanel{
                     draw(g,i,j,"apple.png");
                     if(dofirst)this.Vmatrix[i][j] = new AppleCapsule(200,4);
                 }
+                else if (matrix[i][j] == 'b'-'0') {
+                    if(turn<50)
+                        draw(g,i,j,"temp_block.png");
+                    else
+                        matrix[i][j]=0;
+                }
             }
             dofirst=false;
     }
@@ -186,7 +195,7 @@ public class LevelGame extends JPanel{
             tmp_x = (x + vx) % 32;
             tmp_y = (y + vy) % 32;
         }
-        if(matrix[tmp_x][tmp_y]!=1){//not a block
+        if(matrix[tmp_x][tmp_y]!=1 & matrix[tmp_x][tmp_y]!='b'-'0'){//not a block
             if(!freeze) {
                 matrix[x][y] = 0;
             }
@@ -234,6 +243,12 @@ public class LevelGame extends JPanel{
             vx = desiredX;
             vy = desiredY;
         }
+    }
+    public static int pacManX(){
+        return x;
+    }
+    public static int pacManY(){
+        return y;
     }
     public static Pacman getPacMan(){
         return pacman;

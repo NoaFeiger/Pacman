@@ -38,7 +38,8 @@ private int counter;
         this.freeze=sec;
     }
     @Override
-    public void move() {
+    public StatusChange move() {
+        StatusChange statusChange = null;
         // create a list of all moves possibilities
         int tmp_x=x;
         int tmp_y=y;
@@ -102,6 +103,10 @@ private int counter;
                     break;
                 }
             }
+            if(LevelGame.matrix[x][y]==2){
+                System.out.println("HIT");
+                statusChange = LevelGame.getPacMan().accept(this);
+            }
             LevelGame.Vmatrix[tmp_x][tmp_y]=temp; // save the icon before
             LevelGame.matrix[tmp_x][tmp_y]=tempnum;
             temp = LevelGame.Vmatrix[x][y];
@@ -141,7 +146,7 @@ private int counter;
                     default: { //RIGHT
                         if (LevelGame.matrix[x + 1][y] != 1) {
                             water_bomb = new WaterBomb(this, x + 1, y, "water_bomb.jpg", 2, 9, d);//TODO check if it goes on the right direction
-                            water_bomb.move();
+                            statusChange = water_bomb.move();
                             LevelGame.tmp_array.add(water_bomb);
                         }
                         break;
@@ -149,6 +154,7 @@ private int counter;
                 }
             }
             }
+            return statusChange;
         }
     }
 
