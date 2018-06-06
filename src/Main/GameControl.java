@@ -56,7 +56,7 @@ public class GameControl implements ActionListener, KeyListener {
 
     public void startGame() {
         this.level = 1;
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, 0, 3);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, 0, 3,true);
         this.levelGame.setFocusable(true);
         this.levelGame.setFocusTraversalKeysEnabled(false);
         this.levelGame.requestFocusInWindow();
@@ -74,7 +74,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (change == true)
             this.level++;
         frame.remove(this.levelGame);
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes,change);
         this.levelGame.addKeyListener(this);
         this.curBackground = new Color(5, 5, 160);
         this.statusP.setBackground(this.curBackground);
@@ -92,6 +92,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (e.getSource() == timer) {
             this.levelGame.requestFocus(false);
             levelGame.turn++;
+            LevelGame.getPacMan().switchM();
             StatusChange statusChange = null;
             for (TimerListener t : LevelGame.monsters) {
                 statusChange = t.action();

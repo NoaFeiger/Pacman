@@ -26,6 +26,7 @@ public class LevelGame extends JPanel{
    // protected int vy;
    // private int desiredX;
    // private int desiredY;
+    private static Point startingPoint;
     private int points;
     private int lifes;
     public int turn;
@@ -33,15 +34,13 @@ public class LevelGame extends JPanel{
     private static Pacman pacman;
     public static ArrayList<Ghost>ghost_to_remove;
     public static ArrayList<Ghost> tmp_array;
-    public LevelGame(JFrame frame, int level, String path_board,int points,int lives) {
+    public LevelGame(JFrame frame, int level, String path_board,int points,int lives, boolean change) {
         super();
         this.frame = frame;
         turn = 0;
       //  this.main_panel = main_panel;
         tmp_array=new ArrayList<>();
         ghost_to_remove=new ArrayList<>();
-        this.matrix = new int[32][32];
-        this.Vmatrix = new Visitor[32][32];
         this.lifes=lives;
         this.points=points;
         setFocusable(true);
@@ -51,7 +50,15 @@ public class LevelGame extends JPanel{
       //  desiredX = 0;
       //  desiredY = 0;
         dofirst=true;
-        buildMatrix(path_board);
+        if(change) {
+            this.matrix = new int[32][32];
+            this.Vmatrix = new Visitor[32][32];
+            buildMatrix(path_board);
+        }
+        else{
+            matrix[x][y]=0;
+            matrix[startingPoint.x][startingPoint.y]=2;
+        }
         if(level==1){
         pacman = new NicePacman(x,y,lives,points);
         }
@@ -134,6 +141,8 @@ public class LevelGame extends JPanel{
                 if (matrix[i][j] == 1) {
                     draw(g,i,j,"block.png");
                 } else if (matrix[i][j] == 2) {
+                    if(dofirst)
+                        startingPoint = new Point(i,j);
                     x = i;
                     y = j;
                     draw(g,i,j,pacman.getImg_pacman());
@@ -187,7 +196,7 @@ public class LevelGame extends JPanel{
     }
     public StatusChange move(boolean freeze,int vx, int vy){
         StatusChange statusChange = null;
-        pacman.switchM();
+        //pacman.switchM();
         int tmp_x=x;
         int tmp_y=y;
         if(!freeze) {
