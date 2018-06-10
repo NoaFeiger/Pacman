@@ -127,7 +127,7 @@ public abstract class Ghost implements TimerListener,Visitor{
         int tmp_x=x;
         int tmp_y=y;
         HashSet<Integer>set=new HashSet<>();
-        set.add('b'-'0');set.add(1);set.add(4);set.add(8);
+        set.add('b'-'0');set.add(1);set.add(4);set.add(8);set.add(9);
         ArrayList<directions> poss=new ArrayList<>();
         if (((x)<30)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
             poss.add(directions.RIGHT);
@@ -143,13 +143,11 @@ public abstract class Ghost implements TimerListener,Visitor{
         //int random = (int)(Math.random() *size );
             directions d = null;
         if(!beenCorner & corner!=null) {
-            System.out.println("trying " + this.corner);
             d = getClosest(poss, corner);
         }
         else {
             Point pacP = new Point(LevelGame.pacManX(), LevelGame.pacManY());
             d = getClosest(poss, pacP);
-            System.out.println("After pacman! " + pacP);
         }
         last_direct=d;
 
@@ -174,6 +172,9 @@ public abstract class Ghost implements TimerListener,Visitor{
         if(LevelGame.matrix[x][y]==2){
             System.out.println("HIT");
             statusChange = LevelGame.getPacMan().accept(this);
+            LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
+            LevelGame.matrix[tmp_x][tmp_y]=tempnum;
+            return statusChange;
         }
         if(!beenCorner & LevelGame.matrix[x][y]==5) {
             beenCorner = true;

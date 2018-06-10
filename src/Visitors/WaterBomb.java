@@ -14,6 +14,8 @@ public class WaterBomb  extends Ghost implements Visitor {
     private int id;
     private directions direct_ghost;
     private INKY ghost;
+    private boolean dead;
+
     public WaterBomb(INKY me,int x_ghost,int y_ghost,String path_img,int speed,int id, directions direct_ghost){
         super(x_ghost, y_ghost,path_img,path_img,speed,id);
         this.id=id;
@@ -35,16 +37,24 @@ public class WaterBomb  extends Ghost implements Visitor {
     @Override
     public StatusChange visit(SafePacman safe_p) {
         //freeze- 3 sec lose 10 points
+        if(dead)  return null;
         return new StatusChange(-10,0,30);
     }
 
     @Override
     public StatusChange visit(AngryPacman angry_p) { // ghost Freeze for 5 sec
+        if(dead) return null;
         ghost.freeze(50);
         return  null; //TODO check
     }
     @Override
     public StatusChange move() {
+        if(dead){
+            LevelGame.matrix[x][y]=0;
+            LevelGame.Vmatrix=null;
+            return null;
+        }
+        System.out.println(x+" "+y);
         StatusChange statusChange = null;
         int tmp_x = x;
         int tmp_y = y;
@@ -71,6 +81,7 @@ public class WaterBomb  extends Ghost implements Visitor {
             if(LevelGame.matrix[x][y]==2){
                 System.out.println("HIT");
                 statusChange =  LevelGame.getPacMan().accept(this);
+                return statusChange;
             }
             if (!(LevelGame.matrix[x][y] == 1)) {
                 if(!(LevelGame.matrix[x][y]==4||LevelGame.matrix[x][y]==8)) { //if encountered a monster - dont save it
@@ -81,15 +92,22 @@ public class WaterBomb  extends Ghost implements Visitor {
                 tempnum = LevelGame.matrix[x][y];
                 LevelGame.matrix[x][y] = id; // new place of GINKEY
                 LevelGame.Vmatrix[x][y] = this;
+                return statusChange;
+
             } else {
                 LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
                 LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-                LevelGame.Vmatrix[x][y] = null;
-                LevelGame.matrix[x][y] = 1;
+                //LevelGame.Vmatrix[x][y] = null;
+                //LevelGame.matrix[x][y] = 1;
+                x=tmp_x;
+                y=tmp_y;
+                dead=true;
                 LevelGame.ghost_to_remove.add(this);
+                return statusChange;
             }
         }
-        return statusChange;
+        dead=true;
+        return null;
     }
     @Override
     public String getPath() {

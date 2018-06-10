@@ -4,6 +4,7 @@ import Level.LevelGame;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 
 public class BLINKY extends Ghost implements Visitor {
 
@@ -76,7 +77,9 @@ public class BLINKY extends Ghost implements Visitor {
         }
         int size = poss.size();
         if (size != 0) {
-            int random = (int) (Math.random() * size);
+            Random rnd = new Random(1);
+            rnd.nextInt(size);
+            int random = rnd.nextInt(size);
             directions d = poss.get(random);
             last_direct = d;
 

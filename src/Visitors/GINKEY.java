@@ -4,7 +4,6 @@ public class GINKEY extends Ghost implements Visitor {
 
     public GINKEY(int x, int y, int speed) {
         super(x, y, "GINKY.png","GINKY_FROZEN.png", 1, 4);
-        System.out.println("GINKY CREATED");
     }
 
     @Override
@@ -14,7 +13,7 @@ public class GINKEY extends Ghost implements Visitor {
 
     @Override
     public StatusChange visit(SafePacman safe_p) { //ginkey disappear for 5 sec
-        freeze();
+        visible=10;
         return new StatusChange(0, 0, 0);
     }
 

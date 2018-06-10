@@ -1,5 +1,7 @@
 package Visitors;
 
+import java.util.Random;
+
 public class StatusChange {
     private int points;
     private int lifes;
@@ -22,6 +24,7 @@ public class StatusChange {
     }
 
     public String toString(){
-        return "points: " + this.points + " lifes: " + this.lifes +" freeze: " + this.freezeTime +"   " + (int)(Math.random()*10);
+        Random rnd = new Random(1);
+        return "points: " + this.points + " lifes: " + this.lifes +" freeze: " + this.freezeTime +"   " + rnd.nextInt(10);
     }
 }

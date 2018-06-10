@@ -20,12 +20,12 @@ private int counter;
 
     @Override
     public StatusChange visit(SafePacman safe_p) { // pacman lose 10 points and freeze for 3 sec
-        return new StatusChange(-10,0,300);
+        return new StatusChange(-10,0,10);
     }
 
     @Override
     public StatusChange visit(AngryPacman angry_p) { // inky freeze for 5 sec
-        this.freeze=500;
+        this.freeze=10;
         return new StatusChange(0,0,0);
     }
 
@@ -37,11 +37,15 @@ private int counter;
     public void freeze(int sec){
         this.freeze=sec;
     }
+    int often=15;
     @Override
     public StatusChange move() {
         StatusChange statusChange = super.move();
-        if (counter++ % 3 == 0) {
+
+
+        if (counter++ % often == often-1) {
             WaterBomb water_bomb;
+            often=8;
             switch (cur) {
                 case UP: {
                     if (LevelGame.matrix[x][y - 1] != 1) {

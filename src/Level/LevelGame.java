@@ -188,7 +188,7 @@ public class LevelGame extends JPanel{
                     if(dofirst)this.Vmatrix[i][j] = new AppleCapsule(200,4);
                 }
                 else if (matrix[i][j] == 'b'-'0') {
-                    if(turn<50)
+                    if(turn<10)
                         draw(g,i,j,"temp_block.png");
                     else
                         matrix[i][j]=0;
@@ -223,6 +223,7 @@ public class LevelGame extends JPanel{
             y=31;
 
         matrix[x][y] = 2;
+
         repaint();
         if(!freeze & pacman.isFrozen())
             pacman.unfreeze();
