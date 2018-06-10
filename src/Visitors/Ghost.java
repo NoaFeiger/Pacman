@@ -2,6 +2,7 @@ package Visitors;
 
 import Level.LevelGame;
 import Main.TimerListener;
+import javafx.util.Pair;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,8 +22,22 @@ public abstract class Ghost implements TimerListener,Visitor{
    protected Visitor temp;
    protected int tempnum;
    protected int visible;
+   static ArrayList<Point> corners;
+   private ArrayList<Point> lastPlaces;
+   private Point corner;
+   private boolean beenCorner;
 
     public Ghost(int x, int y, String path_img,int speed, int id){
+        if(corners==null)
+            corners = new ArrayList<>();
+        for(int i=0;i<LevelGame.matrix.length & this.corner==null;i++)
+            for(int j=0;j<LevelGame.matrix.length & this.corner==null;j++)
+                if(LevelGame.matrix[i][j]==5 && !corners.contains(new Point(i,j))) {
+                    this.corner = new Point(i, j);
+                    corners.add(this.corner);
+                    System.out.println(this.corner);
+                }
+        lastPlaces = new ArrayList<>();
        this.img_path = path_img;
        this.x=x;
        this.visible=0;
@@ -33,6 +48,7 @@ public abstract class Ghost implements TimerListener,Visitor{
        this.id=id;
        this.speed = speed;
        this.alive = true;
+       beenCorner = false;
    }
     public int getSpeed() {
         return speed;
@@ -81,11 +97,12 @@ public abstract class Ghost implements TimerListener,Visitor{
             LevelGame.Vmatrix[x][y]=null;
             LevelGame.matrix[x][y]=0;
         }
-        else if(freeze>0) { // TODO check order of if else
+        else if(freeze>0){ // TODO check order of if else
             this.img_path = "GINKY_FROZEN.png";
             freeze--;
             if(freeze<=0)
                 this.img_path = "GINKY.png";
+            System.out.println(freeze);
         }
         else if (visible>0)
             visible--;
@@ -116,32 +133,41 @@ public abstract class Ghost implements TimerListener,Visitor{
         if (((y<30)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
             poss.add(directions.DOWN);
 
-        if(poss.size()>1) {
-            if (last_direct != null) {
-                switch (last_direct) { // remove the option to go the opposite way of the last move
-                    case RIGHT: {
-                        poss.remove(directions.LEFT);
-                        break;
-                    }
-                    case LEFT: {
-                        poss.remove(directions.RIGHT);
-                        break;
-                    }
-                    case DOWN: {
-                        poss.remove(directions.UP);
-                        break;
-                    }
-                    case UP: {
-                        poss.remove(directions.DOWN);
-                        break;
-                    }
-                }
-            }
-        }
+//        if(poss.size()>1) {
+//            if (last_direct != null) {
+//                switch (last_direct) { // remove the option to go the opposite way of the last move
+//                    case RIGHT: {
+//                        poss.remove(directions.LEFT);
+//                        break;
+//                    }
+//                    case LEFT: {
+//                        poss.remove(directions.RIGHT);
+//                        break;
+//                    }
+//                    case DOWN: {
+//                        poss.remove(directions.UP);
+//                        break;
+//                    }
+//                    case UP: {
+//                        poss.remove(directions.DOWN);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
         int size=poss.size();
         if (size!=0){
         //int random = (int)(Math.random() *size );
-        directions d=getClosest(poss);
+            directions d = null;
+        if(!beenCorner & corner!=null) {
+            System.out.println("trying " + this.corner);
+            d = getClosest(poss, corner);
+        }
+        else {
+            Point pacP = new Point(LevelGame.pacManX(), LevelGame.pacManY());
+            d = getClosest(poss, pacP);
+            System.out.println("After pacman! " + pacP);
+        }
         last_direct=d;
 
         switch (d){
@@ -166,19 +192,25 @@ public abstract class Ghost implements TimerListener,Visitor{
             System.out.println("HIT");
             statusChange = LevelGame.getPacMan().accept(this);
         }
+        if(!beenCorner & LevelGame.matrix[x][y]==5) {
+            beenCorner = true;
+            System.out.println("Corner " + this.corner);
+            freeze = 10;
+        }
         LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
         LevelGame.matrix[tmp_x][tmp_y]=tempnum;
         temp = LevelGame.Vmatrix[x][y];
         tempnum = LevelGame.matrix[x][y];
         LevelGame.matrix[x][y]=id; // new place of GINKEY
         LevelGame.Vmatrix[x][y]=this;
+        updateList(x,y);
     }
         return statusChange;
     }
-    private directions getClosest(ArrayList<directions> options){
+    private directions getClosest(ArrayList<directions> options,Point des){
         int curX=0,curY=0;
-        int pacX = LevelGame.pacManX();
-        int pacY = LevelGame.pacManY();
+        int pacX = des.x;
+        int pacY = des.y;
         int curDis = Integer.MAX_VALUE;
         directions toReturn = options.get(0);
         for(directions d: options){
@@ -210,7 +242,14 @@ public abstract class Ghost implements TimerListener,Visitor{
         return toReturn;
     }
     private int distance(Point p1, Point p2){
-        return Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y)-free(p1,0);
+        int been = 0;
+        if(lastPlaces.contains(p1)) {
+            been = 15;
+            if (lastPlaces.lastIndexOf(p1) > 10)
+                been = 25;
+        }
+        return Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y)+been;
+                //-free(p1,0);
     }
     private int free(Point p,int t){
         int free = 0;
@@ -229,6 +268,11 @@ public abstract class Ghost implements TimerListener,Visitor{
         free += free(new Point(p.x-1,p.y),t+1);
         free += free(new Point(p.x,p.y+1),t+1);
         return free;
+    }
+    private void updateList(int u, int v){
+        this.lastPlaces.add(new Point(u,v));
+        if(this.lastPlaces.size()>25)
+            this.lastPlaces.remove(0);
     }
 }
 enum directions{RIGHT,LEFT,UP,DOWN}
