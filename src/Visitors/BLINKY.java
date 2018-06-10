@@ -9,7 +9,7 @@ public class BLINKY extends Ghost implements Visitor {
 
     public BLINKY(int x, int y, int speed) {
 
-        super(x, y, "BLINKY.png", speed, 9);
+        super(x, y, "BLINKY.png","BLINKY.png", speed, 9);
     }
 
     @Override

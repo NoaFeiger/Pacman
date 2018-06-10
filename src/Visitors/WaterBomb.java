@@ -15,7 +15,7 @@ public class WaterBomb  extends Ghost implements Visitor {
     private directions direct_ghost;
     private INKY ghost;
     public WaterBomb(INKY me,int x_ghost,int y_ghost,String path_img,int speed,int id, directions direct_ghost){
-        super(x_ghost, y_ghost,path_img,speed,id);
+        super(x_ghost, y_ghost,path_img,path_img,speed,id);
         this.id=id;
         this.direct_ghost=direct_ghost;
         this.ghost=me;

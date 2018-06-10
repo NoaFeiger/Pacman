@@ -3,7 +3,7 @@ package Visitors;
 public class GINKEY extends Ghost implements Visitor {
 
     public GINKEY(int x, int y, int speed) {
-        super(x, y, "GINKY.png", 6, 4);
+        super(x, y, "GINKY.png","GINKY_FROZEN.png", 6, 4);
         System.out.println("GINKY CREATED");
     }
 
@@ -28,6 +28,6 @@ public class GINKEY extends Ghost implements Visitor {
         return super.getImg_path();
     }
     public void freeze(){
-        this.freeze=500;
+        this.freeze=10;
     }
 }

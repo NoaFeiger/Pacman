@@ -12,7 +12,7 @@ public class FireBall extends Ghost implements Visitor {
     private BLINKY blinky;
 
     public FireBall(BLINKY me, int x_ghost, int y_ghost, String path_img, int speed, int id, directions direct_gohst) {
-        super(x_ghost, y_ghost, path_img, speed, id);
+        super(x_ghost, y_ghost, path_img,"", speed, id);
         this.id = id;
         this.blinky = blinky;
         this.direct_ghost = direct_gohst;

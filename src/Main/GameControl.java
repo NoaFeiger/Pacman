@@ -19,7 +19,7 @@ public class GameControl implements ActionListener, KeyListener {
     private int level;
     private int freeze;
     private Timer timer;
-    private final int delay = 100;
+    private final int delay = 50;
     private JLabel pointsL;
     private JLabel lifesL;
     private JPanel statusP;

@@ -26,8 +26,11 @@ public abstract class Ghost implements TimerListener,Visitor{
    private ArrayList<Point> lastPlaces;
    private Point corner;
    private boolean beenCorner;
+   protected directions cur;
+   private String normal_path;
+   private String frozen_path;
 
-    public Ghost(int x, int y, String path_img,int speed, int id){
+    public Ghost(int x, int y, String normal_path, String frozen_path, int speed, int id){
         if(corners==null)
             corners = new ArrayList<>();
         for(int i=0;i<LevelGame.matrix.length & this.corner==null;i++)
@@ -37,8 +40,9 @@ public abstract class Ghost implements TimerListener,Visitor{
                     corners.add(this.corner);
                     System.out.println(this.corner);
                 }
-        lastPlaces = new ArrayList<>();
-       this.img_path = path_img;
+       lastPlaces = new ArrayList<>();
+       this.normal_path = normal_path;
+       this.frozen_path = frozen_path;
        this.x=x;
        this.visible=0;
        this.freeze=0;
@@ -49,6 +53,7 @@ public abstract class Ghost implements TimerListener,Visitor{
        this.speed = speed;
        this.alive = true;
        beenCorner = false;
+       this.img_path = normal_path;
    }
     public int getSpeed() {
         return speed;
@@ -98,16 +103,16 @@ public abstract class Ghost implements TimerListener,Visitor{
             LevelGame.matrix[x][y]=0;
         }
         else if(freeze>0){ // TODO check order of if else
-            this.img_path = "GINKY_FROZEN.png";
+            this.img_path = frozen_path;
             freeze--;
             if(freeze<=0)
-                this.img_path = "GINKY.png";
+                this.img_path = normal_path;
             System.out.println(freeze);
         }
         else if (visible>0)
             visible--;
         else {
-            if (this.count == this.speed) {
+            if (this.count >= this.speed) {
                 this.count = 0;
                 statusChange = move();
             }
@@ -204,7 +209,8 @@ public abstract class Ghost implements TimerListener,Visitor{
         LevelGame.matrix[x][y]=id; // new place of GINKEY
         LevelGame.Vmatrix[x][y]=this;
         updateList(x,y);
-    }
+        cur = d;
+        }
         return statusChange;
     }
     private directions getClosest(ArrayList<directions> options,Point des){
