@@ -40,7 +40,7 @@ private int counter;
     @Override
     public StatusChange move() {
         StatusChange statusChange = super.move();
-        if (counter++ % 4 == 0) {
+        if (counter++ % 3 == 0) {
             WaterBomb water_bomb;
             switch (cur) {
                 case UP: {

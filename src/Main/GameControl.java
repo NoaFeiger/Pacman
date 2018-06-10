@@ -59,7 +59,7 @@ public class GameControl implements ActionListener, KeyListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(delay == 50) {
-                    delay = 1000;
+                    delay = 10;
                 }
                 else {
                     delay = 50;

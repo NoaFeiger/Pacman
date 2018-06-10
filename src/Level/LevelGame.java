@@ -31,7 +31,7 @@ public class LevelGame extends JPanel{
     private int points;
     private int lifes;
     public int turn;
-    private final int delay = 100;
+    private final int delay = 50;
     private static Pacman pacman;
     public static ArrayList<Ghost>ghost_to_remove;
     public static ArrayList<Ghost> tmp_array;
@@ -155,7 +155,7 @@ public class LevelGame extends JPanel{
                 }
                 else if (matrix[i][j] == 4) {
                     if(dofirst){
-                        GINKEY b= new GINKEY(i,j,6);
+                        GINKEY b= new GINKEY(i,j,1);
                         this.Vmatrix[i][j]=b;
                         monsters.add(b);
                     }
@@ -163,7 +163,7 @@ public class LevelGame extends JPanel{
                 }
                 else if (matrix[i][j] == 8) {
                     if(dofirst){
-                        INKY inky= new INKY(i,j,3);
+                        INKY inky= new INKY(i,j,1);
                         this.Vmatrix[i][j]=inky;
                         monsters.add(inky);
                     }

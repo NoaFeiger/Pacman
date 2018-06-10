@@ -138,28 +138,6 @@ public abstract class Ghost implements TimerListener,Visitor{
         if (((y<30)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
             poss.add(directions.DOWN);
 
-//        if(poss.size()>1) {
-//            if (last_direct != null) {
-//                switch (last_direct) { // remove the option to go the opposite way of the last move
-//                    case RIGHT: {
-//                        poss.remove(directions.LEFT);
-//                        break;
-//                    }
-//                    case LEFT: {
-//                        poss.remove(directions.RIGHT);
-//                        break;
-//                    }
-//                    case DOWN: {
-//                        poss.remove(directions.UP);
-//                        break;
-//                    }
-//                    case UP: {
-//                        poss.remove(directions.DOWN);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
         int size=poss.size();
         if (size!=0){
         //int random = (int)(Math.random() *size );
