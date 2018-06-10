@@ -45,7 +45,7 @@ private int counter;
 
         if (counter++ % often == often-1) {
             WaterBomb water_bomb;
-            often=8;
+            often=15;
             switch (cur) {
                 case UP: {
                     if (LevelGame.matrix[x][y - 1] != 1) {

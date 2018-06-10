@@ -223,7 +223,6 @@ public class LevelGame extends JPanel{
             y=31;
 
         matrix[x][y] = 2;
-
         repaint();
         if(!freeze & pacman.isFrozen())
             pacman.unfreeze();
