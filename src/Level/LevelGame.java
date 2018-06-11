@@ -18,6 +18,7 @@ public class LevelGame extends JPanel{
     public static ArrayList<TimerListener> monsters;
     private JFrame frame;
     private JPanel main_panel;
+    private  int counter;
     public static int[][] matrix;
     public static Visitor[][]Vmatrix;
     private static int x; // pacman place
@@ -35,15 +36,18 @@ public class LevelGame extends JPanel{
     private static Pacman pacman;
     public static ArrayList<Ghost>ghost_to_remove;
     public static ArrayList<Ghost> tmp_array;
+    private  int level;
     public LevelGame(JFrame frame, int level, String path_board,int points,int lives, boolean change) {
         super();
         this.frame = frame;
+        this.level=level;
         turn = 0;
       //  this.main_panel = main_panel;
         tmp_array=new ArrayList<>();
         ghost_to_remove=new ArrayList<>();
         this.lifes=lives;
         this.points=points;
+        this.counter=0;
         setFocusable(true);
         requestFocusInWindow();
        // vx = 0;
@@ -70,10 +74,6 @@ public class LevelGame extends JPanel{
         if(level==3){
             pacman=new AngryPacman(x,y,lives,points);
         }
-//        addKeyListener(KeyEvent.VK_UP, 0, -1);
-//        addKeyListener(KeyEvent.VK_DOWN, 0, 1);
-//        addKeyListener(KeyEvent.VK_LEFT, -1, 0);
-//        addKeyListener(KeyEvent.VK_RIGHT, 1, 0);
         monsters = new ArrayList<>();
         turn = 0;
     }
@@ -110,7 +110,7 @@ public class LevelGame extends JPanel{
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        // ImageIcon img=new ImageIcon("pacman.jpg");
+        counter++;
         for (int i = 0; i < matrix.length; i++)
             for (int j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] == 1) {
@@ -161,10 +161,28 @@ public class LevelGame extends JPanel{
                     if(dofirst)this.Vmatrix[i][j] = new AppleCapsule(200,4);
                 }
                 else if (matrix[i][j] == 'b'-'0') {
-                    if(turn<10)
-                        draw(g,i,j,"temp_block.png");
+                    if (turn < 10)
+                        draw(g, i, j, "temp_block.png");
                     else
-                        matrix[i][j]=0;
+                        matrix[i][j] = 0;
+                }
+            }
+            if(counter>=22&&level==1) {
+                for (int i = 16; i < 20; i++) {
+                    draw(g, i, 12, "temp_block.png");
+                    matrix[i][12] = 1;
+                }
+            }
+            else if(counter>=22&&level==2) {
+                for (int i = 14; i < 18; i++) {
+                    draw(g, i, 9, "temp_block.png");
+                    matrix[i][9] = 1;
+                }
+            }
+            else if(counter>=22&&level==3) {
+                for (int i = 14; i < 18; i++) {
+                    draw(g, i, 9, "temp_block.png");
+                    matrix[i][9] = 1;
                 }
             }
             dofirst=false;
@@ -219,15 +237,7 @@ public class LevelGame extends JPanel{
           g.drawImage(image,i*20,j*20,20,20,this);
         }
     }
-//    private void tryDesired(){
-//        int tmp_x = (x + desiredX) % 32;
-//        int tmp_y = (y + desiredY) % 32;
-//
-//        if(matrix[tmp_x][tmp_y]!=1){
-//            vx = desiredX;
-//            vy = desiredY;
-//        }
-//    }
+
     public static int pacManX(){
         return x;
     }
