@@ -27,6 +27,6 @@ public class GINKEY extends Ghost implements Visitor {
         return super.getImg_path();
     }
     public void freeze(){
-        this.freeze=10;
+        this.freeze(10);
     }
 }

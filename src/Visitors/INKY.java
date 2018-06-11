@@ -1,7 +1,6 @@
 package Visitors;
 
 import Level.LevelGame;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -25,7 +24,7 @@ private int counter;
 
     @Override
     public StatusChange visit(AngryPacman angry_p) { // inky freeze for 5 sec
-        this.freeze=10;
+        super.freeze(10);
         return new StatusChange(0,0,0);
     }
 
@@ -35,7 +34,7 @@ private int counter;
     }
 
     public void freeze(int sec){
-        this.freeze=sec;
+        this.freeze(sec);
     }
     int often=15;
     @Override

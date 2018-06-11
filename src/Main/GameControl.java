@@ -35,17 +35,24 @@ public class GameControl implements ActionListener, KeyListener {
         this.level = 0;
         this.freeze = 0;
         this.curBackground = new Color(3, 3, 99);
-        this.statusP = new JPanel(new GridLayout(4, 1));
+        GridBagLayout gl = new GridBagLayout();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10,10,10,10);
+        this.statusP = new JPanel(gl);
+        //this.statusP = new JPanel(new FlowLayout());
+        gbc.gridx=0;
+        gbc.gridy=0;
         this.pointsL = new JLabel("Points: 0", SwingConstants.CENTER);
         this.pointsL.setForeground(Color.WHITE);
         this.pointsL.setFont(new Font("", Font.BOLD, 20));
         this.pointsL.setSize(200, 200);
         this.pointsL.setHorizontalAlignment(0);
-        this.statusP.add(pointsL);
+        this.statusP.add(pointsL,gbc);
         this.lifesL = new JLabel("Lifes: 0", SwingConstants.CENTER);
         this.lifesL.setForeground(Color.WHITE);
         this.lifesL.setFont(new Font("", Font.BOLD, 20));
-        this.statusP.add(lifesL);
+        gbc.gridy=1;
+        this.statusP.add(lifesL,gbc);
         this.statusP.setBackground(this.curBackground);
         this.lifesL.setSize(100, 200);
         this.lifesL.setHorizontalAlignment(0);
@@ -54,7 +61,8 @@ public class GameControl implements ActionListener, KeyListener {
         this.frame.addKeyListener(this);
         JButton speed_up = new JButton("Speed up");
         speed_up.setSize(100,50);
-        this.statusP.add(speed_up);
+        gbc.gridy=2;
+        this.statusP.add(speed_up,gbc);
         speed_up.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,7 +79,8 @@ public class GameControl implements ActionListener, KeyListener {
         ImageIcon pause_img=resizeImage("pause.jpg",40,40);
         JButton pause=new JButton(pause_img);
         pause.setOpaque(false);
-        this.statusP.add(pause);
+        gbc.gridy=3;
+        this.statusP.add(pause,gbc);
         pause.addActionListener(new ActionListener() {
             boolean wait=true;
             @Override
@@ -108,6 +117,8 @@ public class GameControl implements ActionListener, KeyListener {
     public void nextLevel(boolean change) {
         if (change == true)
             this.level++;
+        if(this.lifes<1)
+            return;
         frame.remove(this.levelGame);
         this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes,change);
         this.levelGame.addKeyListener(this);

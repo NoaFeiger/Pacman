@@ -11,7 +11,7 @@ import java.util.HashSet;
 
 public abstract class Ghost implements TimerListener,Visitor{
    protected int x;
-   protected int freeze;
+   private int freeze;
    protected int y;
    private String img_path;
    private int speed;
@@ -231,7 +231,7 @@ public abstract class Ghost implements TimerListener,Visitor{
         if(lastPlaces.contains(p1)) {
             been = 15;
             if (lastPlaces.lastIndexOf(p1) > 10)
-                been = 25;
+                been = 3*lastPlaces.lastIndexOf(p1);
         }
         return Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y)+been;
                 //-free(p1,0);
@@ -258,6 +258,9 @@ public abstract class Ghost implements TimerListener,Visitor{
         this.lastPlaces.add(new Point(u,v));
         if(this.lastPlaces.size()>25)
             this.lastPlaces.remove(0);
+    }
+    public void freeze(int time){
+        this.freeze = time;
     }
 }
 enum directions{RIGHT,LEFT,UP,DOWN}
