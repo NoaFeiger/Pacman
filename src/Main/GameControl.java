@@ -35,7 +35,7 @@ public class GameControl implements ActionListener, KeyListener {
         this.level = 0;
         this.freeze = 0;
         this.curBackground = new Color(3, 3, 99);
-        this.statusP = new JPanel(new GridLayout(3, 1));
+        this.statusP = new JPanel(new GridLayout(4, 1));
         this.pointsL = new JLabel("Points: 0", SwingConstants.CENTER);
         this.pointsL.setForeground(Color.WHITE);
         this.pointsL.setFont(new Font("", Font.BOLD, 20));
@@ -66,6 +66,25 @@ public class GameControl implements ActionListener, KeyListener {
                 }
                 speed_up.setText("delay " + delay);
                 timer.setDelay(delay);
+            }
+        });
+        ImageIcon pause_img=resizeImage("pause.jpg",40,40);
+        JButton pause=new JButton(pause_img);
+        pause.setOpaque(false);
+        this.statusP.add(pause);
+        pause.addActionListener(new ActionListener() {
+            boolean wait=true;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(wait) // pause
+                {
+                    timer.stop();
+                    wait=false;
+                }
+                else{ // play
+                    timer.start();
+                    wait=true;
+                }
             }
         });
     }
@@ -208,5 +227,12 @@ public class GameControl implements ActionListener, KeyListener {
         frame.add(last_page);
         frame.repaint();
         frame.revalidate();
+    }
+    public ImageIcon resizeImage(String path, int i, int i1) {
+        ImageIcon undo_image = new ImageIcon(path);
+        Image image = undo_image.getImage(); // transform it
+        Image new_img = image.getScaledInstance(i, i1,  Image.SCALE_SMOOTH); // scale it the smooth way
+        undo_image = new ImageIcon(new_img);  // transform it back
+        return undo_image;
     }
 }

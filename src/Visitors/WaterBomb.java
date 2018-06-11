@@ -2,8 +2,6 @@ package Visitors;
 
 import Level.LevelGame;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class WaterBomb  extends Ghost implements Visitor {
 

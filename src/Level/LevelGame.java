@@ -92,47 +92,20 @@ public class LevelGame extends JPanel{
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-//        int countC = 188;
-//        while(countC<240)
-//        for(int i=0;i<matrix.length;i++)
-//            for(int j=0;j<matrix.length;j++){
-//                if(countC<240 & matrix[i][j]==0 & matrix[31-i][j]!=2 & Math.random()<0.4){
-//                    matrix[i][j]=3;
-//                    matrix[31-i][j]=3;
-//                    countC+=2;
-//                }
-//            }
-//            for(int i=0;i<matrix.length;i++){
-//                for(int j=0;j<matrix.length;j++)
-//                    System.out.print(matrix[j][i]);
-//                System.out.println();
-//            }
     }
-
     private void buildLine(String line, int j) {
         for (int i = 0; i < line.length(); i++) {
             matrix[i][j] = line.charAt(i) - '0';
         }
     }
 
-//    private void addKeyListener(int keyEvent, int mvx, int mvy) {
-//        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keyEvent, 0), "forward" + keyEvent);
-//        this.getActionMap().put("forward" + keyEvent, new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                desiredX = mvx;
-//                desiredY = mvy;
-//            }
-//        });
-//    }
     boolean dofirst=true;
     @Override
     public void paint(Graphics g) {
