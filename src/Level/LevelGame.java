@@ -134,14 +134,6 @@ public class LevelGame extends JPanel{
                     }
                     draw(g,i,j,this.Vmatrix[i][j].getPath());
                 }
-                else if (matrix[i][j] == 'c'-'0') {
-                    if(dofirst){
-                        BLINKY blinky= new BLINKY(i,j,1);
-                        this.Vmatrix[i][j]=blinky;
-                        monsters.add(blinky);
-                    }
-                    draw(g,i,j,this.Vmatrix[i][j].getPath());
-                }
                 else if (matrix[i][j] == 'a'-'0') {
                     draw(g,i,j,"fire_ball.png");
                     }
@@ -180,9 +172,9 @@ public class LevelGame extends JPanel{
                 }
             }
             else if(counter>=22&&level==3) {
-                for (int i = 15; i < 18; i++) {
-                    draw(g, i, 4, "temp_block.png");
-                    matrix[i][4] = 1;
+                for (int i = 14; i < 18; i++) {
+                    draw(g, i, 9, "temp_block.png");
+                    matrix[i][9] = 1;
                 }
             }
             dofirst=false;

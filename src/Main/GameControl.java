@@ -176,7 +176,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (this.lifes == 0) {
             endScene();
         }
-        if (LevelGame.collected>10) { //TODO CHANGE POINTS
+        if (LevelGame.collected>30) { //TODO CHANGE POINTS
             if(this.level<3) {
                 System.out.println("Next Level");
                 timer.stop();
