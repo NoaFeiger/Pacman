@@ -24,10 +24,6 @@ public class LevelGame extends JPanel{
     private static int x; // pacman place
     private static int y;
     public static int collected;
-   // protected int vx;
-   // protected int vy;
-   // private int desiredX;
-   // private int desiredY;
     private static Point startingPoint;
     private int points;
     private int lifes;
@@ -50,10 +46,6 @@ public class LevelGame extends JPanel{
         this.counter=0;
         setFocusable(true);
         requestFocusInWindow();
-       // vx = 0;
-      //  vy = 0;
-      //  desiredX = 0;
-      //  desiredY = 0;
         dofirst=true;
         if(change) {
             this.matrix = new int[32][32];

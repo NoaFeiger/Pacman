@@ -140,7 +140,7 @@ public class GameControl implements ActionListener, KeyListener {
             this.levelGame.requestFocus(false);
             levelGame.turn++;
             LevelGame.getPacMan().switchM();
-            //System.out.println(LevelGame.getPacMan().getX()+" "+LevelGame.getPacMan().getY());
+            int curLife = this.lifes;
             StatusChange statusChange = null;
             for (TimerListener t : LevelGame.monsters) {
                 statusChange = t.action();
@@ -158,7 +158,8 @@ public class GameControl implements ActionListener, KeyListener {
             } else {
                 freeze--;
             }
-            update(statusChange);
+            if(this.lifes==curLife)
+                update(statusChange);
             this.levelGame.repaint();
         }
     }
@@ -171,8 +172,9 @@ public class GameControl implements ActionListener, KeyListener {
                 LevelGame.getPacMan().freeze();
             else// =\<
                 LevelGame.getPacMan().unfreeze();
-            if ((statusChange.getLifes() + this.lifes) != this.lifes) {
+            if (statusChange.getLifes()!=0) {
                 this.lifes = this.lifes + statusChange.getLifes();
+                System.out.println("Life");
                 if (this.lifes != 0) {
                     timer.stop();
                     nextLevel(false);
