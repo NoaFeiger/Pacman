@@ -42,7 +42,6 @@ private int counter;
     public StatusChange move() {
         StatusChange statusChange = super.move();
 
-
         if (counter++ % often == often-1) {
             WaterBomb water_bomb;
             often=15;
