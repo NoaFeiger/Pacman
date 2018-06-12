@@ -247,7 +247,7 @@ public class LevelGame extends JPanel{
 //            case 1:
 //
 //        }
-    }
+//    }
 
 
 
