@@ -173,7 +173,7 @@ public class LevelGame extends JPanel{
                     matrix[i][12] = 1;
                 }
             }
-            else if(counter>=26&&level==2) {
+            else if(counter>=22&&level==2) {
                 for (int i = 14; i < 18; i++) {
                     draw(g, i, 9, "temp_block.png");
                     matrix[i][9] = 1;
