@@ -18,6 +18,7 @@ public class GameControl implements ActionListener, KeyListener {
     private int points;
     private int level;
     private int freeze;
+    private int counter;
     private Timer timer;
     private int delay = 50;
     private JLabel pointsL;
@@ -37,22 +38,23 @@ public class GameControl implements ActionListener, KeyListener {
         this.curBackground = new Color(3, 3, 99);
         GridBagLayout gl = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10,10,10,10);
+        gbc.insets = new Insets(10, 10, 10, 10);
         this.statusP = new JPanel(gl);
         //this.statusP = new JPanel(new FlowLayout());
-        gbc.gridx=0;
-        gbc.gridy=0;
+        gbc.gridx = 0;
+        this.counter = 0;
+        gbc.gridy = 0;
         this.pointsL = new JLabel("Points: 0", SwingConstants.CENTER);
         this.pointsL.setForeground(Color.WHITE);
         this.pointsL.setFont(new Font("", Font.BOLD, 20));
         this.pointsL.setSize(200, 200);
         this.pointsL.setHorizontalAlignment(0);
-        this.statusP.add(pointsL,gbc);
+        this.statusP.add(pointsL, gbc);
         this.lifesL = new JLabel("Lifes: 0", SwingConstants.CENTER);
         this.lifesL.setForeground(Color.WHITE);
         this.lifesL.setFont(new Font("", Font.BOLD, 20));
-        gbc.gridy=1;
-        this.statusP.add(lifesL,gbc);
+        gbc.gridy = 1;
+        this.statusP.add(lifesL, gbc);
         this.statusP.setBackground(this.curBackground);
         this.lifesL.setSize(100, 200);
         this.lifesL.setHorizontalAlignment(0);
@@ -60,39 +62,38 @@ public class GameControl implements ActionListener, KeyListener {
         this.frame.getContentPane().setBackground(this.curBackground);
         this.frame.addKeyListener(this);
         JButton speed_up = new JButton("Speed up");
-        speed_up.setSize(100,50);
-        gbc.gridy=2;
-        this.statusP.add(speed_up,gbc);
+        speed_up.setSize(100, 50);
+        gbc.gridy = 2;
+        this.statusP.add(speed_up, gbc);
         speed_up.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(delay == 50) {
+                if (delay == 50) {
                     delay = 10;
-                }
-                else {
+                } else {
                     delay = 50;
                 }
                 speed_up.setText("delay " + delay);
                 timer.setDelay(delay);
             }
         });
-        ImageIcon pause_img=resizeImage("pause.jpg",40,40);
-        JButton pause=new JButton(pause_img);
+        ImageIcon pause_img = resizeImage("pause.jpg", 40, 40);
+        JButton pause = new JButton(pause_img);
         pause.setOpaque(false);
-        gbc.gridy=3;
-        this.statusP.add(pause,gbc);
+        gbc.gridy = 3;
+        this.statusP.add(pause, gbc);
         pause.addActionListener(new ActionListener() {
-            boolean wait=true;
+            boolean wait = true;
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(wait) // pause
+                if (wait) // pause
                 {
                     timer.stop();
-                    wait=false;
-                }
-                else{ // play
+                    wait = false;
+                } else { // play
                     timer.start();
-                    wait=true;
+                    wait = true;
                 }
             }
         });
@@ -100,7 +101,7 @@ public class GameControl implements ActionListener, KeyListener {
 
     public void startGame() {
         this.level = 1;
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, 0, 3,true, curBackground);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, 0, 3, true, curBackground);
         this.levelGame.setFocusable(true);
         this.levelGame.setFocusTraversalKeysEnabled(false);
         this.levelGame.requestFocusInWindow();
@@ -117,10 +118,10 @@ public class GameControl implements ActionListener, KeyListener {
     public void nextLevel(boolean change) {
         if (change == true)
             this.level++;
-        if(this.lifes<1)
+        if (this.lifes < 1)
             return;
         frame.remove(this.levelGame);
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes,change, curBackground);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes, change, curBackground);
         this.levelGame.addKeyListener(this);
         this.curBackground = new Color(5, 5, 160);
         this.statusP.setBackground(this.curBackground);
@@ -136,16 +137,29 @@ public class GameControl implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timer) {
-
+            if (level == 1) {
+                if (counter >= 10 && counter <= 22) { // open cage
+                    for (int j = 17; j < 20; j++) {
+                        LevelGame.matrix_walls[j][12] = 0;
+                    }
+                } else {// close cage
+                    for (int j = 17; j < 20; j++) {
+                        LevelGame.matrix_walls[j][12] = 'b' - '0';
+                    }
+                }
+                counter++;
+            }
             this.levelGame.requestFocus(false);
             levelGame.turn++;
             LevelGame.getPacMan().switchM();
             int curLife = this.lifes;
             StatusChange statusChange = null;
-            for (TimerListener t : LevelGame.monsters) {
+            for (TimerListener t : LevelGame.array_ghost) {
                 statusChange = t.action();
                 update(statusChange);
             }
+
+
             LevelGame.monsters.addAll(LevelGame.tmp_array);
             LevelGame.tmp_array.clear();
             if (LevelGame.ghost_to_remove != null) {
@@ -158,11 +172,12 @@ public class GameControl implements ActionListener, KeyListener {
             } else {
                 freeze--;
             }
-            if(this.lifes==curLife)
+            if (this.lifes == curLife)
                 update(statusChange);
             this.levelGame.repaint();
         }
     }
+
 
     private void update(StatusChange statusChange) {
         if (statusChange != null) {

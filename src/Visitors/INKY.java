@@ -2,9 +2,6 @@ package Visitors;
 
 import Level.LevelGame;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
 
 public class INKY extends Ghost implements Visitor {
 private int counter;
@@ -47,8 +44,8 @@ private int counter;
             often=15;
             switch (cur) {
                 case UP: {
-                    if (LevelGame.matrix[x][y - 1] != 1) {
-                        water_bomb = new WaterBomb(this, x, y - 1, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
+                    if (LevelGame.matrix_walls[x_ghost][y_ghost - 1] != 1) {
+                        water_bomb = new WaterBomb(this, x_ghost, y_ghost - 1, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
@@ -56,8 +53,8 @@ private int counter;
                     break;
                 }
                 case DOWN: {
-                    if (LevelGame.matrix[x][y + 1] != 1) {
-                        water_bomb = new WaterBomb(this, x, y + 1, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
+                    if (LevelGame.matrix_walls[x_ghost][y_ghost + 1] != 1) {
+                        water_bomb = new WaterBomb(this, x_ghost, y_ghost + 1, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
@@ -65,8 +62,8 @@ private int counter;
                     break;
                 }
                 case LEFT: {
-                    if (LevelGame.matrix[x - 1][y] != 1) {
-                        water_bomb = new WaterBomb(this, x - 1, y, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
+                    if (LevelGame.matrix_walls[x_ghost - 1][y_ghost] != 1) {
+                        water_bomb = new WaterBomb(this, x_ghost - 1, y_ghost, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
@@ -74,8 +71,8 @@ private int counter;
                     break;
                 }
                 default: { //RIGHT
-                    if (LevelGame.matrix[x + 1][y] != 1) {
-                        water_bomb = new WaterBomb(this, x + 1, y, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
+                    if (LevelGame.matrix_walls[x_ghost + 1][y_ghost] != 1) {
+                        water_bomb = new WaterBomb(this, x_ghost + 1, y_ghost, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);

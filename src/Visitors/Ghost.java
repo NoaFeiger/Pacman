@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public abstract class Ghost implements TimerListener,Visitor{
-   protected int x;
+   protected int x_ghost;
    protected int freeze;
-   protected int y;
+   protected int y_ghost;
    private String img_path;
    private int speed;
    boolean alive;
@@ -41,12 +41,12 @@ public abstract class Ghost implements TimerListener,Visitor{
        lastPlaces = new ArrayList<>();
        this.normal_path = normal_path;
        this.frozen_path = frozen_path;
-       this.x=x;
+       this.x_ghost =x;
        this.visible=0;
        this.freeze=0;
        this.last_direct=null;
        this.count=0;
-       this.y=y;
+       this.y_ghost =y;
        this.id=id;
        this.speed = speed;
        this.alive = true;
@@ -69,20 +69,20 @@ public abstract class Ghost implements TimerListener,Visitor{
         this.alive = alive;
     }
 
-    public int getX() {
-        return x;
+    public int getX_ghost() {
+        return x_ghost;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setX_ghost(int x_ghost) {
+        this.x_ghost = x_ghost;
     }
 
-    public int getY() {
-        return y;
+    public int getY_ghost() {
+        return y_ghost;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setY_ghost(int y_ghost) {
+        this.y_ghost = y_ghost;
     }
 
     public String getImg_path() {
@@ -97,8 +97,8 @@ public abstract class Ghost implements TimerListener,Visitor{
     public StatusChange action() {
         StatusChange statusChange = null;
         if (!alive){
-            LevelGame.matrix_ghost[x][y]=null;
-            LevelGame.matrix[x][y]=0;
+            LevelGame.array_ghost.remove(this);
+           // LevelGame.matrix[x_ghost][y_ghost]=0;
         }
         else if(freeze>0){ // TODO check order of if else
             this.img_path = frozen_path;
@@ -122,24 +122,24 @@ public abstract class Ghost implements TimerListener,Visitor{
     public StatusChange move() {
         // create a list of all moves possibilities
         StatusChange statusChange = null;
-        int tmp_x=x;
-        int tmp_y=y;
+        int tmp_x=x_ghost;
+        int tmp_y= y_ghost;
         HashSet<Integer>set=new HashSet<>();
-        set.add('b'-'0');set.add(1);set.add(4);set.add(8);set.add(9);
+        set.add('b'-'0');set.add(1);
         ArrayList<directions> poss=new ArrayList<>();
-        if (((x)<30)&&(!set.contains(LevelGame.matrix[x + 1][y]))) // RIGHT
+        if (((x_ghost)<30)&&(!set.contains(LevelGame.matrix_walls[x_ghost + 1][y_ghost]))) // RIGHT
             poss.add(directions.RIGHT);
-        if (((x>1)&&(!set.contains(LevelGame.matrix[x - 1][y])))) // LEFT
+        if (((x_ghost >1)&&(!set.contains(LevelGame.matrix_walls[x_ghost - 1][y_ghost])))) // LEFT
             poss.add(directions.LEFT);
-        if (((y)>1)&&(!set.contains(LevelGame.matrix[x][y - 1]))) // UP
+        if (((y_ghost)>1)&&(!set.contains(LevelGame.matrix_walls[x_ghost][y_ghost - 1]))) // UP
             poss.add(directions.UP);
-        if (((y<30)&&(!set.contains(LevelGame.matrix[x][y + 1])))) // DOWN
+        if (((y_ghost <30)&&(!set.contains(LevelGame.matrix_walls[x_ghost][y_ghost + 1])))) // DOWN
             poss.add(directions.DOWN);
 
         int size=poss.size();
         if (size!=0){
         //int random = (int)(Math.random() *size );
-            directions d = null;
+            directions d;
         if(!beenCorner & corner!=null) {
             d = getClosest(poss, corner);
         }
@@ -151,43 +151,45 @@ public abstract class Ghost implements TimerListener,Visitor{
 
         switch (d){
             case UP:{
-                y--;
+                y_ghost--;
                 break;
             }
             case DOWN:{
-                y++;
+                y_ghost++;
                 break;
             }
             case LEFT:{
-                x--;
+                x_ghost--;
                 break;
             }
             case RIGHT:{
-                x++;
+                x_ghost++;
                 break;
             }
         }
-        if(LevelGame.matrix[x][y]==2){
-            System.out.println("HIT");
-            statusChange = LevelGame.getPacMan().accept(this);
-            LevelGame.matrix_ghost[tmp_x][tmp_y]=temp;
-            LevelGame.matrix[tmp_x][tmp_y]=tempnum;
-            cur = d;
-            beenCorner = false;
-            return statusChange;
-        }
-        if(!beenCorner & LevelGame.matrix[x][y]==5) {
+       // if(x_ghost ==LevelGame.getPacMan().getX()&& y_ghost ==LevelGame.getPacMan().getY()){
+            // System.out.println("HIT");
+            //statusChange = LevelGame.getPacMan().accept(this);
+           // LevelGame.array_ghost[tmp_x][tmp_y]=temp;
+           // LevelGame.matrix[tmp_x][tmp_y]=tempnum;
+         //   cur = d;
+         //   beenCorner = false;
+           // return statusChange;
+
+        if(!beenCorner & LevelGame.matrix[x_ghost][y_ghost]==5) {
             beenCorner = true;
             System.out.println("Corner " + this.corner);
             freeze = 10;
         }
-        LevelGame.matrix_ghost[tmp_x][tmp_y]=temp;
-        LevelGame.matrix[tmp_x][tmp_y]=tempnum;
-        temp = LevelGame.matrix_ghost[x][y];
-        tempnum = LevelGame.matrix[x][y];
-        LevelGame.matrix[x][y]=id; // new place of GINKEY
-        LevelGame.matrix_ghost[x][y]=this;
-        updateList(x,y);
+       // LevelGame.array_ghost[tmp_x][tmp_y]=temp
+        // LevelGame.matrix[tmp_x][tmp_y]=tempnum;
+       // temp = LevelGame.array_ghost[x_ghost][y_ghost];
+        //tempnum = LevelGame.matrix[x_ghost][y_ghost];
+     //   LevelGame.array_ghost[x_ghost][y_ghost]=id; //
+       // LevelGame.array_ghost[x_ghost][y_ghost]=this;//new place of GINKEY
+       // x_ghost=tmp_x;//new x of GINKEY
+        //y_ghost=tmp_y;//new y of GINKEY
+        updateList(x_ghost, y_ghost);
         cur = d;
         }
         return statusChange;
@@ -199,8 +201,8 @@ public abstract class Ghost implements TimerListener,Visitor{
         int curDis = Integer.MAX_VALUE;
         directions toReturn = options.get(0);
         for(directions d: options){
-            curX = x;
-            curY = y;
+            curX = x_ghost;
+            curY = y_ghost;
             switch (d){
                 case UP:{
                     curY--;
@@ -240,13 +242,13 @@ public abstract class Ghost implements TimerListener,Visitor{
         int free = 0;
         if(t>2)
             return 0;
-        if(p.x>0 && LevelGame.matrix[x-1][y]!=1)
+        if(p.x>0 && LevelGame.matrix[x_ghost -1][y_ghost]!=1)
             free++;
-        if(p.y>0 && LevelGame.matrix[x][y-1]!=1)
+        if(p.y>0 && LevelGame.matrix[x_ghost][y_ghost -1]!=1)
             free++;
-        if(p.x<31 && LevelGame.matrix[x+1][y]!=1)
+        if(p.x<31 && LevelGame.matrix[x_ghost +1][y_ghost]!=1)
             free++;
-        if(p.y<31 && LevelGame.matrix[x][y+1]!=1)
+        if(p.y<31 && LevelGame.matrix[x_ghost][y_ghost +1]!=1)
             free++;
         free += free(new Point(p.x+1,p.y),t+1);
         free += free(new Point(p.x,p.y+1),t+1);

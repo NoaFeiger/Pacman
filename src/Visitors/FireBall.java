@@ -41,40 +41,40 @@ public class FireBall extends Ghost implements Visitor {
     public StatusChange move() {
         StatusChange statusChange = null;
         // create a list of all moves possibilities
-        int tmp_x = x;
-        int tmp_y = y;
+        int tmp_x = this.x_ghost;
+        int tmp_y = this.y_ghost;
         switch (direct_ghost) {
             case UP: {
-                y--;
+                this.y_ghost--;
                 break;
             }
             case DOWN: {
-                y++;
+                this.y_ghost++;
                 break;
             }
             case LEFT: {
-                x--;
+                this.x_ghost--;
                 break;
             }
             case RIGHT: {
-                x++;
+                this.x_ghost++;
                 break;
             }
         }
-        if (!(x < 0 || y < 0 || x > 31 || y > 31)) {
-            LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
-            LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-            temp = LevelGame.matrix_ghost[x][y];
-            tempnum = LevelGame.matrix[x][y];
-            LevelGame.matrix[x][y] = id; // new place of GINKEY
-            LevelGame.matrix_ghost[x][y] = LevelGame.matrix_ghost[tmp_x][tmp_y];
-
-        } else {
-            LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
-            LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-            LevelGame.ghost_to_remove.add(this);
+        if (!(this.x_ghost < 0 || this.y_ghost < 0 || this.x_ghost > 31 || this.y_ghost > 31)) {//alive
+           // LevelGame.array_ghost[tmp_x][tmp_y] = temp;
+            //LevelGame.matrix[tmp_x][tmp_y] = tempnum;
+           // temp = LevelGame.array_ghost[this.x_ghost][this.y_ghost];
+            //tempnum = LevelGame.matrix[this.x_ghost][this.y_ghost];
+            //LevelGame.matrix[this.x_ghost][this.y_ghost] = id; // new place of GINKEY
+         //  LevelGame.array_ghost[this.x_ghost][this.y_ghost] = LevelGame.array_ghost[tmp_x][tmp_y];
+            x_ghost=tmp_x;
+            y_ghost=tmp_y;
+        } else { // died
+            LevelGame.array_ghost.remove(this);
+       //     LevelGame.ghost_to_remove.add(this);
         }
-        if(LevelGame.matrix[x][y]==2){
+        if(LevelGame.matrix[this.x_ghost][this.y_ghost]==2){
             System.out.println("HIT");
             statusChange = LevelGame.getPacMan().accept(this);
         }
