@@ -292,6 +292,7 @@ public class LevelGame extends JPanel{
             for(int i=0;i<array_ghost.size();i++){
                 if(array_ghost.get(i).getX_ghost()==tmp_x&&array_ghost.get(i).getY_ghost()==tmp_y){
                     statusChange = pacman.accept(array_ghost.get(i));
+
                 }
             }
            // if(array_ghost[tmp_x][tmp_y] !=null) {
@@ -305,7 +306,7 @@ public class LevelGame extends JPanel{
         if(y<=-1)
             y=31;
 
-        matrix[x][y] = 2;
+
         repaint();
         if(!freeze & pacman.isFrozen())
             pacman.unfreeze();
