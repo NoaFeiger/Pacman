@@ -176,7 +176,7 @@ public class LevelGame extends JPanel{
             }
 
         draw(g,x,y,pacman.getImg_pacman()); // draw pacman
-
+/*
         if(counter>=22&&level==1) {
             for (int i = 16; i < 20; i++) {
                 draw(g, i, 12, "temp_block.png");
@@ -193,8 +193,8 @@ public class LevelGame extends JPanel{
             for (int i = 14; i < 18; i++) {
                 draw(g, i, 9, "temp_block.png");
                 matrix[i][9] = 1;
-            }
-        }
+            }*/
+
 
 
 /*
