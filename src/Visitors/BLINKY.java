@@ -109,12 +109,12 @@ public class BLINKY extends Ghost implements Visitor {
                     break;
                 }
             }
-            temp = LevelGame.Vmatrix[x][y];
+            temp = LevelGame.matrix_ghost[x][y];
             tempnum = LevelGame.matrix[x][y];
-            LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
+            LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
             LevelGame.matrix[tmp_x][tmp_y] = tempnum;
             LevelGame.matrix[x][y] = id; // new place of GINKEY
-            LevelGame.Vmatrix[x][y] = this;
+            LevelGame.matrix_ghost[x][y] = this;
 
             if(FireBall.can_shoot) {
                 FireBall fire_bomb = new FireBall(this, x, y, "fire_ball.png", 1, 'a' - '0', d);//TODO check if it goes on the right direction and check id

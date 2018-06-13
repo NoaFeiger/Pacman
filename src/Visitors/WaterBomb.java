@@ -22,7 +22,7 @@ public class WaterBomb  extends Ghost implements Visitor {
         this.speed=speed;
         this.x_ghost=x_ghost;
         this.y_ghost=y_ghost;
-        temp=LevelGame.Vmatrix[x_ghost][y_ghost];
+        temp=LevelGame.matrix_ghost[x_ghost][y_ghost];
         tempnum=LevelGame.matrix[x_ghost][y_ghost];
     }
 
@@ -48,7 +48,7 @@ public class WaterBomb  extends Ghost implements Visitor {
     public StatusChange move() {
         if(dead){
             LevelGame.matrix[x][y]=0;
-            LevelGame.Vmatrix=null;
+            LevelGame.matrix_ghost =null;
             return null;
         }
         System.out.println(x+" "+y);
@@ -83,17 +83,17 @@ public class WaterBomb  extends Ghost implements Visitor {
                 }
                 if (!(LevelGame.matrix[x][y] == 1)) {
                     if (!(LevelGame.matrix[x][y] == 4 || LevelGame.matrix[x][y] == 8)) { //if encountered a monster - dont save it
-                        LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
+                        LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
                         LevelGame.matrix[tmp_x][tmp_y] = tempnum;
                     }
-                    temp = LevelGame.Vmatrix[x][y];
+                    temp = LevelGame.matrix_ghost[x][y];
                     tempnum = LevelGame.matrix[x][y];
                     LevelGame.matrix[x][y] = id; // new place of GINKEY
-                    LevelGame.Vmatrix[x][y] = this;
+                    LevelGame.matrix_ghost[x][y] = this;
                     return statusChange;
 
                 } else {
-                    LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
+                    LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
                     LevelGame.matrix[tmp_x][tmp_y] = tempnum;
                     x = tmp_x;
                     y = tmp_y;

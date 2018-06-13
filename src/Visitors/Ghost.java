@@ -2,9 +2,7 @@ package Visitors;
 
 import Level.LevelGame;
 import Main.TimerListener;
-import javafx.util.Pair;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -99,7 +97,7 @@ public abstract class Ghost implements TimerListener,Visitor{
     public StatusChange action() {
         StatusChange statusChange = null;
         if (!alive){
-            LevelGame.Vmatrix[x][y]=null;
+            LevelGame.matrix_ghost[x][y]=null;
             LevelGame.matrix[x][y]=0;
         }
         else if(freeze>0){ // TODO check order of if else
@@ -172,7 +170,7 @@ public abstract class Ghost implements TimerListener,Visitor{
         if(LevelGame.matrix[x][y]==2){
             System.out.println("HIT");
             statusChange = LevelGame.getPacMan().accept(this);
-            LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
+            LevelGame.matrix_ghost[tmp_x][tmp_y]=temp;
             LevelGame.matrix[tmp_x][tmp_y]=tempnum;
             return statusChange;
         }
@@ -181,12 +179,12 @@ public abstract class Ghost implements TimerListener,Visitor{
             System.out.println("Corner " + this.corner);
             freeze = 10;
         }
-        LevelGame.Vmatrix[tmp_x][tmp_y]=temp;
+        LevelGame.matrix_ghost[tmp_x][tmp_y]=temp;
         LevelGame.matrix[tmp_x][tmp_y]=tempnum;
-        temp = LevelGame.Vmatrix[x][y];
+        temp = LevelGame.matrix_ghost[x][y];
         tempnum = LevelGame.matrix[x][y];
         LevelGame.matrix[x][y]=id; // new place of GINKEY
-        LevelGame.Vmatrix[x][y]=this;
+        LevelGame.matrix_ghost[x][y]=this;
         updateList(x,y);
         cur = d;
         }
