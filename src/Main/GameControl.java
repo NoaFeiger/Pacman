@@ -139,11 +139,11 @@ public class GameControl implements ActionListener, KeyListener {
         if (e.getSource() == timer) {
             if (level == 1) {
                 if (counter >= 10 && counter <= 22) { // open cage
-                    for (int j = 17; j < 20; j++) {
+                    for (int j = 16; j < 20; j++) {
                         LevelGame.matrix_walls[j][12] = 0;
                     }
                 } else {// close cage
-                    for (int j = 17; j < 20; j++) {
+                    for (int j = 16; j < 20; j++) {
                         LevelGame.matrix_walls[j][12] = 'b' - '0';
                     }
                 }

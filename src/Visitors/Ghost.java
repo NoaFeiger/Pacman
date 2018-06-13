@@ -17,10 +17,10 @@ public abstract class Ghost implements TimerListener,Visitor{
    private int count;
    protected int id;
    protected directions last_direct;
-   protected Visitor temp;
+   protected Ghost temp;
    protected int tempnum;
    protected int visible;
-   static ArrayList<Point> corners;
+   public static ArrayList<Point> corners;
    private ArrayList<Point> lastPlaces;
    private Point corner;
    private boolean beenCorner;
@@ -167,15 +167,15 @@ public abstract class Ghost implements TimerListener,Visitor{
                 break;
             }
         }
-       // if(x_ghost ==LevelGame.getPacMan().getX()&& y_ghost ==LevelGame.getPacMan().getY()){
-            // System.out.println("HIT");
-            //statusChange = LevelGame.getPacMan().accept(this);
-           // LevelGame.array_ghost[tmp_x][tmp_y]=temp;
-           // LevelGame.matrix[tmp_x][tmp_y]=tempnum;
-         //   cur = d;
-         //   beenCorner = false;
-           // return statusChange;
-
+        if(x_ghost ==LevelGame.getPacMan().getX()&& y_ghost ==LevelGame.getPacMan().getY()) {
+            System.out.println("HIT");
+            statusChange = LevelGame.getPacMan().accept(this);
+            //LevelGame.array_ghost[tmp_x][tmp_y] = temp;
+            LevelGame.matrix[tmp_x][tmp_y] = tempnum;
+            cur = d;
+            beenCorner = false;
+            return statusChange;
+        }
         if(!beenCorner & LevelGame.matrix[x_ghost][y_ghost]==5) {
             beenCorner = true;
             System.out.println("Corner " + this.corner);
@@ -231,9 +231,7 @@ public abstract class Ghost implements TimerListener,Visitor{
     private int distance(Point p1, Point p2){
         int been = 0;
         if(lastPlaces.contains(p1)) {
-            been = 15;
-            if (lastPlaces.lastIndexOf(p1) > 10)
-                been = 25;
+            been = lastPlaces.lastIndexOf(p1)*3;
         }
         return Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y)+been;
                 //-free(p1,0);

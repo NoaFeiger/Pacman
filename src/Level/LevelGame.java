@@ -50,6 +50,7 @@ public class LevelGame extends JPanel{
         setFocusable(true);
         requestFocusInWindow();
         dofirst=true;
+        Ghost.corners = null;
         this.boardColor = boardColor;
         if(change) {
             this.matrix = new int[32][32];
@@ -151,7 +152,7 @@ public class LevelGame extends JPanel{
     public void paint(Graphics g) {
         super.paint(g);
         counter++;
-
+        turn++;
         //walls
         for(int i=0;i<matrix_walls.length;i++){
             for(int j=0;j<matrix_walls[i].length;j++) {
@@ -177,7 +178,7 @@ public class LevelGame extends JPanel{
 
         draw(g,x,y,pacman.getImg_pacman()); // draw pacman
 
-        if(counter>=22&&level==1) {
+        if(counter>=28&&level==1) {
             for (int i = 16; i < 20; i++) {
                 draw(g, i, 12, "temp_block.png");
                 matrix[i][12] = 1;
