@@ -10,8 +10,6 @@ public class FireBall extends Ghost implements Visitor {
     private int speed;
     private int id;
     private BLINKY blinky;
-    public static boolean can_shoot;
-    private boolean dead;
 
     public FireBall(BLINKY me, int x_ghost, int y_ghost, String path_img, int speed, int id, directions direct_gohst) {
         super(x_ghost, y_ghost, path_img,"", speed, id);
@@ -41,73 +39,6 @@ public class FireBall extends Ghost implements Visitor {
 
     @Override
     public StatusChange move() {
-        if(dead){
-            LevelGame.matrix[x][y]=0;
-            LevelGame.matrix_ghost =null;
-            return null;
-        }
-        System.out.println(x+" "+y);
-        StatusChange statusChange = null;
-        int tmp_x = x;
-        int tmp_y = y;
-
-        switch (direct_ghost) {
-            case UP: {
-                y--;
-                break;
-            }
-            case DOWN: {
-                y++;
-                break;
-            }
-            case LEFT: {
-                x--;
-                break;
-            }
-            case RIGHT: {
-                x++;
-                break;
-            }
-        }
-        if(LevelGame.matrix[x][y]!='c'-'0') {
-            if (!(x < 0 || y < 0 || x > 31 || y > 31)) {
-                if (LevelGame.matrix[x][y] == 2) {
-                    System.out.println("HIT");
-                    statusChange = LevelGame.getPacMan().accept(this);
-                    return statusChange;
-                }
-                if (!(LevelGame.matrix[x][y] == 1))
-                {
-                    if (!(LevelGame.matrix[x][y] == 4 || LevelGame.matrix[x][y] == 8)) { //if encountered a monster - dont save it
-                        LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
-                        LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-                    }
-                    temp = LevelGame.matrix_ghost[x][y];
-                    tempnum = LevelGame.matrix[x][y];
-                    LevelGame.matrix[x][y] = id; // new place of GINKEY
-                    LevelGame.matrix_ghost[x][y] = this;
-                    return statusChange;
-
-                }
-                else {
-                    LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
-                    LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-                    x = tmp_x;
-                    y = tmp_y;
-                    dead = true;
-                    this.blinky.setCan_shoot_fire(true);
-                    LevelGame.ghost_to_remove.add(this);
-                    return statusChange;
-                }
-            }
-        }
-        dead=true;
-        this.blinky.setCan_shoot_fire(true);
-        return null;
-    }
-    /*
-    @Override
-    public StatusChange move() {
         StatusChange statusChange = null;
         // create a list of all moves possibilities
         int tmp_x = x;
@@ -131,19 +62,17 @@ public class FireBall extends Ghost implements Visitor {
             }
         }
         if (!(x < 0 || y < 0 || x > 31 || y > 31)) {
-            LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
+            LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
             LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-            temp = LevelGame.matrix_ghost[x][y];
+            temp = LevelGame.Vmatrix[x][y];
             tempnum = LevelGame.matrix[x][y];
             LevelGame.matrix[x][y] = id; // new place of GINKEY
-            LevelGame.matrix_ghost[x][y] = LevelGame.matrix_ghost[tmp_x][tmp_y];
+            LevelGame.Vmatrix[x][y] = LevelGame.Vmatrix[tmp_x][tmp_y];
 
-        } else { // corner
-            LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
+        } else {
+            LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
             LevelGame.matrix[tmp_x][tmp_y] = tempnum;
             LevelGame.ghost_to_remove.add(this);
-            blinky.setCan_shoot_fire(true);
-
         }
         if(LevelGame.matrix[x][y]==2){
             System.out.println("HIT");
@@ -151,7 +80,6 @@ public class FireBall extends Ghost implements Visitor {
         }
         return statusChange;
     }
-    */
     @Override
     public String getPath() {
         return super.getImg_path();

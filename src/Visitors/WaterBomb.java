@@ -13,6 +13,7 @@ public class WaterBomb  extends Ghost implements Visitor {
     private directions direct_ghost;
     private INKY ghost;
     private boolean dead;
+
     public WaterBomb(INKY me,int x_ghost,int y_ghost,String path_img,int speed,int id, directions direct_ghost){
         super(x_ghost, y_ghost,path_img,path_img,speed,id);
         this.id=id;
@@ -22,7 +23,7 @@ public class WaterBomb  extends Ghost implements Visitor {
         this.speed=speed;
         this.x_ghost=x_ghost;
         this.y_ghost=y_ghost;
-        temp=LevelGame.matrix_ghost[x_ghost][y_ghost];
+        temp=LevelGame.Vmatrix[x_ghost][y_ghost];
         tempnum=LevelGame.matrix[x_ghost][y_ghost];
     }
 
@@ -48,7 +49,7 @@ public class WaterBomb  extends Ghost implements Visitor {
     public StatusChange move() {
         if(dead){
             LevelGame.matrix[x][y]=0;
-            LevelGame.matrix_ghost =null;
+            LevelGame.Vmatrix=null;
             return null;
         }
         System.out.println(x+" "+y);
@@ -74,38 +75,36 @@ public class WaterBomb  extends Ghost implements Visitor {
                 break;
             }
         }
-        if(LevelGame.matrix[x][y]!=9) {
-            if (!(x < 0 || y < 0 || x > 31 || y > 31)) {
-                if (LevelGame.matrix[x][y] == 2) {
-                    System.out.println("HIT");
-                    statusChange = LevelGame.getPacMan().accept(this);
-                    return statusChange;
-                }
-                if (!(LevelGame.matrix[x][y] == 1)) {
-                    if (!(LevelGame.matrix[x][y] == 4 || LevelGame.matrix[x][y] == 8)) { //if encountered a monster - dont save it
-                        LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
-                        LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-                    }
-                    temp = LevelGame.matrix_ghost[x][y];
-                    tempnum = LevelGame.matrix[x][y];
-                    LevelGame.matrix[x][y] = id; // new place of GINKEY
-                    LevelGame.matrix_ghost[x][y] = this;
-                    return statusChange;
-
-                } else {
-                    LevelGame.matrix_ghost[tmp_x][tmp_y] = temp;
+        if (!(x < 0 || y < 0 || x > 31 || y > 31)) {
+            if(LevelGame.matrix[x][y]==2){
+                System.out.println("HIT");
+                statusChange =  LevelGame.getPacMan().accept(this);
+                return statusChange;
+            }
+            if (!(LevelGame.matrix[x][y] == 1)) {
+                if(!(LevelGame.matrix[x][y]==4||LevelGame.matrix[x][y]==8)) { //if encountered a monster - dont save it
+                    LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
                     LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-                    x = tmp_x;
-                    y = tmp_y;
-                    dead = true;
-                    ghost.setCan_shoot_water(true);
-                    LevelGame.ghost_to_remove.add(this);
-                    return statusChange;
                 }
+                temp = LevelGame.Vmatrix[x][y];
+                tempnum = LevelGame.matrix[x][y];
+                LevelGame.matrix[x][y] = id; // new place of GINKEY
+                LevelGame.Vmatrix[x][y] = this;
+                return statusChange;
+
+            } else {
+                LevelGame.Vmatrix[tmp_x][tmp_y] = temp;
+                LevelGame.matrix[tmp_x][tmp_y] = tempnum;
+                //LevelGame.Vmatrix[x][y] = null;
+                //LevelGame.matrix[x][y] = 1;
+                x=tmp_x;
+                y=tmp_y;
+                dead=true;
+                LevelGame.ghost_to_remove.add(this);
+                return statusChange;
             }
         }
         dead=true;
-        ghost.setCan_shoot_water(true);
         return null;
     }
     @Override

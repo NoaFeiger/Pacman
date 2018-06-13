@@ -1,6 +1,7 @@
 package Level;
 import Main.TimerListener;
 import Visitors.*;
+import javafx.util.Pair;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,9 +19,7 @@ public class LevelGame extends JPanel{
     private JPanel main_panel;
     private  int counter;
     public static int[][] matrix;
-    public static Visitor[][] matrix_ghost;
-    public static Visitor[][]matrix_capsuls;
-    public static int[][] matrix_walls;
+    public static Visitor[][]Vmatrix;
     private static int x; // pacman place
     private static int y;
     public static int collected;
@@ -33,12 +32,14 @@ public class LevelGame extends JPanel{
     public static ArrayList<Ghost>ghost_to_remove;
     public static ArrayList<Ghost> tmp_array;
     private  int level;
-    public LevelGame(JFrame frame, int level, String path_board,int points,int lives, boolean change) {
+    private Color boardColor;
+    private ArrayList<Pair<Point,Capsule>> capsulesPlaces;
+
+    public LevelGame(JFrame frame, int level, String path_board,int points,int lives, boolean change, Color boardColor) {
         super();
         this.frame = frame;
         this.level=level;
         turn = 0;
-      //  this.main_panel = main_panel;
         tmp_array=new ArrayList<>();
         ghost_to_remove=new ArrayList<>();
         this.lifes=lives;
@@ -47,11 +48,10 @@ public class LevelGame extends JPanel{
         setFocusable(true);
         requestFocusInWindow();
         dofirst=true;
+        this.boardColor = boardColor;
         if(change) {
             this.matrix = new int[32][32];
-            this.matrix_ghost = new Visitor[32][32];
-            matrix_capsuls=new Capsule[32][32];
-            matrix_walls=new int[32][32];
+            this.Vmatrix = new Visitor[32][32];
             buildMatrix(path_board);
             collected = 0;
         }
@@ -117,32 +117,24 @@ public class LevelGame extends JPanel{
                     draw(g,i,j,pacman.getImg_pacman());
                 }
                 else if (matrix[i][j] == 3) {
-                    if(dofirst)this.matrix_ghost[i][j] = new Capsule(10,240,"capsule.png");
-                    draw(g,i,j, this.matrix_ghost[i][j].getPath());
+                    if(dofirst)this.Vmatrix[i][j] = new Capsule(10,240,"capsule.png");
+                    draw(g,i,j, this.Vmatrix[i][j].getPath());
                 }
                 else if (matrix[i][j] == 4) {
                     if(dofirst){
                         GINKEY b= new GINKEY(i,j,1);
-                        this.matrix_ghost[i][j]=b;
+                        this.Vmatrix[i][j]=b;
                         monsters.add(b);
                     }
-                    draw(g,i,j,this.matrix_ghost[i][j].getPath());
+                    draw(g,i,j,this.Vmatrix[i][j].getPath());
                 }
                 else if (matrix[i][j] == 8) {
                     if(dofirst){
                         INKY inky= new INKY(i,j,1);
-                        this.matrix_ghost[i][j]=inky;
+                        this.Vmatrix[i][j]=inky;
                         monsters.add(inky);
                     }
-                    draw(g,i,j,this.matrix_ghost[i][j].getPath());
-                }
-                else if (matrix[i][j] == 'c'-'0') {
-                    if(dofirst){
-                        BLINKY blinky= new BLINKY(i,j,1);
-                        this.matrix_ghost[i][j]=blinky;
-                        monsters.add(blinky);
-                    }
-                    draw(g,i,j,this.matrix_ghost[i][j].getPath());
+                    draw(g,i,j,this.Vmatrix[i][j].getPath());
                 }
                 else if (matrix[i][j] == 'a'-'0') {
                     draw(g,i,j,"fire_ball.png");
@@ -152,15 +144,15 @@ public class LevelGame extends JPanel{
                 }
                 else if (matrix[i][j] == 5) {
                     draw(g,i,j,"water.png");
-                    if(dofirst)this.matrix_ghost[i][j] = new EnergyCapsule(50,4);
+                    if(dofirst)this.Vmatrix[i][j] = new EnergyCapsule(50,4);
                 }
                 else if (matrix[i][j] == 6) {
-                    draw(g,i,j,"pineapple.png");
-                    if(dofirst)this.matrix_ghost[i][j] = new PineAppleCapsule(100,4);
+                    if(dofirst)this.Vmatrix[i][j] = new PineAppleCapsule(100,4);
+                    draw(g,i,j,this.Vmatrix[i][j].getPath());
                 }
                 else if (matrix[i][j] == 7) {
-                    draw(g,i,j,"apple.png");
-                    if(dofirst)this.matrix_ghost[i][j] = new AppleCapsule(200,4);
+                    if(dofirst)Vmatrix[i][j] = new AppleCapsule(200,4);
+                    draw(g,i,j,this.Vmatrix[i][j].getPath());
                 }
                 else if (matrix[i][j] == 'b'-'0') {
                     if (turn < 10)
@@ -175,16 +167,16 @@ public class LevelGame extends JPanel{
                     matrix[i][12] = 1;
                 }
             }
-            else if(counter>=26&&level==2) {
+            else if(counter>=22&&level==2) {
                 for (int i = 14; i < 18; i++) {
                     draw(g, i, 9, "temp_block.png");
                     matrix[i][9] = 1;
                 }
             }
             else if(counter>=22&&level==3) {
-                for (int i = 15; i < 18; i++) {
-                    draw(g, i, 4, "temp_block.png");
-                    matrix[i][4] = 1;
+                for (int i = 14; i < 18; i++) {
+                    draw(g, i, 9, "temp_block.png");
+                    matrix[i][9] = 1;
                 }
             }
             dofirst=false;
@@ -202,10 +194,10 @@ public class LevelGame extends JPanel{
             if(!freeze) {
                 matrix[x][y] = 0;
             }
-            if(matrix_ghost[tmp_x][tmp_y] !=null) {
-                statusChange = pacman.accept(matrix_ghost[tmp_x][tmp_y]);
-                //statusChange = matrix_ghost[tmp_x][tmp_y].visit(pacman.ac);
-                matrix_ghost[tmp_x][tmp_y]=null;
+            if(Vmatrix[tmp_x][tmp_y] !=null) {
+                statusChange = pacman.accept(Vmatrix[tmp_x][tmp_y]);
+                //statusChange = Vmatrix[tmp_x][tmp_y].visit(pacman.ac);
+                Vmatrix[tmp_x][tmp_y]=null;
             }
             x = tmp_x;
             y = tmp_y;
@@ -232,7 +224,7 @@ public class LevelGame extends JPanel{
         catch (IOException e){ }
 
         if(image==null) {
-            g.setColor(Color.ORANGE);
+            g.setColor(boardColor);
             g.fillRect(i * 20, j * 20, 20, 20);
         }
         else{
@@ -248,7 +240,19 @@ public class LevelGame extends JPanel{
     }
     public static Pacman getPacMan(){
         return pacman;
-    } }
+    }
+
+//    private void initSpecialCapsules(int level){
+//        switch(level){
+//            case 1:
+//
+//        }
+//    }
+
+
+
+
+}
 
 
 

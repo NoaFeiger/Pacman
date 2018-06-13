@@ -100,7 +100,7 @@ public class GameControl implements ActionListener, KeyListener {
 
     public void startGame() {
         this.level = 1;
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, 0, 3,true);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, 0, 3,true, curBackground);
         this.levelGame.setFocusable(true);
         this.levelGame.setFocusTraversalKeysEnabled(false);
         this.levelGame.requestFocusInWindow();
@@ -120,7 +120,7 @@ public class GameControl implements ActionListener, KeyListener {
         if(this.lifes<1)
             return;
         frame.remove(this.levelGame);
-        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes,change);
+        this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes,change, curBackground);
         this.levelGame.addKeyListener(this);
         this.curBackground = new Color(5, 5, 160);
         this.statusP.setBackground(this.curBackground);
@@ -180,6 +180,7 @@ public class GameControl implements ActionListener, KeyListener {
                     nextLevel(false);
                 }
             }
+            levelGame.repaint();
             updateStatus();
         }
     }
@@ -187,7 +188,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (this.lifes == 0) {
             endScene();
         }
-        if (LevelGame.collected>10) { //TODO CHANGE POINTS
+        if (LevelGame.collected>30) { //TODO CHANGE POINTS
             if(this.level<3) {
                 System.out.println("Next Level");
                 timer.stop();
@@ -207,7 +208,7 @@ public class GameControl implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-       // System.out.println("asdfghjkl");
+        // System.out.println("asdfghjkl");
         StatusChange statusChange = null;
         int key = e.getKeyCode();
         if(freeze>0)

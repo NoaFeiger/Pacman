@@ -7,4 +7,3 @@ Itay Rosh,330
 ,0
 sagi,860
 James,2040
-shlomo,0
