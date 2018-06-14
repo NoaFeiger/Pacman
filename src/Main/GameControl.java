@@ -125,7 +125,7 @@ public class GameControl implements ActionListener, KeyListener {
         frame.remove(this.levelGame);
         this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes, change, curBackground);
         this.levelGame.addKeyListener(this);
-        this.curBackground = new Color(5, 5, 160);
+        //this.curBackground = new Color(5, 5, 160);
         this.statusP.setBackground(this.curBackground);
         this.levelGame.setBackground(curBackground);
         this.frame.getContentPane().setBackground(this.curBackground);
@@ -164,16 +164,18 @@ public class GameControl implements ActionListener, KeyListener {
                 counter++;
             }
             if (level == 3) {
-              /*  if (counter >= 10 && counter <= 22) { // open cage
-                    for (int j = 14; j < 18; j++) {
-                        LevelGame.matrix_walls[j][9] = 0;
-                    }
+                if (counter >= 10 && counter <= 22) { // open cage
+                    LevelGame.matrix_walls[12][1]=0;
+                    LevelGame.matrix_walls[19][1]=0;
+                    for(int i=14;i<18;i++)
+                        LevelGame.matrix_walls[i][4]=0;
                 } else {// close cage
-                    for (int j = 14; j < 18; j++) {
-                        LevelGame.matrix_walls[j][9] = 'b' - '0';
-                    }
+                    LevelGame.matrix_walls[12][1]='b'-'0';
+                    LevelGame.matrix_walls[19][1]='b'-'0';
+                    for(int i=14;i<18;i++)
+                        LevelGame.matrix_walls[i][4]='b'-'0';
                 }
-                counter++;*/
+                counter++;
             }
             this.levelGame.requestFocus(false);
             levelGame.turn++;
@@ -229,7 +231,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (this.lifes == 0) {
             endScene();
         }
-        if (LevelGame.collected>10) { //TODO CHANGE POINTS
+        if (LevelGame.collected>40) { //TODO CHANGE POINTS
             if(this.level<3) {
                 System.out.println("Next Level");
                 timer.stop();

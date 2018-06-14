@@ -12,16 +12,19 @@ private int counter;
 
     @Override
     public StatusChange visit(NicePacman nice_p) {
+        this.setBeenCorner(false);
         return new StatusChange(0,0,0);
     }
 
     @Override
     public StatusChange visit(SafePacman safe_p) { // pacman lose 10 points and freeze for 3 sec
+        this.setBeenCorner(false);
         return new StatusChange(-10,0,10);
     }
 
     @Override
     public StatusChange visit(AngryPacman angry_p) { // inky freeze for 5 sec
+        this.setBeenCorner(false);
         this.freeze=10;
         return new StatusChange(0,0,0);
     }

@@ -24,7 +24,7 @@ public abstract class Ghost implements TimerListener,Visitor{
    public static ArrayList<Point> corners;
    private ArrayList<Point> lastPlaces;
    private Point corner;
-   private boolean beenCorner;
+   protected boolean beenCorner;
    protected directions cur;
    private String normal_path;
    private String frozen_path;
@@ -33,16 +33,10 @@ public abstract class Ghost implements TimerListener,Visitor{
         if(corners==null)
             corners = new ArrayList<>();
         this.corner = null;
-        for(int i=0;i<4 & this.corner==null;i++)
-            for(int j=0;j<LevelGame.matrix_capsule.length & this.corner==null;j++)
-                if(this.corner==null && LevelGame.matrix_capsule[i][j] instanceof EnergyCapsule && !corners.contains(new Point(i,j))) {
-                    this.corner = new Point(i, j);
-                    corners.add(this.corner);
-                    System.out.println(this.corner);
-                }
-        for(int i=28;i<LevelGame.matrix.length & this.corner==null;i++)
-            for(int j=0;j<LevelGame.matrix_capsule.length & this.corner==null;j++)
-                if(this.corner==null && LevelGame.matrix_capsule[i][j] instanceof EnergyCapsule && !corners.contains(new Point(i,j))) {
+        beenCorner = true;
+        for(int i=0;i<LevelGame.matrix.length & this.corner==null;i++)
+            for(int j=0;j<LevelGame.matrix.length & this.corner==null;j++)
+                if(this.corner==null && LevelGame.matrix[i][j] == 5 && !corners.contains(new Point(i,j))) {
                     this.corner = new Point(i, j);
                     corners.add(this.corner);
                     System.out.println(this.corner);
@@ -255,6 +249,9 @@ public abstract class Ghost implements TimerListener,Visitor{
         this.lastPlaces.add(new Point(u,v));
         if(this.lastPlaces.size()>25)
             this.lastPlaces.remove(0);
+    }
+    public void setBeenCorner(boolean beenCorner){
+        this.beenCorner = beenCorner;
     }
 }
 enum directions{RIGHT,LEFT,UP,DOWN}
