@@ -8,11 +8,15 @@ public abstract class Pacman implements Visited{
     private String curPic;
     boolean openMouth;
     boolean frozen;
+    private String openMouthP;
+    private String closeMouthP;
 
-    public Pacman(int x,int y,String path, int lives,int score){
+    public Pacman(int x,int y,String openPath, String closePath, int lives,int score){
         this.x=x;
         this.y=y;
-        this.curPic = path;
+        this.curPic = openPath;
+        this.openMouthP = openPath;
+        this.closeMouthP = closePath;
         this.lives=lives;
         this.score=score;
         openMouth = true;
@@ -23,9 +27,9 @@ public abstract class Pacman implements Visited{
         openMouth = !openMouth;
         if(!frozen)
         if(openMouth)
-            curPic = "pacman_open.png";
+            curPic = this.openMouthP;
         else
-            curPic = "pacman_close.png";
+            curPic = this.closeMouthP;
     }
     public void freeze(){
         this.frozen = true;
@@ -33,7 +37,7 @@ public abstract class Pacman implements Visited{
     }
     public void unfreeze(){
         frozen = false;
-        this.curPic = "pacman_open.png";
+        this.curPic = this.openMouthP;
     }
     public boolean isOpenMouth() {
         return openMouth;
