@@ -116,6 +116,7 @@ public class GameControl implements ActionListener, KeyListener {
     }
 
     public void nextLevel(boolean change) {
+        this.freeze = 2;
         if (change == true)
             this.level++;
         if (this.lifes < 1)
