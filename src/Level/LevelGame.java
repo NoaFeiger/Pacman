@@ -136,6 +136,11 @@ public class LevelGame extends JPanel{
                     this.array_ghost.add(inky);
                   //  monsters.add(inky);
             }
+            else if (num == 'c'-'0') { //Inky
+                BLINKY blinky= new BLINKY(i,j,2);
+                this.array_ghost.add(blinky);
+                //  monsters.add(inky);
+            }
          //   else if (num == 'a'-'0') { // Fire Ball
            //     array_ghost[i][j]=new
             //}
