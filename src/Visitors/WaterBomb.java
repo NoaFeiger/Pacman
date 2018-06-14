@@ -49,8 +49,9 @@ public class WaterBomb  extends Ghost implements Visitor {
     @Override
     public StatusChange move() {
         if (dead) {
-            LevelGame.matrix[this.x_ghost][this.y_ghost] = 0;
-            LevelGame.array_ghost = null;
+          //  LevelGame.matrix[this.x_ghost][this.y_ghost] = 0;
+           // LevelGame.array_ghost = null;
+           LevelGame.ghost_to_remove.add(this);
             return null;
         }
         System.out.println(this.x_ghost + " " + this.y_ghost);
@@ -102,7 +103,7 @@ public class WaterBomb  extends Ghost implements Visitor {
             //LevelGame.array_ghost[x_ghost][y_ghost] = null;
             //LevelGame.matrix[x_ghost][y_ghost] = 1;
             dead = true;
-            LevelGame.array_ghost.remove(this);
+            LevelGame.ghost_to_remove.remove(this);
             //  LevelGame.ghost_to_remove.add(this);
              return statusChange;
         }

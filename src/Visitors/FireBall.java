@@ -71,7 +71,7 @@ public class FireBall extends Ghost implements Visitor {
             x_ghost=tmp_x;
             y_ghost=tmp_y;
         } else { // died
-            LevelGame.array_ghost.remove(this);
+            LevelGame.ghost_to_remove.add(this);
        //     LevelGame.ghost_to_remove.add(this);
         }
         if(LevelGame.matrix[this.x_ghost][this.y_ghost]==2){

@@ -117,7 +117,7 @@ public class GameControl implements ActionListener, KeyListener {
 
     public void nextLevel(boolean change) {
         this.freeze = 2;
-        if (change == true)
+        if (change == true) //TODO check
             this.level++;
         if (this.lifes < 1)
             return;
@@ -186,11 +186,11 @@ public class GameControl implements ActionListener, KeyListener {
                     update(statusChange);
                 }
 
-            LevelGame.monsters.addAll(LevelGame.tmp_array);
+            LevelGame.array_ghost.addAll(LevelGame.tmp_array);
             LevelGame.tmp_array.clear();
             if (LevelGame.ghost_to_remove != null) {
                 for (int i = 0; i < LevelGame.ghost_to_remove.size(); i++) {
-                    LevelGame.monsters.remove(LevelGame.ghost_to_remove.get(i));
+                    LevelGame.array_ghost.remove(LevelGame.ghost_to_remove.get(i));
                 }
             }
             if (this.freeze <= 0) {
@@ -229,7 +229,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (this.lifes == 0) {
             endScene();
         }
-        if (LevelGame.collected>100) { //TODO CHANGE POINTS
+        if (LevelGame.collected>10) { //TODO CHANGE POINTS
             if(this.level<3) {
                 System.out.println("Next Level");
                 timer.stop();

@@ -111,7 +111,7 @@ public class BLINKY extends Ghost implements Visitor {
 */
             //todo Add switch of d
             FireBall fire_bomb = new FireBall(this, x_ghost, y_ghost, "fire_ball.png", 1, 'a'-'0',d);//TODO check if it goes on the right direction and check id
-            LevelGame.array_ghost.add(fire_bomb);
+            LevelGame.tmp_array.add(fire_bomb);
 
         }
 

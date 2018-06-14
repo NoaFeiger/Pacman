@@ -43,6 +43,7 @@ public class LevelGame extends JPanel{
         this.frame = frame;
         this.level=level;
         turn = 0;
+        array_ghost=new ArrayList<>();
         tmp_array=new ArrayList<>();
         ghost_to_remove=new ArrayList<>();
         this.lifes=lives;

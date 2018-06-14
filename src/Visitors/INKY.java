@@ -48,7 +48,7 @@ private int counter;
                         water_bomb = new WaterBomb(this, x_ghost, y_ghost - 1, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
-                        LevelGame.array_ghost.add(water_bomb);
+                        LevelGame.tmp_array.add(water_bomb);
                     }
                     break;
                 }
@@ -57,7 +57,7 @@ private int counter;
                         water_bomb = new WaterBomb(this, x_ghost, y_ghost + 1, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
-                        LevelGame.array_ghost.add(water_bomb);
+                        LevelGame.tmp_array.add(water_bomb);
                     }
                     break;
                 }
@@ -66,7 +66,7 @@ private int counter;
                         water_bomb = new WaterBomb(this, x_ghost - 1, y_ghost, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
-                        LevelGame.array_ghost.add(water_bomb);
+                        LevelGame.tmp_array.add(water_bomb);
                     }
                     break;
                 }
@@ -75,7 +75,7 @@ private int counter;
                         water_bomb = new WaterBomb(this, x_ghost + 1, y_ghost, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
-                        LevelGame.array_ghost.add(water_bomb);
+                        LevelGame.tmp_array.add(water_bomb);
                     }
                     break;
                 }
