@@ -56,7 +56,6 @@ public class WaterBomb  extends Ghost implements Visitor {
 
            return new StatusChange(0,0,0);
         }
-        System.out.println(this.x_ghost + " " + this.y_ghost);
         StatusChange statusChange = null;
         int tmp_x = this.x_ghost;
         int tmp_y = this.y_ghost;
@@ -79,34 +78,21 @@ public class WaterBomb  extends Ghost implements Visitor {
                 break;
             }
         }
-       /* if (!(this.x_ghost < 0 || this.y_ghost < 0 || this.x_ghost > 31 || this.y_ghost > 31)) {
-            if(LevelGame.matrix[this.x_ghost][this.y_ghost]==2){
-                System.out.println("HIT");
-                statusChange =  LevelGame.getPacMan().accept(this);
-                return statusChange;
-            }
-            */
+
+       if(LevelGame.pacManX()==x_ghost&&LevelGame.pacManY()==y_ghost)
+       {
+           statusChange = LevelGame.getPacMan().accept(this);
+           LevelGame.ghost_to_remove.add(this);
+           ghost.setInky_can_shoot(true);
+       }
         if (!(LevelGame.matrix_walls[this.x_ghost][this.y_ghost] == 1)) {
-            //     if(!(LevelGame.matrix[this.x_ghost][this.y_ghost]==4||LevelGame.matrix[this.x_ghost][this.y_ghost]==8)) { //if encountered a monster - dont save it
-            //       LevelGame.array_ghost[tmp_x][tmp_y] = temp;
-            //     LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-            //}
-            //   temp = LevelGame.array_ghost[this.x_ghost][this.y_ghost];
-            // tempnum = LevelGame.matrix[this.x_ghost][this.y_ghost];
-            // LevelGame.matrix[this.x_ghost][this.y_ghost] = id; // new place of GINKEY
-            // LevelGame.array_ghost[this.x_ghost][this.y_ghost] = this;
-            // return statusChange;
-            x_ghost = tmp_x;
-            y_ghost = tmp_y;
+           // x_ghost = tmp_x;
+           // y_ghost = tmp_y;
         }
         else { //died
-            // LevelGame.array_ghost[tmp_x][tmp_y] = temp;
-            // LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-            //LevelGame.array_ghost[x_ghost][y_ghost] = null;
-            //LevelGame.matrix[x_ghost][y_ghost] = 1;
+
             dead = true;
             LevelGame.ghost_to_remove.remove(this);
-            //  LevelGame.ghost_to_remove.add(this);
              return statusChange;
         }
     //  dead=true;

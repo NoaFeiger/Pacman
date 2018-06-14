@@ -58,7 +58,7 @@ private int counter;
             switch (cur) {
                 case UP: {
                     if (LevelGame.matrix_walls[x_ghost][y_ghost - 1] != 1) {
-                        water_bomb = new WaterBomb(this, x_ghost, y_ghost - 1, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
+                        water_bomb = new WaterBomb(this, x_ghost, y_ghost - 1, "water_bomb.png", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
@@ -68,7 +68,7 @@ private int counter;
                 }
                 case DOWN: {
                     if (LevelGame.matrix_walls[x_ghost][y_ghost + 1] != 1) {
-                        water_bomb = new WaterBomb(this, x_ghost, y_ghost + 1, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
+                        water_bomb = new WaterBomb(this, x_ghost, y_ghost + 1, "water_bomb.png", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
@@ -79,7 +79,7 @@ private int counter;
                 }
                 case LEFT: {
                     if (LevelGame.matrix_walls[x_ghost - 1][y_ghost] != 1) {
-                        water_bomb = new WaterBomb(this, x_ghost - 1, y_ghost, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
+                        water_bomb = new WaterBomb(this, x_ghost - 1, y_ghost, "water_bomb.png", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
@@ -90,7 +90,7 @@ private int counter;
                 }
                 default: { //RIGHT
                     if (LevelGame.matrix_walls[x_ghost + 1][y_ghost] != 1) {
-                        water_bomb = new WaterBomb(this, x_ghost + 1, y_ghost, "water_bomb.jpg", 2, 9, cur);//TODO check if it goes on the right direction
+                        water_bomb = new WaterBomb(this, x_ghost + 1, y_ghost, "water_bomb.png", 2, 9, cur);//TODO check if it goes on the right direction
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);

@@ -135,7 +135,7 @@ public class LevelGame extends JPanel{
                     this.array_ghost.add(inky);
                   //  monsters.add(inky);
             }
-            else if (num == 'c'-'0') { //Inky
+            else if (num == 'c'-'0') { //BLInky
                 BLINKY blinky= new BLINKY(i,j,2);
                 this.array_ghost.add(blinky);
                 //  monsters.add(inky);
@@ -194,6 +194,8 @@ public class LevelGame extends JPanel{
         }
         //ghosts
         for(int i = 0; i< array_ghost.size(); i++){
+            if(array_ghost.get(i) instanceof  FireBall)
+                System.out.println(array_ghost.get(i)+ " DRAW "+array_ghost.get(i).getX_ghost()+" "+array_ghost.get(i).getY_ghost());
             draw(g,array_ghost.get(i).getX_ghost(),array_ghost.get(i).getY_ghost(), array_ghost.get(i).getPath());
             }
 

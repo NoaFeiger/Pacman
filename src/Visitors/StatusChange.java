@@ -11,7 +11,6 @@ public class StatusChange {
         this.points = points;
         this.lifes = lifes;
         this.freezeTime = freezeTime;
-        System.out.println(this);
     }
     public int getPoints(){
         return this.points;

@@ -35,7 +35,6 @@ public class BLINKY extends Ghost implements Visitor {
 
     @Override
     public StatusChange visit(AngryPacman angryPacman_p) { //kills pacman
-        System.out.println("PacMan dies");
         angryPacman_p.setLives(angryPacman_p.getLives() - 1);
 
         return new StatusChange(0, -1, 0);

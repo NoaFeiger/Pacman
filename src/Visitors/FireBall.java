@@ -41,8 +41,6 @@ public class FireBall extends Ghost implements Visitor {
     public StatusChange move() {
         StatusChange statusChange = null;
         // create a list of all moves possibilities
-        int tmp_x = this.x_ghost;
-        int tmp_y = this.y_ghost;
         switch (direct_ghost) {
             case UP: {
                 this.y_ghost--;
@@ -61,17 +59,19 @@ public class FireBall extends Ghost implements Visitor {
                 break;
             }
         }
-        if ((this.x_ghost <=1 || this.y_ghost >= 30 || this.x_ghost >= 30 || this.y_ghost <= 1)) {//alive
+        System.out.println(this+ " FIREBALL "+this.x_ghost + " "+this.y_ghost);
+        if ((this.x_ghost <= -1 || this.y_ghost >= 31 || this.x_ghost >= 31 || this.y_ghost <= -1)) {//alive
             LevelGame.ghost_to_remove.add(this);
             blinky.setBlinky_can_shoot(true);
+        } else { // alive
+            //x_ghost = tmp_x;
+            //y_ghost = tmp_y;
         }
-        else { // alive
-          x_ghost=tmp_x;
-          y_ghost=tmp_y;
-        }
-        if(LevelGame.matrix[this.x_ghost][this.y_ghost]==2){
-            System.out.println("HIT");
+        if (LevelGame.pacManX() == x_ghost && LevelGame.pacManY() == y_ghost)
+        {
             statusChange = LevelGame.getPacMan().accept(this);
+            LevelGame.ghost_to_remove.add(this);
+            blinky.setBlinky_can_shoot(true);
         }
         return statusChange;
     }

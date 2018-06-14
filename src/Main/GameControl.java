@@ -218,7 +218,6 @@ public class GameControl implements ActionListener, KeyListener {
                 LevelGame.getPacMan().unfreeze();
             if (statusChange.getLifes()!=0) {
                 this.lifes = this.lifes + statusChange.getLifes();
-                System.out.println("Life");
                 if (this.lifes != 0) {
                     timer.stop();
                     nextLevel(false);
@@ -236,7 +235,6 @@ public class GameControl implements ActionListener, KeyListener {
         }
         if (LevelGame.collected>10) { //TODO CHANGE POINTS
             if(this.level<3) {
-                System.out.println("Next Level");
                 timer.stop();
                 nextLevel(true);
             }
