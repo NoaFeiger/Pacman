@@ -61,18 +61,13 @@ public class FireBall extends Ghost implements Visitor {
                 break;
             }
         }
-        if (!(this.x_ghost < 0 || this.y_ghost < 0 || this.x_ghost > 31 || this.y_ghost > 31)) {//alive
-           // LevelGame.array_ghost[tmp_x][tmp_y] = temp;
-            //LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-           // temp = LevelGame.array_ghost[this.x_ghost][this.y_ghost];
-            //tempnum = LevelGame.matrix[this.x_ghost][this.y_ghost];
-            //LevelGame.matrix[this.x_ghost][this.y_ghost] = id; // new place of GINKEY
-         //  LevelGame.array_ghost[this.x_ghost][this.y_ghost] = LevelGame.array_ghost[tmp_x][tmp_y];
-            x_ghost=tmp_x;
-            y_ghost=tmp_y;
-        } else { // died
+        if ((this.x_ghost <=1 || this.y_ghost >= 30 || this.x_ghost >= 30 || this.y_ghost <= 1)) {//alive
             LevelGame.ghost_to_remove.add(this);
-       //     LevelGame.ghost_to_remove.add(this);
+            blinky.setBlinky_can_shoot(true);
+        }
+        else { // alive
+          x_ghost=tmp_x;
+          y_ghost=tmp_y;
         }
         if(LevelGame.matrix[this.x_ghost][this.y_ghost]==2){
             System.out.println("HIT");

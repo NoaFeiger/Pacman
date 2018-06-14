@@ -8,9 +8,19 @@ import java.util.Random;
 
 public class BLINKY extends Ghost implements Visitor {
 
+    public boolean isBlinky_can_shoot() {
+        return blinky_can_shoot;
+    }
+
+    public void setBlinky_can_shoot(boolean blinky_can_shoot) {
+        this.blinky_can_shoot = blinky_can_shoot;
+    }
+
+    private boolean blinky_can_shoot;
     public BLINKY(int x, int y, int speed) {
 
         super(x, y, "BLINKY.png","BLINKY.png", speed, 9);
+        this.blinky_can_shoot=true;
     }
 
     @Override
@@ -110,9 +120,11 @@ public class BLINKY extends Ghost implements Visitor {
             LevelGame.array_ghost[x_ghost][y_ghost] = this;
 */
             //todo Add switch of d
-            FireBall fire_bomb = new FireBall(this, x_ghost, y_ghost, "fire_ball.png", 1, 'a'-'0',d);//TODO check if it goes on the right direction and check id
-            LevelGame.tmp_array.add(fire_bomb);
-
+            if(blinky_can_shoot) {
+                FireBall fire_bomb = new FireBall(this, x_ghost, y_ghost, "fire_ball.png", 1, 'a' - '0', d);//TODO check if it goes on the right direction and check id
+                blinky_can_shoot = false;
+                LevelGame.tmp_array.add(fire_bomb);
+            }
         }
 
        // if(LevelGame.matrix[x_ghost][y_ghost]==2){

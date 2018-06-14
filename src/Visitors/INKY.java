@@ -5,9 +5,20 @@ import Level.LevelGame;
 
 public class INKY extends Ghost implements Visitor {
 private int counter;
+
+    public boolean isInky_can_shoot() {
+        return inky_can_shoot;
+    }
+
+    public void setInky_can_shoot(boolean inky_can_shoot) {
+        this.inky_can_shoot = inky_can_shoot;
+    }
+
+    private boolean inky_can_shoot;
     public INKY(int x, int y,int speed) {
         super(x, y, "INKY.png","GINKY_FROZEN.png",speed,8);
         counter=0;
+        this.inky_can_shoot=true;
     }
 
     @Override
@@ -42,9 +53,8 @@ private int counter;
     public StatusChange move() {
         StatusChange statusChange = super.move();
 
-        if (counter++ % often == often-1) {
+        if(inky_can_shoot){
             WaterBomb water_bomb;
-            often=15;
             switch (cur) {
                 case UP: {
                     if (LevelGame.matrix_walls[x_ghost][y_ghost - 1] != 1) {
@@ -52,6 +62,7 @@ private int counter;
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
+                        this.inky_can_shoot=false;
                     }
                     break;
                 }
@@ -61,6 +72,8 @@ private int counter;
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
+                        this.inky_can_shoot=false;
+
                     }
                     break;
                 }
@@ -70,6 +83,8 @@ private int counter;
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
+                        this.inky_can_shoot=false;
+
                     }
                     break;
                 }
@@ -79,6 +94,7 @@ private int counter;
                         if (statusChange == null)
                             statusChange = water_bomb.move();
                         LevelGame.tmp_array.add(water_bomb);
+                        this.inky_can_shoot=false;
                     }
                     break;
                 }

@@ -52,7 +52,9 @@ public class WaterBomb  extends Ghost implements Visitor {
           //  LevelGame.matrix[this.x_ghost][this.y_ghost] = 0;
            // LevelGame.array_ghost = null;
            LevelGame.ghost_to_remove.add(this);
-            return null;
+           ghost.setInky_can_shoot(true);
+
+           return new StatusChange(0,0,0);
         }
         System.out.println(this.x_ghost + " " + this.y_ghost);
         StatusChange statusChange = null;
