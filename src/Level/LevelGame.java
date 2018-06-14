@@ -62,12 +62,7 @@ public class LevelGame extends JPanel{
             matrix_capsule=new Capsule[32][32];
             matrix_walls =new int[32][32];
             buildMatrix(path_board);
-//            for(int[]aa:matrix) {
-//                for (int aaa : aa){
-//                    System.out.print(aaa);
-//                }
-//                System.out.println();;
-//            }
+
             collected = 0;
         }
         else{
