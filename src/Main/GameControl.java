@@ -1,6 +1,7 @@
 package Main;
 
 import Level.LevelGame;
+import Visitors.Ghost;
 import Visitors.StatusChange;
 
 import javax.swing.*;
@@ -117,7 +118,7 @@ public class GameControl implements ActionListener, KeyListener {
 
     public void nextLevel(boolean change) {
         this.freeze = 2;
-        if (change == true) //TODO check
+        if (change) //TODO check
             this.level++;
         if (this.lifes < 1)
             return;
@@ -222,6 +223,8 @@ public class GameControl implements ActionListener, KeyListener {
                     timer.stop();
                     nextLevel(false);
                 }
+                for(Ghost ghost:LevelGame.array_ghost)
+                    ghost.startOver();
             }
             levelGame.repaint();
             updateStatus();

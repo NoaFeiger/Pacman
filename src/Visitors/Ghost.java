@@ -28,6 +28,8 @@ public abstract class Ghost implements TimerListener,Visitor{
    protected directions cur;
    private String normal_path;
    private String frozen_path;
+   private int startX;
+   private int startY;
 
     public Ghost(int x, int y, String normal_path, String frozen_path, int speed, int id){
         if(corners==null)
@@ -41,6 +43,8 @@ public abstract class Ghost implements TimerListener,Visitor{
                     corners.add(this.corner);
                     System.out.println(this.corner);
                 }
+        if(this.corner==null & corners.size()>1)
+            this.corner = corners.get(1);
        lastPlaces = new ArrayList<>();
        this.normal_path = normal_path;
        this.frozen_path = frozen_path;
@@ -55,6 +59,8 @@ public abstract class Ghost implements TimerListener,Visitor{
        this.alive = true;
        beenCorner = false;
        this.img_path = normal_path;
+       this.startX = x;
+       this.startY = y;
    }
     public int getSpeed() {
         return speed;
@@ -252,6 +258,10 @@ public abstract class Ghost implements TimerListener,Visitor{
     }
     public void setBeenCorner(boolean beenCorner){
         this.beenCorner = beenCorner;
+    }
+    public void startOver(){
+        this.x_ghost = this.startX;
+        this.y_ghost = this.startY;
     }
 }
 enum directions{RIGHT,LEFT,UP,DOWN}

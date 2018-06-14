@@ -43,7 +43,6 @@ public class LevelGame extends JPanel{
         this.frame = frame;
         this.level=level;
         turn = 0;
-        array_ghost=new ArrayList<>();
         tmp_array=new ArrayList<>();
         ghost_to_remove=new ArrayList<>();
         this.lifes=lives;
@@ -52,11 +51,11 @@ public class LevelGame extends JPanel{
         setFocusable(true);
         requestFocusInWindow();
         dofirst=true;
-        Ghost.corners = null;
         this.boardColor = boardColor;
         if(speCasules == null)
             speCasules = new ArrayList<>();
         if(change) {
+            Ghost.corners = null;
             speCasules = new ArrayList<>();
             this.matrix = new int[32][32];
             this.array_ghost = new ArrayList<>();
@@ -219,83 +218,6 @@ public class LevelGame extends JPanel{
             }
         }
 
-
-/*
-        for (int i = 0; i < matrix.length; i++)
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] == 1) {
-                    draw(g,i,j,"block.png");
-                } else if (matrix[i][j] == 2) {
-                    if(dofirst)
-                        startingPoint = new Point(i,j);
-                    x_ghost = i;
-                    y_ghost = j;
-                    draw(g,i,j,pacman.getImg_pacman());
-                }
-                else if (matrix[i][j] == 3) {
-                    if(dofirst)this.array_ghost[i][j] = new Capsule(10,240,"capsule.png");
-                    draw(g,i,j, this.array_ghost[i][j].getPath());
-                }
-                else if (matrix[i][j] == 4) {
-                    if(dofirst){
-                        GINKEY b= new GINKEY(i,j,1);
-                        this.array_ghost[i][j]=b;
-                        monsters.add(b);
-                    }
-                    draw(g,i,j,this.array_ghost[i][j].getPath());
-                }
-                else if (matrix[i][j] == 8) {
-                    if(dofirst){
-                        INKY inky= new INKY(i,j,1);
-                        this.array_ghost[i][j]=inky;
-                        monsters.add(inky);
-                    }
-                    draw(g,i,j,this.array_ghost[i][j].getPath());
-                }
-                else if (matrix[i][j] == 'a'-'0') {
-                    draw(g,i,j,"fire_ball.png");
-                    }
-                else if (matrix[i][j] == 9) {
-                    draw(g,i,j,"water_bomb.png");
-                }
-                else if (matrix[i][j] == 5) {
-                    draw(g,i,j,"water.png");
-                    if(dofirst)this.array_ghost[i][j] = new EnergyCapsule(50,4);
-                }
-                else if (matrix[i][j] == 6) {
-                    if(dofirst)this.array_ghost[i][j] = new PineAppleCapsule(100,4);
-                    draw(g,i,j,this.array_ghost[i][j].getPath());
-                }
-                else if (matrix[i][j] == 7) {
-                    if(dofirst) array_ghost[i][j] = new AppleCapsule(200,4);
-                    draw(g,i,j,this.array_ghost[i][j].getPath());
-                }
-                else if (matrix[i][j] == 'b'-'0') {
-                    if (turn < 10)
-                        draw(g, i, j, "temp_block.png");
-                    else
-                        matrix[i][j] = 0;
-                }
-            }
-            if(counter>=22&&level==1) {
-                for (int i = 16; i < 20; i++) {
-                    draw(g, i, 12, "temp_block.png");
-                    matrix[i][12] = 1;
-                }
-            }
-            else if(counter>=22&&level==2) {
-                for (int i = 14; i < 18; i++) {
-                    draw(g, i, 9, "temp_block.png");
-                    matrix[i][9] = 1;
-                }
-            }
-            else if(counter>=22&&level==3) {
-                for (int i = 14; i < 18; i++) {
-                    draw(g, i, 9, "temp_block.png");
-                    matrix[i][9] = 1;
-                }
-            }
-            dofirst=false;*/
     }
     public StatusChange move(boolean freeze,int vx, int vy){
         StatusChange statusChange = null;
