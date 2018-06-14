@@ -4,6 +4,7 @@ import Level.LevelGame;
 import Main.TimerListener;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -31,9 +32,17 @@ public abstract class Ghost implements TimerListener,Visitor{
     public Ghost(int x, int y, String normal_path, String frozen_path, int speed, int id){
         if(corners==null)
             corners = new ArrayList<>();
-        for(int i=0;i<LevelGame.matrix.length & this.corner==null;i++)
-            for(int j=0;j<LevelGame.matrix.length & this.corner==null;j++)
-                if(LevelGame.matrix[i][j]==5 && !corners.contains(new Point(i,j))) {
+        this.corner = null;
+        for(int i=0;i<4 & this.corner==null;i++)
+            for(int j=0;j<LevelGame.matrix_capsule.length & this.corner==null;j++)
+                if(this.corner==null && LevelGame.matrix_capsule[i][j] instanceof EnergyCapsule && !corners.contains(new Point(i,j))) {
+                    this.corner = new Point(i, j);
+                    corners.add(this.corner);
+                    System.out.println(this.corner);
+                }
+        for(int i=28;i<LevelGame.matrix.length & this.corner==null;i++)
+            for(int j=0;j<LevelGame.matrix_capsule.length & this.corner==null;j++)
+                if(this.corner==null && LevelGame.matrix_capsule[i][j] instanceof EnergyCapsule && !corners.contains(new Point(i,j))) {
                     this.corner = new Point(i, j);
                     corners.add(this.corner);
                     System.out.println(this.corner);
@@ -142,10 +151,16 @@ public abstract class Ghost implements TimerListener,Visitor{
             directions d;
         if(!beenCorner & corner!=null) {
             d = getClosest(poss, corner);
+            //System.out.println("To Corner " + corner);
         }
         else {
             Point pacP = new Point(LevelGame.pacManX(), LevelGame.pacManY());
             d = getClosest(poss, pacP);
+            System.out.println("To PacMan " + pacP);
+            if(corners!=null)
+            for(Point ppp:corners)
+                System.out.println(ppp);
+            System.out.println("-----");
         }
         last_direct=d;
 
@@ -167,7 +182,7 @@ public abstract class Ghost implements TimerListener,Visitor{
                 break;
             }
         }
-        if(x_ghost ==LevelGame.getPacMan().getX()&& y_ghost ==LevelGame.getPacMan().getY()) {
+        if(x_ghost ==LevelGame.pacManX()&& y_ghost ==LevelGame.pacManY()) {
             System.out.println("HIT");
             statusChange = LevelGame.getPacMan().accept(this);
             //LevelGame.array_ghost[tmp_x][tmp_y] = temp;
@@ -234,26 +249,8 @@ public abstract class Ghost implements TimerListener,Visitor{
             been = lastPlaces.lastIndexOf(p1)*3;
         }
         return Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y)+been;
-                //-free(p1,0);
     }
-    private int free(Point p,int t){
-        int free = 0;
-        if(t>2)
-            return 0;
-        if(p.x>0 && LevelGame.matrix[x_ghost -1][y_ghost]!=1)
-            free++;
-        if(p.y>0 && LevelGame.matrix[x_ghost][y_ghost -1]!=1)
-            free++;
-        if(p.x<31 && LevelGame.matrix[x_ghost +1][y_ghost]!=1)
-            free++;
-        if(p.y<31 && LevelGame.matrix[x_ghost][y_ghost +1]!=1)
-            free++;
-        free += free(new Point(p.x+1,p.y),t+1);
-        free += free(new Point(p.x,p.y+1),t+1);
-        free += free(new Point(p.x-1,p.y),t+1);
-        free += free(new Point(p.x,p.y+1),t+1);
-        return free;
-    }
+
     private void updateList(int u, int v){
         this.lastPlaces.add(new Point(u,v));
         if(this.lastPlaces.size()>25)

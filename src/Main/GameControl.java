@@ -120,6 +120,7 @@ public class GameControl implements ActionListener, KeyListener {
             this.level++;
         if (this.lifes < 1)
             return;
+        counter = 0;
         frame.remove(this.levelGame);
         this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, this.points, this.lifes, change, curBackground);
         this.levelGame.addKeyListener(this);
@@ -178,11 +179,11 @@ public class GameControl implements ActionListener, KeyListener {
             LevelGame.getPacMan().switchM();
             int curLife = this.lifes;
             StatusChange statusChange = null;
-            for (TimerListener t : LevelGame.array_ghost) {
-                statusChange = t.action();
-                update(statusChange);
-            }
 
+            for(int k=0;k<LevelGame.array_ghost.size();k++){
+                    statusChange = LevelGame.array_ghost.get(k).action();
+                    update(statusChange);
+                }
 
             LevelGame.monsters.addAll(LevelGame.tmp_array);
             LevelGame.tmp_array.clear();
@@ -227,7 +228,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (this.lifes == 0) {
             endScene();
         }
-        if (LevelGame.collected>30) { //TODO CHANGE POINTS
+        if (LevelGame.collected>100) { //TODO CHANGE POINTS
             if(this.level<3) {
                 System.out.println("Next Level");
                 timer.stop();

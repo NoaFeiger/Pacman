@@ -22,6 +22,7 @@ public class LevelGame extends JPanel{
     public static ArrayList<Ghost> array_ghost;
     public static int[][] matrix_walls;
     public static Capsule[][] matrix_capsule;
+    public static ArrayList<Capsule> speCasules;
     private static int x; // pacman place
     private static int y;
     public static int collected;
@@ -52,17 +53,28 @@ public class LevelGame extends JPanel{
         dofirst=true;
         Ghost.corners = null;
         this.boardColor = boardColor;
+        if(speCasules == null)
+            speCasules = new ArrayList<>();
         if(change) {
+            speCasules = new ArrayList<>();
             this.matrix = new int[32][32];
             this.array_ghost = new ArrayList<>();
             matrix_capsule=new Capsule[32][32];
             matrix_walls =new int[32][32];
             buildMatrix(path_board);
+//            for(int[]aa:matrix) {
+//                for (int aaa : aa){
+//                    System.out.print(aaa);
+//                }
+//                System.out.println();;
+//            }
             collected = 0;
         }
         else{
             matrix[x][y]=0;
             matrix[startingPoint.x][startingPoint.y]=2;
+            x = startingPoint.x;
+            y = startingPoint.y;
         }
         if(level==1){
         pacman = new NicePacman(x,y,lives,points);
@@ -111,7 +123,7 @@ public class LevelGame extends JPanel{
                 y = j;
             }
             else if (num == 3) { // regularCapsule
-               matrix_capsule[i][j] = new Capsule(10,240,"capsule.png");
+               matrix_capsule[i][j] = new Capsule(10,240,"capsule.png", new Point(i,j));
             }
             else if (num== 4) { // ghost ginky
                     GINKEY b= new GINKEY(i,j,1);
@@ -130,13 +142,15 @@ public class LevelGame extends JPanel{
              //   draw(g,i,j,"water_bomb.png");
            // }
             else if (num == 5) { //energy capsule
-               matrix_capsule[i][j] = new EnergyCapsule(50,4);
+               matrix_capsule[i][j] = new EnergyCapsule(50,4, new Point(i,j));
             }
             else if (num == 6) {
-                this.matrix_capsule[i][j] = new PineAppleCapsule(100,4);
+                this.matrix_capsule[i][j] = new PineAppleCapsule(100,4, new Point(i,j));
+                speCasules.add(matrix_capsule[i][j]);
             }
             else if (num == 7) {
-                matrix_capsule[i][j] = new AppleCapsule(200,4);
+                matrix_capsule[i][j] = new AppleCapsule(200,4, new Point(i,j));
+                speCasules.add(matrix_capsule[i][j]);
             }
             else if (num == 'b'-'0') { // block cage
                 if (turn < 10)
@@ -152,7 +166,9 @@ public class LevelGame extends JPanel{
     public void paint(Graphics g) {
         super.paint(g);
         counter++;
-        turn++;
+       // turn++;
+        if(turn%30==0)
+        swapCapsules();
         //walls
         for(int i=0;i<matrix_walls.length;i++){
             for(int j=0;j<matrix_walls[i].length;j++) {
@@ -288,6 +304,7 @@ public class LevelGame extends JPanel{
           //  if(!freeze) {
             //    matrix[x_ghost][y_ghost] = 0;
            // }
+            matrix[x][y]=0;
             x=tmp_x;
             y=tmp_y;
             for(int i=0;i<array_ghost.size();i++){
@@ -346,6 +363,28 @@ public class LevelGame extends JPanel{
         return pacman;
     }
 
+    public void swapCapsules(){
+        for(Capsule c: speCasules){
+            swapCapsule(c);
+        }
+    }
+    private void swapCapsule(Capsule c){
+        Point newPoint = null;
+        matrix_capsule[c.getPlace().x][c.getPlace().y] = null;
+        while(newPoint == null){
+            int x1 = (int)(Math.random()*31);
+            int y1 = (int)(Math.random()*31);
+            if(matrix_walls[x1][y1]==0)
+                newPoint = new Point(x1,y1);
+            }
+        Capsule temp = matrix_capsule[newPoint.x][newPoint.y];
+        if(temp!=null) {
+            matrix_capsule[c.getPlace().x][c.getPlace().y] = temp;
+            temp.setPlace(c.getPlace());
+        }
+        matrix_capsule[newPoint.x][newPoint.y] = c;
+        c.setPlace(newPoint);
+    }
 //    private void initSpecialCapsules(int level){
 //        switch(level){
 //            case 1:

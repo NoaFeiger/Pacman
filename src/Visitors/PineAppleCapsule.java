@@ -1,9 +1,11 @@
 package Visitors;
 
+import java.awt.*;
+
 public class PineAppleCapsule extends Capsule {
     int shown;
-    public PineAppleCapsule(int points, int quantity) {
-        super(points, quantity, "pineapple.png");
+    public PineAppleCapsule(int points, int quantity, Point place) {
+        super(points, quantity, "pineapple.png", place);
         shown = 0;
     }
     @Override
