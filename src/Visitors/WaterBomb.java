@@ -1,33 +1,35 @@
 package Visitors;
 
 import Level.LevelGame;
-import Visitors.*;
 
 public class WaterBomb extends Ghost {
 
     private final directions direction;
-    INKY summer;
+    INKY ghost_creator;
 
     public WaterBomb(int x, int y, String normal_path, String frozen_path, int speed, int id, INKY summer) {
         super(x, y, normal_path, frozen_path, speed, id);
-        this.summer = summer;
+        this.ghost_creator = summer;
         this.direction = summer.last_direct;
     }
-
     @Override
     public StatusChange visit(NicePacman nice_p) {
-        return null;
+        return null; // wont happen
     }
 
     @Override
     public StatusChange visit(SafePacman safe_p) {
-        return null;
+        //freeze- 3 sec lose 10 points
+        return new StatusChange(-10, 0, 30);
     }
 
     @Override
-    public StatusChange visit(AngryPacman angry_p) {
-        return new StatusChange(0, -1, 0);
+    public StatusChange visit(AngryPacman angry_p) { // ghost Freeze for 5 sec
+        ghost_creator.freeze(50);
+        return null; //TODO check
     }
+
+
 
     @Override
     public String getPath() {
@@ -53,11 +55,11 @@ public class WaterBomb extends Ghost {
         }
         if (x_ghost < 0 || x_ghost > 31 || y_ghost < 0 || y_ghost > 31) {
             LevelGame.ghost_to_remove.add(this);
-            summer.setInky_can_shoot(true);
+            ghost_creator.setInky_can_shoot(true);
         }
         if (LevelGame.matrix_walls[x_ghost][y_ghost] == 1) {
             LevelGame.ghost_to_remove.add(this);
-            summer.setInky_can_shoot(true);
+            ghost_creator.setInky_can_shoot(true);
         }
         if (x_ghost == LevelGame.pacManX() && y_ghost == LevelGame.pacManY()) {
             return LevelGame.getPacMan().accept(this);
