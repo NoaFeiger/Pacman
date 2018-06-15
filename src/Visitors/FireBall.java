@@ -1,82 +1,59 @@
 package Visitors;
 
 import Level.LevelGame;
+import Visitors.*;
 
-public class FireBall extends Ghost implements Visitor {
-    private directions direct_ghost;
-    private int x_ghost;
-    private int y_ghost;
-    private String path_img;
-    private int speed;
-    private int id;
-    private BLINKY blinky;
+class FireBall extends Ghost {
 
-    public FireBall(BLINKY me, int x_ghost, int y_ghost, String path_img, int speed, int id, directions direct_gohst) {
-        super(x_ghost, y_ghost, path_img,"", speed, id);
-        this.id = id;
-        this.blinky = me;
-        this.direct_ghost = direct_gohst;
-        this.path_img = path_img;
-        this.speed = speed;
-        this.x_ghost = x_ghost;
-        this.y_ghost = y_ghost;
+    private final directions direction;
+    BLINKY summer;
+    public FireBall(int x, int y, String normal_path, String frozen_path, int speed, int id,BLINKY summer) {
+        super(x, y, normal_path, frozen_path, speed, id);
+        this.summer=summer;
+        this.direction = summer.last_direct;
     }
 
     @Override
     public StatusChange visit(NicePacman nice_p) {
-        return null; // wont happen
+        return null;
     }
 
     @Override
     public StatusChange visit(SafePacman safe_p) {
-        return null; // wont happen
+        return null;
     }
 
     @Override
-    public StatusChange visit(AngryPacman angry_p) { // pacman died
+    public StatusChange visit(AngryPacman angry_p) {
         return new StatusChange(0, -1, 0);
     }
 
     @Override
-    public StatusChange move() {
-        StatusChange statusChange = null;
-        // create a list of all moves possibilities
-        switch (direct_ghost) {
-            case UP: {
-                this.y_ghost--;
-                break;
-            }
-            case DOWN: {
-                this.y_ghost++;
-                break;
-            }
-            case LEFT: {
-                this.x_ghost--;
-                break;
-            }
-            case RIGHT: {
-                this.x_ghost++;
-                break;
-            }
-        }
-        System.out.println(this+ " FIREBALL "+direct_ghost.toString()+" "+this.x_ghost + " "+this.y_ghost);
-        if ((this.x_ghost <= -1 || this.y_ghost >= 31 || this.x_ghost >= 31 || this.y_ghost <= -1)) {//alive
-            LevelGame.ghost_to_remove.add(this);
-            blinky.setBlinky_can_shoot(true);
-        } else { // alive
-            //x_ghost = tmp_x;
-            //y_ghost = tmp_y;
-        }
-        if (LevelGame.pacManX() == x_ghost && LevelGame.pacManY() == y_ghost)
-        {
-            //statusChange = LevelGame.getPacMan().accept(this);
-            //LevelGame.ghost_to_remove.add(this);
-            //blinky.setBlinky_can_shoot(true);
-        }
-        return statusChange;
+    public String getPath() {
+        return normal_path;
     }
     @Override
-    public String getPath() {
-        return super.getImg_path();
+    public StatusChange move(){
+        directions i =direction;
+        switch (i)
+        {
+            case RIGHT:x_ghost++;
+                break;
+            case LEFT:x_ghost--;
+                break;
+            case UP:y_ghost--;
+                break;
+            case DOWN:y_ghost++;
+                break;
+        }
+        if(x_ghost<0||x_ghost>31||y_ghost<0||y_ghost>31) {
+            LevelGame.ghost_to_remove.add(this);
+            summer.setBlinky_can_shoot(true);
+        }
+        if(x_ghost==LevelGame.pacManX()&& y_ghost==LevelGame.pacManY())
+        {
+            return LevelGame.getPacMan().accept(this);
+        }
+        return new StatusChange(0,0,0);
     }
 }

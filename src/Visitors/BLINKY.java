@@ -123,7 +123,7 @@ public class BLINKY extends Ghost implements Visitor {
                // FireBall fire_bomb = new FireBall(this, x_ghost, y_ghost, "fire_ball.png", 1, 'a' - '0', d);//TODO check if it goes on the right direction and check id
 
                 blinky_can_shoot = false;
-                LevelGame.tmp_array.add(new MFireBall(x_ghost,y_ghost,"fire_ball.png","Snowflake.png",1,'a'-'0',this));
+                LevelGame.tmp_array.add(new FireBall(x_ghost,y_ghost,"fire_ball.png","Snowflake.png",1,'a'-'0',this));
             }
         }
 
@@ -136,60 +136,5 @@ public class BLINKY extends Ghost implements Visitor {
     @Override
     public String getPath() {
         return super.getImg_path();
-    }
-}
-
-class MFireBall extends Ghost{
-
-    private final directions direction;
-    BLINKY summer;
-    public MFireBall(int x, int y, String normal_path, String frozen_path, int speed, int id,BLINKY summer) {
-        super(x, y, normal_path, frozen_path, speed, id);
-        this.summer=summer;
-        this.direction = summer.last_direct;
-    }
-
-    @Override
-    public StatusChange visit(NicePacman nice_p) {
-        return null;
-    }
-
-    @Override
-    public StatusChange visit(SafePacman safe_p) {
-        return null;
-    }
-
-    @Override
-    public StatusChange visit(AngryPacman angry_p) {
-        return new StatusChange(0, -1, 0);
-    }
-
-    @Override
-    public String getPath() {
-        return normal_path;
-    }
-    @Override
-    public StatusChange move(){
-        directions i =direction;
-        switch (i)
-        {
-            case RIGHT:x_ghost++;
-                break;
-            case LEFT:x_ghost--;
-                break;
-            case UP:y_ghost--;
-                break;
-            case DOWN:y_ghost++;
-                break;
-        }
-        if(x_ghost<0||x_ghost>31||y_ghost<0||y_ghost>31) {
-            LevelGame.ghost_to_remove.add(this);
-            summer.setBlinky_can_shoot(true);
-        }
-        if(x_ghost==LevelGame.pacManX()&& y_ghost==LevelGame.pacManY())
-        {
-            return LevelGame.getPacMan().accept(this);
-        }
-        return new StatusChange(0,0,0);
     }
 }
