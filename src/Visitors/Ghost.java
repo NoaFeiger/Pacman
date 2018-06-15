@@ -94,7 +94,10 @@ public abstract class Ghost implements TimerListener,Visitor{
     }
 
     public String getImg_path() {
-        return img_path;
+        if(visible==0)
+            return img_path;
+        else
+            return "";
     }
 
     public void setImg_path(String img) {

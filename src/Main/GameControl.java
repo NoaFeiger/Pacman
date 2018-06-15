@@ -233,7 +233,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (this.lifes == 0) {
             endScene();
         }
-        if (LevelGame.collected>10) { //TODO CHANGE POINTS
+        if (LevelGame.collected>50) { //TODO CHANGE POINTS
             if(this.level<3) {
                 timer.stop();
                 nextLevel(true);
@@ -282,6 +282,7 @@ public class GameControl implements ActionListener, KeyListener {
         timer.stop();
         LastPage last_page = new LastPage(frame, main_panel, this.points);
         frame.remove(this.levelGame); // move to the game page
+        frame.remove(this.statusP);
         frame.add(last_page);
         frame.repaint();
         frame.revalidate();
