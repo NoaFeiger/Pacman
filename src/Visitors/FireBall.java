@@ -59,7 +59,7 @@ public class FireBall extends Ghost implements Visitor {
                 break;
             }
         }
-        System.out.println(this+ " FIREBALL "+this.x_ghost + " "+this.y_ghost);
+        System.out.println(this+ " FIREBALL "+direct_ghost.toString()+" "+this.x_ghost + " "+this.y_ghost);
         if ((this.x_ghost <= -1 || this.y_ghost >= 31 || this.x_ghost >= 31 || this.y_ghost <= -1)) {//alive
             LevelGame.ghost_to_remove.add(this);
             blinky.setBlinky_can_shoot(true);
@@ -69,9 +69,9 @@ public class FireBall extends Ghost implements Visitor {
         }
         if (LevelGame.pacManX() == x_ghost && LevelGame.pacManY() == y_ghost)
         {
-            statusChange = LevelGame.getPacMan().accept(this);
-            LevelGame.ghost_to_remove.add(this);
-            blinky.setBlinky_can_shoot(true);
+            //statusChange = LevelGame.getPacMan().accept(this);
+            //LevelGame.ghost_to_remove.add(this);
+            //blinky.setBlinky_can_shoot(true);
         }
         return statusChange;
     }

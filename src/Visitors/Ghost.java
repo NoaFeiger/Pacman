@@ -26,7 +26,7 @@ public abstract class Ghost implements TimerListener,Visitor{
    private Point corner;
    protected boolean beenCorner;
    protected directions cur;
-   private String normal_path;
+   protected String normal_path;
    private String frozen_path;
    private int startX;
    private int startY;
@@ -113,7 +113,6 @@ public abstract class Ghost implements TimerListener,Visitor{
             freeze--;
             if(freeze<=0)
                 this.img_path = normal_path;
-            System.out.println(freeze);
         }
         else if (visible>0)
             visible--;
@@ -155,9 +154,9 @@ public abstract class Ghost implements TimerListener,Visitor{
         else {
             Point pacP = new Point(LevelGame.pacManX(), LevelGame.pacManY());
             d = getClosest(poss, pacP);
-            if(corners!=null)
-            for(Point ppp:corners)
-                System.out.println(ppp);
+            //if(corners!=null)
+            //for(Point ppp:corners)
+            //    System.out.println(ppp);
         }
         last_direct=d;
 

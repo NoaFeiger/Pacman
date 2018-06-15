@@ -57,8 +57,8 @@ public class WaterBomb  extends Ghost implements Visitor {
            return new StatusChange(0,0,0);
         }
         StatusChange statusChange = null;
-        int tmp_x = this.x_ghost;
-        int tmp_y = this.y_ghost;
+     //   int tmp_x = this.x_ghost;
+      //  int tmp_y = this.y_ghost;
 
         switch (direct_ghost) {
             case UP: {
@@ -85,7 +85,7 @@ public class WaterBomb  extends Ghost implements Visitor {
            LevelGame.ghost_to_remove.add(this);
            ghost.setInky_can_shoot(true);
        }
-        if (!(LevelGame.matrix_walls[this.x_ghost][this.y_ghost] == 1)) {
+        if (!(LevelGame.matrix_walls[this.x_ghost][this.y_ghost] == 1)) { // if not a wall
            // x_ghost = tmp_x;
            // y_ghost = tmp_y;
         }
