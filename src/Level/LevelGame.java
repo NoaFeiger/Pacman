@@ -36,6 +36,7 @@ public class LevelGame extends JPanel{
     public static ArrayList<Ghost> tmp_array;
     private  int level;
     private Color boardColor;
+    public static int max_capsules;
     private ArrayList<Pair<Point,Capsule>> capsulesPlaces;
 
     public LevelGame(JFrame frame, int level, String path_board,int points,int lives, boolean change, Color boardColor) {
@@ -56,6 +57,7 @@ public class LevelGame extends JPanel{
             speCasules = new ArrayList<>();
         if(change) {
             Ghost.corners = null;
+            max_capsules = 0;
             speCasules = new ArrayList<>();
             this.matrix = new int[32][32];
             this.array_ghost = new ArrayList<>();
@@ -124,6 +126,7 @@ public class LevelGame extends JPanel{
             }
             else if (num == 3) { // regularCapsule
                matrix_capsule[i][j] = new Capsule(10,240,"capsule.png", new Point(i,j));
+               max_capsules++;
             }
             else if (num== 4) { // ghost ginky
                     GINKEY b= new GINKEY(i,j,1);
@@ -148,13 +151,16 @@ public class LevelGame extends JPanel{
            // }
             else if (num == 5) { //energy capsule
                matrix_capsule[i][j] = new EnergyCapsule(50,4, new Point(i,j));
+               max_capsules++;
             }
             else if (num == 6) {
                 this.matrix_capsule[i][j] = new PineAppleCapsule(100,4, new Point(i,j));
+                max_capsules++;
                 speCasules.add(matrix_capsule[i][j]);
             }
             else if (num == 7) {
                 matrix_capsule[i][j] = new AppleCapsule(200,4, new Point(i,j));
+                max_capsules++;
                 speCasules.add(matrix_capsule[i][j]);
             }
             else if (num == 'b'-'0') { // block cage

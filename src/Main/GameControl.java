@@ -25,6 +25,7 @@ public class GameControl implements ActionListener, KeyListener {
     private JLabel pointsL;
     private JLabel lifesL;
     private JPanel statusP;
+    private JLabel collectedT;
     private Color curBackground;
     private JPanel main_panel;
 
@@ -47,13 +48,13 @@ public class GameControl implements ActionListener, KeyListener {
         gbc.gridy = 0;
         this.pointsL = new JLabel("Points: 0", SwingConstants.CENTER);
         this.pointsL.setForeground(Color.WHITE);
-        this.pointsL.setFont(new Font("", Font.BOLD, 20));
+        this.pointsL.setFont(new Font("", Font.BOLD, 18));
         this.pointsL.setSize(200, 200);
         this.pointsL.setHorizontalAlignment(0);
         this.statusP.add(pointsL, gbc);
         this.lifesL = new JLabel("Lifes: 0", SwingConstants.CENTER);
         this.lifesL.setForeground(Color.WHITE);
-        this.lifesL.setFont(new Font("", Font.BOLD, 20));
+        this.lifesL.setFont(new Font("", Font.BOLD, 18));
         gbc.gridy = 1;
         this.statusP.add(lifesL, gbc);
         this.statusP.setBackground(this.curBackground);
@@ -64,8 +65,13 @@ public class GameControl implements ActionListener, KeyListener {
         this.frame.addKeyListener(this);
         JButton speed_up = new JButton("Speed up");
         speed_up.setSize(100, 50);
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         this.statusP.add(speed_up, gbc);
+        this.collectedT = new JLabel("Collected: 0/0", SwingConstants.CENTER);
+        this.collectedT.setForeground(Color.WHITE);
+        this.collectedT.setFont(new Font("", Font.BOLD, 14));
+        gbc.gridy = 2;
+        this.statusP.add(collectedT, gbc);
         speed_up.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,7 +87,7 @@ public class GameControl implements ActionListener, KeyListener {
         ImageIcon pause_img = resizeImage("pause.jpg", 40, 40);
         JButton pause = new JButton(pause_img);
         pause.setOpaque(false);
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         this.statusP.add(pause, gbc);
         pause.addActionListener(new ActionListener() {
             boolean wait = true;
@@ -233,7 +239,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (this.lifes == 0) {
             endScene();
         }
-        if (LevelGame.collected>50) { //TODO CHANGE POINTS
+        if (LevelGame.collected>=LevelGame.max_capsules) { //TODO CHANGE POINTS
             if(this.level<3) {
                 timer.stop();
                 nextLevel(true);
@@ -244,6 +250,7 @@ public class GameControl implements ActionListener, KeyListener {
         }
         pointsL.setText("Points: " + this.points);
         lifesL.setText("Lifes: " + this.lifes);
+        collectedT.setText("Collected: " + LevelGame.collected + "/" + LevelGame.max_capsules);
     }
 
     @Override
