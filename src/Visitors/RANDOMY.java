@@ -1,8 +1,8 @@
 package Visitors;
 
-public class GHOSTY extends Ghost implements Visitor {
+public class RANDOMY extends Ghost implements Visitor {
     private int curNum;
-    public GHOSTY(int x, int y, int speed) {
+    public RANDOMY(int x, int y, int speed) {
         super(x, y, "GINKY.png","GHOSTY1.png", 1, 4);
         curNum = 0;
     }
@@ -14,8 +14,7 @@ public class GHOSTY extends Ghost implements Visitor {
 
     @Override
     public StatusChange visit(SafePacman safe_p) { //ginkey disappear for 5 sec
-        visible=10;
-        return new StatusChange(0, 0, 0);
+        return new StatusChange(-(int)(Math.random()*50), (int)(Math.random()), 0);
     }
 
     @Override
@@ -26,7 +25,7 @@ public class GHOSTY extends Ghost implements Visitor {
     @Override
     public String getPath() {
         curNum = (curNum%5)+1;
-        this.setSpeed((int)(Math.random()*10));
+        this.setSpeed(Math.min((int)(Math.random()*10),5));
         if(this.freeze!=0)
             return super.getImg_path();
         else return "GHOSTY" + curNum + ".png";

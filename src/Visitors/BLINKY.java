@@ -42,82 +42,7 @@ public class BLINKY extends Ghost implements Visitor {
 
     @Override
     public StatusChange move() {
-        StatusChange statusChange = null;
-        // create a list of all moves possibilities
-        int tmp_x = x_ghost;
-        int tmp_y = y_ghost;
-        HashSet<Integer> set = new HashSet<>();
-        set.add(1);
-        set.add(4);
-        set.add(8);
-        set.add('b'-'0');
-
-        ArrayList<directions> poss = new ArrayList<>();
-        if (((x_ghost)<30)&&(!set.contains(LevelGame.matrix[x_ghost + 1][y_ghost]))) // RIGHT
-            poss.add(directions.RIGHT);
-        if (((x_ghost >1)&&(!set.contains(LevelGame.matrix[x_ghost - 1][y_ghost])))) // LEFT
-            poss.add(directions.LEFT);
-        if (((y_ghost)>1)&&(!set.contains(LevelGame.matrix[x_ghost][y_ghost - 1]))) // UP
-            poss.add(directions.UP);
-        if (((y_ghost <30)&&(!set.contains(LevelGame.matrix[x_ghost][y_ghost + 1])))) // DOWN
-            poss.add(directions.DOWN);
-
-        if (poss.size() > 1) {
-            if (last_direct != null) {
-                switch (last_direct) { // remove the option to go the opposite way of the last move
-                    case RIGHT: {
-                        poss.remove(directions.LEFT);
-                        break;
-                    }
-                    case LEFT: {
-                        poss.remove(directions.RIGHT);
-                        break;
-                    }
-                    case DOWN: {
-                        poss.remove(directions.UP);
-                        break;
-                    }
-                    case UP: {
-                        poss.remove(directions.DOWN);
-                        break;
-                    }
-                }
-            }
-        }
-        int size = poss.size();
-        if (size != 0) {
-            Random rnd = new Random(1);
-            rnd.nextInt(size);
-            int random = rnd.nextInt(size);
-            directions d = poss.get(random);
-            last_direct = d;
-
-            switch (d) {
-                case UP: {
-                    y_ghost--;
-                    break;
-                }
-                case DOWN: {
-                    y_ghost++;
-                    break;
-                }
-                case LEFT: {
-                    x_ghost--;
-                    break;
-                }
-                case RIGHT: {
-                    x_ghost++;
-                    break;
-                }
-            }
-        /*
-            temp = LevelGame.array_ghost[x_ghost][y_ghost];
-            tempnum = LevelGame.matrix[x_ghost][y_ghost];
-            LevelGame.array_ghost[tmp_x][tmp_y] = temp;
-            LevelGame.matrix[tmp_x][tmp_y] = tempnum;
-            LevelGame.matrix[x_ghost][y_ghost] = id; // new place of GINKEY
-            LevelGame.array_ghost[x_ghost][y_ghost] = this;
-*/
+        StatusChange statusChange = super.move();
             //todo Add switch of d
             if(blinky_can_shoot) {
                // FireBall fire_bomb = new FireBall(this, x_ghost, y_ghost, "fire_ball.png", 1, 'a' - '0', d);//TODO check if it goes on the right direction and check id
@@ -125,9 +50,7 @@ public class BLINKY extends Ghost implements Visitor {
                 blinky_can_shoot = false;
                 LevelGame.tmp_array.add(new FireBall(x_ghost,y_ghost,"fire_ball.png","Snowflake.png",1,'a'-'0',this));
             }
-        }
-
-       // if(LevelGame.matrix[x_ghost][y_ghost]==2){
+         // if(LevelGame.matrix[x_ghost][y_ghost]==2){
          //   System.out.println("HIT");
            // statusChange = LevelGame.getPacMan().accept(this);
         //}

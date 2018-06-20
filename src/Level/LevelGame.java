@@ -144,8 +144,8 @@ public class LevelGame extends JPanel{
                 //  monsters.add(inky);
             }
             else if (num == 'd'-'0') { //BLInky
-                GHOSTY ghosty= new GHOSTY(i,j,2);
-                array_ghost.add(ghosty);
+                RANDOMY randomy = new RANDOMY(i,j,2);
+                array_ghost.add(randomy);
                 //  monsters.add(inky);
             }
          //   else if (num == 'a'-'0') { // Fire Ball
