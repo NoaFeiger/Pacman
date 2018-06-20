@@ -28,7 +28,7 @@ public class Main extends JFrame {
         button_start.setContentAreaFilled(false);
         button_start.addActionListener(e -> {   //moves to the option window panel
             remove(main_panel);
-            GameControl gameControl = new GameControl(this,main_panel);
+            GameControl gameControl = new GameControl(this,main_panel, 3);
             gameControl.startGame();});
 
         JButton button_best5 = new JButton(new ImageIcon("button_top-players.png"));

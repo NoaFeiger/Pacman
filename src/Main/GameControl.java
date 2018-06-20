@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class GameControl implements ActionListener, KeyListener {
     JFrame frame;
@@ -28,14 +29,20 @@ public class GameControl implements ActionListener, KeyListener {
     private JLabel collectedT;
     private Color curBackground;
     private JPanel main_panel;
+    private ArrayList<Integer> levels;
 
-    public GameControl(JFrame frame, JPanel main_panel) {
+    public GameControl(JFrame frame, JPanel main_panel, int startingLevel) {
         this.frame = frame;
         this.lifes = 3;
+        this.levels = new ArrayList<>();
+        this.levels.add(1);
+        this.levels.add(2);
+        this.levels.add(3);
         this.change_level = true;
         this.points = 0;
         this.main_panel = main_panel;
-        this.level = 0;
+        this.level = startingLevel;
+        this.levels.remove((Integer)startingLevel);
         this.freeze = 0;
         this.curBackground = new Color(3, 3, 99);
         GridBagLayout gl = new GridBagLayout();
@@ -107,7 +114,7 @@ public class GameControl implements ActionListener, KeyListener {
     }
 
     public void startGame() {
-        this.level = 1;
+    //    this.level = 1;
         this.levelGame = new LevelGame(frame, this.level, "BoardLevel" + this.level, 0, 3, true, curBackground);
         this.levelGame.setFocusable(true);
         this.levelGame.setFocusTraversalKeysEnabled(false);
@@ -125,7 +132,7 @@ public class GameControl implements ActionListener, KeyListener {
     public void nextLevel(boolean change) {
         this.freeze = 2;
         if (change) //TODO check
-            this.level++;
+            this.level = this.levels.remove(0);
         if (this.lifes < 1)
             return;
         counter = 0;
@@ -239,8 +246,8 @@ public class GameControl implements ActionListener, KeyListener {
         if (this.lifes == 0) {
             endScene();
         }
-        if (LevelGame.collected>=LevelGame.max_capsules) { //TODO CHANGE POINTS
-            if(this.level<3) {
+        if (LevelGame.collected>=LevelGame.max_capsules/5) { //TODO CHANGE POINTS
+            if(!this.levels.isEmpty()) {
                 timer.stop();
                 nextLevel(true);
             }
