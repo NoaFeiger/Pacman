@@ -135,12 +135,17 @@ public class LevelGame extends JPanel{
                 }
             else if (num == 8) { //Inky
                     INKY inky= new INKY(i,j,1);
-                    this.array_ghost.add(inky);
+                    array_ghost.add(inky);
                   //  monsters.add(inky);
             }
             else if (num == 'c'-'0') { //BLInky
                 BLINKY blinky= new BLINKY(i,j,2);
-                this.array_ghost.add(blinky);
+                array_ghost.add(blinky);
+                //  monsters.add(inky);
+            }
+            else if (num == 'd'-'0') { //BLInky
+                GHOSTY ghosty= new GHOSTY(i,j,2);
+                array_ghost.add(ghosty);
                 //  monsters.add(inky);
             }
          //   else if (num == 'a'-'0') { // Fire Ball

@@ -59,50 +59,6 @@ public class INKY extends Ghost implements Visitor {
             water_bomb = new WaterBomb(x_ghost,y_ghost,"water_bomb.png","Snowflake.png",1,9,this);//TODO check if it goes on the right direction
             LevelGame.tmp_array.add(water_bomb);
             this.inky_can_shoot=false;
-            /*
-            switch (cur) {
-                case UP: {
-                    if (LevelGame.matrix_walls[x_ghost][y_ghost - 1] != 1) {
-                        water_bomb = new WaterBomb(this, x_ghost, y_ghost - 1, "water_bomb.png", 2, 9, cur);//TODO check if it goes on the right direction
-                        LevelGame.tmp_array.add(water_bomb);
-                        if (statusChange == null)
-                            statusChange = water_bomb.move();
-                        this.inky_can_shoot = false;
-                    }
-                    break;
-                }
-                case DOWN: {
-                    if (LevelGame.matrix_walls[x_ghost][y_ghost + 1] != 1) {
-                        water_bomb = new WaterBomb(this, x_ghost, y_ghost + 1, "water_bomb.png", 2, 9, cur);//TODO check if it goes on the right direction
-                        LevelGame.tmp_array.add(water_bomb);
-                        if (statusChange == null)
-                            statusChange = water_bomb.move();
-                        this.inky_can_shoot = false;
-                    }
-                    break;
-                }
-                case LEFT: {
-                    if (LevelGame.matrix_walls[x_ghost - 1][y_ghost] != 1) {
-                        water_bomb = new WaterBomb(this, x_ghost - 1, y_ghost, "water_bomb.png", 2, 9, cur);//TODO check if it goes on the right direction
-                        LevelGame.tmp_array.add(water_bomb);
-                        if (statusChange == null)
-                            statusChange = water_bomb.move();
-                        this.inky_can_shoot = false;
-
-                    }
-                    break;
-                }
-                default: { //RIGHT
-                    if (LevelGame.matrix_walls[x_ghost + 1][y_ghost] != 1) {
-                        water_bomb = new WaterBomb(this, x_ghost + 1, y_ghost, "water_bomb.png", 2, 9, cur);//TODO check if it goes on the right direction
-                        LevelGame.tmp_array.add(water_bomb);
-                        if (statusChange == null)
-                            statusChange = water_bomb.move();
-                        this.inky_can_shoot = false;
-                    }
-                    break;
-                }
-            }*/
         }
         return statusChange;
     }
