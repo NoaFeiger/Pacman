@@ -2,8 +2,11 @@ package Main;
 import Level.LevelGame;
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.Flow;
 
 public class Main extends JFrame {
+    private JComboBox<String> cb = null;
+
     public static void main(String[] args) {
         Main main=new Main();
     }
@@ -28,7 +31,7 @@ public class Main extends JFrame {
         button_start.setContentAreaFilled(false);
         button_start.addActionListener(e -> {   //moves to the option window panel
             remove(main_panel);
-            GameControl gameControl = new GameControl(this,main_panel, 3);
+            GameControl gameControl = new GameControl(this,main_panel,cb.getSelectedIndex()+1 );
             gameControl.startGame();});
 
         JButton button_best5 = new JButton(new ImageIcon("button_top-players.png"));
@@ -47,9 +50,24 @@ public class Main extends JFrame {
         button_exit.setContentAreaFilled(false);
         button_exit.addActionListener(e ->
             System.exit(42));
-        main_panel.setLayout(new GridLayout(5,2));
+        main_panel.setLayout(new GridLayout(6,2));
         main_panel.add(title);
      //   main_panel.add(new JLabel(""));
+        JPanel l1 = new JPanel(new GridLayout(2,1));
+
+        JPanel l2 = new JPanel();
+        l2.setOpaque(false);
+        l1.setOpaque(false);
+        String[] choices = { "Level 1","Level 2", "Level 3"};
+        cb = new JComboBox<>(choices);
+        JLabel choose = new JLabel("   Choose the Level and then press start");
+        choose.setFont(new Font("Playbill", Font.BOLD, 30));
+
+        choose.setForeground(Color.white);
+        l1.add(choose);
+        l2.add(cb);
+        l1.add(l2);
+        main_panel.add(l1);
         main_panel.add(button_start);
         main_panel.add(button_best5);
         main_panel.add(button_exit);
