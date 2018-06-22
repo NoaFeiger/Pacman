@@ -166,7 +166,7 @@ public class GameControl implements ActionListener, KeyListener {
                 counter++;
             }
             if (level == 2) {
-                if (counter >= 10 && counter <= 22) { // open cage
+                if (counter >= 10 && counter <= 62) { // open cage
                     for (int j = 14; j < 18; j++) {
                         LevelGame.matrix_walls[j][9] = 0;
                     }

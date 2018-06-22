@@ -17,7 +17,7 @@ public class RANDOMY extends Ghost implements Visitor {
 
     @Override
     public StatusChange visit(SafePacman safe_p) { //Random points reduced, and random freezing time.
-        int toFreeze = (int)(Math.random()*10);
+        int toFreeze = (int)(Math.random()*10)+5;
         return new StatusChange(-(int)(Math.random()*100), 0, toFreeze);
     }
 

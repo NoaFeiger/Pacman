@@ -149,7 +149,7 @@ public class LevelGame extends JPanel{
                 //  monsters.add(inky);
             }
             else if (num == 'e'-'0') { //LOVELY
-                LOVELY lovely = new LOVELY(i,j,8);
+                LOVELY lovely = new LOVELY(i,j,4);
                 array_ghost.add(lovely);
                 //  monsters.add(inky);
             }
@@ -237,7 +237,7 @@ public class LevelGame extends JPanel{
     }
     public StatusChange move(boolean freeze,int vx, int vy){
         StatusChange statusChange = null;
-        //pacman.switchM();
+        pacman.switchM();
         int tmp_x=x;
         int tmp_y=y;
         if(!freeze) {
