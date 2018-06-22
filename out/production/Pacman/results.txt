@@ -10,3 +10,5 @@ James,2040
 shlomo,0
 sagi,830
 sagi,3020
+try,490
+sagit,4050

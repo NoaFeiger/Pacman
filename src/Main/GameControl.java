@@ -76,7 +76,7 @@ public class GameControl implements ActionListener, KeyListener {
         this.statusP.add(speed_up, gbc);
         this.collectedT = new JLabel("Collected: 0/0", SwingConstants.CENTER);
         this.collectedT.setForeground(Color.WHITE);
-        this.collectedT.setFont(new Font("", Font.BOLD, 14));
+        this.collectedT.setFont(new Font("", Font.BOLD, 12));
         gbc.gridy = 2;
         this.statusP.add(collectedT, gbc);
         speed_up.addActionListener(new ActionListener() {
@@ -178,7 +178,7 @@ public class GameControl implements ActionListener, KeyListener {
                 counter++;
             }
             if (level == 3) {
-                if (counter >= 10 && counter <= 45) { // open cage
+                if (counter >= 10 && counter <= 30) { // open cage
                     LevelGame.matrix_walls[12][1]=0;
                     LevelGame.matrix_walls[19][1]=0;
                     for(int i=14;i<18;i++)
@@ -246,7 +246,7 @@ public class GameControl implements ActionListener, KeyListener {
         if (this.lifes == 0) {
             endScene();
         }
-        if (LevelGame.collected>=LevelGame.max_capsules/5) { //TODO CHANGE POINTS
+        if (LevelGame.collected>=LevelGame.max_capsules) { //TODO CHANGE POINTS
             if(!this.levels.isEmpty()) {
                 timer.stop();
                 nextLevel(true);

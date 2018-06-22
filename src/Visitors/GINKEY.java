@@ -3,7 +3,7 @@ package Visitors;
 public class GINKEY extends Ghost implements Visitor {
 
     public GINKEY(int x, int y, int speed) {
-        super(x, y, "GINKY.png","GINKY_FROZEN.png", 1, 4);
+        super(x, y, "GINKY.png","GINKY_FROZEN.png", speed, 4);
     }
 
     @Override
