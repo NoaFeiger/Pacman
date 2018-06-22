@@ -227,7 +227,7 @@ public class GameControl implements ActionListener, KeyListener {
             this.freeze += statusChange.getFreezeTime();
             if(statusChange.getFreezeTime()>0)
                 LevelGame.getPacMan().freeze();
-            else// =\<
+            else if(!LevelGame.getPacMan().isFrozen())
                 LevelGame.getPacMan().unfreeze();
             if (statusChange.getLifes()!=0) {
                 this.lifes = this.lifes + statusChange.getLifes();
@@ -243,7 +243,7 @@ public class GameControl implements ActionListener, KeyListener {
         }
     }
     private void updateStatus(){
-        if (this.lifes == 0) {
+        if (this.lifes == 0 | this.points<0) {
             endScene();
         }
         if (LevelGame.collected>=LevelGame.max_capsules) { //TODO CHANGE POINTS

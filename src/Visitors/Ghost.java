@@ -148,18 +148,13 @@ public abstract class Ghost implements TimerListener,Visitor{
 
         int size=poss.size();
         if (size!=0){
-        //int random = (int)(Math.random() *size );
             directions d;
-        if(!beenCorner & corner!=null) {
+        if(LevelGame.getPacMan().isFrozen() | !beenCorner & corner!=null) {
             d = getClosest(poss, corner);
-            //System.out.println("To Corner " + corner);
         }
         else {
             Point pacP = new Point(LevelGame.pacManX(), LevelGame.pacManY());
             d = getClosest(poss, pacP);
-            //if(corners!=null)
-            //for(Point ppp:corners)
-            //    System.out.println(ppp);
         }
         last_direct=d;
 
