@@ -254,6 +254,7 @@ public abstract class Ghost implements TimerListener,Visitor{
     public void startOver(){
         this.x_ghost = this.startX;
         this.y_ghost = this.startY;
+        this.beenCorner = false;
     }
 }
 enum directions{RIGHT,LEFT,UP,DOWN}

@@ -76,7 +76,7 @@ public class GameControl implements ActionListener, KeyListener {
         this.statusP.add(speed_up, gbc);
         this.collectedT = new JLabel("Collected: 0/0", SwingConstants.CENTER);
         this.collectedT.setForeground(Color.WHITE);
-        this.collectedT.setFont(new Font("", Font.BOLD, 12));
+        this.collectedT.setFont(new Font("", Font.BOLD, 13));
         gbc.gridy = 2;
         this.statusP.add(collectedT, gbc);
         speed_up.addActionListener(new ActionListener() {
